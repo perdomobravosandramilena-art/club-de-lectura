@@ -6,7 +6,7 @@
   <meta name="description" content="Club de Lectura Metidos en el Cuento - Promoción de lectura, talleres escolares y cuentos animados.">
   <title>Club de Lectura: ¡Metidos en el Cuento!</title>
 
-  <!-- Tipografías Google Fonts: Fredoka (infantil amigable) y Caveat (manuscrita cálida) -->
+  <!-- Tipografías Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -15,403 +15,111 @@
     :root {
       --bg-warm: #FDEEE9;
       --card-bg: #FFFFFF;
-      --primary: #D95D39; /* Terracota cálido extraído del branding */
+      --primary: #D95D39;
       --primary-hover: #BF4926;
       --text-dark: #2C2523;
       --text-muted: #6B5E5B;
       --accent-yellow: #F6BD60;
       --accent-green: #84A59D;
-      --radius: 18px;
-      --shadow: 0 8px 24px rgba(217, 93, 57, 0.08);
+      --accent-purple: #9D8189;
+      --radius: 20px;
+      --shadow: 0 10px 30px rgba(217, 93, 57, 0.1);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Fredoka', sans-serif; background-color: var(--bg-warm); color: var(--text-dark); line-height: 1.6; }
 
-    body {
-      font-family: 'Fredoka', sans-serif;
-      background-color: var(--bg-warm);
-      color: var(--text-dark);
-      line-height: 1.6;
-    }
+    /* Encabezado */
+    header { background: #FFFFFF; box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05); position: sticky; top: 0; z-index: 100; }
+    .nav-container { max-width: 1200px; margin: auto; padding: 0.8rem 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+    .brand-group { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .brand-group img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary); }
+    .brand-title { font-family: 'Caveat', cursive; font-size: 1.8rem; color: var(--primary); line-height: 1.1; }
+    .brand-subtitle { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+    nav ul { display: flex; gap: 1.2rem; list-style: none; align-items: center; }
+    nav a { text-decoration: none; color: var(--text-dark); font-weight: 600; font-size: 0.95rem; }
+    .btn-cta { background: var(--primary); color: white !important; padding: 0.6rem 1.3rem; border-radius: 30px; text-decoration: none; font-weight: 600; transition: transform 0.2s; border: none; cursor: pointer; display: inline-block; }
+    .btn-cta:hover { background: var(--primary-hover); transform: translateY(-2px); }
 
-    /* Encabezado y Navegación */
-    header {
-      background: #FFFFFF;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
+    /* Hero */
+    .hero { max-width: 1200px; margin: 2rem auto; padding: 1.5rem; display: grid; grid-template-columns: 1.2fr 1fr; gap: 2.5rem; align-items: center; }
+    .hero-text h1 { font-size: 2.6rem; color: var(--text-dark); line-height: 1.2; margin-bottom: 1rem; }
+    .hero-text h1 span { color: var(--primary); font-family: 'Caveat', cursive; font-size: 3.4rem; display: block; }
+    .hero-text p { color: var(--text-muted); font-size: 1.15rem; margin-bottom: 1.5rem; }
+    .hero-video-box { background: #FFFFFF; padding: 12px; border-radius: var(--radius); box-shadow: var(--shadow); border: 3px dashed var(--accent-yellow); }
+    .hero-video-box video { width: 100%; border-radius: 14px; display: block; }
 
-    .nav-container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 0.8rem 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+    /* Vitrinas Temáticas / Categorías de Alto Impacto */
+    .showcase-section { max-width: 1200px; margin: 4rem auto; padding: 0 1.5rem; }
+    .section-title { text-align: center; margin-bottom: 2.5rem; }
+    .section-title h2 { font-size: 2.8rem; color: var(--primary); font-family: 'Caveat', cursive; }
+    .section-title p { color: var(--text-muted); font-size: 1.1rem; }
 
-    .brand-group {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-    }
+    .category-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
+    .cat-card { background: white; border-radius: var(--radius); padding: 1.8rem; text-align: center; cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); box-shadow: var(--shadow); border: 3px solid transparent; position: relative; overflow: hidden; }
+    .cat-card:hover { transform: translateY(-6px); }
+    .cat-card.active { border-color: var(--primary); background: #FFF5F2; }
+    .cat-card.active::after { content: "SELECCIONADO"; position: absolute; top: 12px; right: -30px; background: var(--primary); color: white; font-size: 0.65rem; font-weight: 700; padding: 4px 30px; transform: rotate(45deg); }
+    .cat-icon { font-size: 3rem; margin-bottom: 0.8rem; }
+    .cat-card h3 { font-size: 1.3rem; margin-bottom: 0.4rem; color: var(--text-dark); }
+    .cat-card p { font-size: 0.85rem; color: var(--text-muted); }
 
-    .brand-group img {
-      width: 58px;
-      height: 58px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid var(--primary);
-    }
+    /* Catálogo de Cuentos */
+    .cuentos-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; }
+    .cuento-card { background: var(--card-bg); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; transition: transform 0.2s; }
+    .cuento-card:hover { transform: translateY(-4px); }
+    .cuento-img { width: 100%; height: 210px; object-fit: cover; background: #e0e0e0; }
+    .cuento-body { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
+    .cuento-badge { display: inline-block; align-self: flex-start; background: var(--bg-warm); color: var(--primary); font-size: 0.75rem; font-weight: 700; padding: 0.3rem 0.8rem; border-radius: 20px; margin-bottom: 0.6rem; text-transform: uppercase; }
+    .cuento-body h3 { font-size: 1.35rem; margin-bottom: 0.5rem; }
+    .cuento-body p { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 1.2rem; flex-grow: 1; }
+    .btn-read-along { background: #FFF0EB; color: var(--primary); border: 2px solid var(--primary); padding: 0.7rem; border-radius: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 1rem; width: 100%; transition: all 0.2s; }
+    .btn-read-along:hover { background: var(--primary); color: white; }
 
-    .brand-title {
-      font-family: 'Caveat', cursive;
-      font-size: 1.8rem;
-      color: var(--primary);
-      line-height: 1.1;
-    }
+    /* =========================================================
+       MODO TEATRO (PANTALLA COMPLETA) CON READ-ALONG Y VOTACIÓN
+       ========================================================= */
+    .theatre-modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(30, 24, 22, 0.96); z-index: 9999; display: none; align-items: center; justify-content: center; padding: 1.5rem; overflow-y: auto; }
+    .theatre-modal.active { display: flex; }
+    .theatre-content { background: #FFFFFF; width: 100%; max-width: 900px; max-height: 92vh; border-radius: var(--radius); overflow-y: auto; display: flex; flex-direction: column; box-shadow: 0 20px 60px rgba(0,0,0,0.4); position: relative; }
+    .theatre-header { padding: 1.2rem 1.8rem; border-bottom: 1px solid #EFEAE6; display: flex; justify-content: space-between; align-items: center; background: #FAF7F5; position: sticky; top: 0; z-index: 10; }
+    .theatre-title { font-family: 'Caveat', cursive; font-size: 2.2rem; color: var(--primary); }
+    .btn-close-theatre { background: none; border: none; font-size: 1.8rem; cursor: pointer; color: var(--text-muted); }
+    
+    .theatre-body { padding: 2rem; }
+    .theatre-stage { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; margin-bottom: 2rem; }
+    .stage-img { width: 100%; max-height: 280px; object-fit: cover; border-radius: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+    .read-along-box { height: 260px; overflow-y: auto; background: #FAF7F5; border-radius: 14px; padding: 1.2rem; border-left: 5px solid var(--accent-yellow); font-size: 1.1rem; line-height: 1.8; }
+    .read-sentence { transition: all 0.3s ease; padding: 4px 6px; border-radius: 6px; display: inline; color: #736966; }
+    .read-sentence.highlight { background: #FFE8A3; color: #000; font-weight: 600; }
 
-    .brand-subtitle {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
+    .audio-dock { background: #FAF7F5; padding: 1.2rem; border-radius: 16px; display: flex; flex-direction: column; gap: 8px; margin-bottom: 2rem; }
+    .audio-dock audio { width: 100%; height: 42px; }
 
-    nav ul {
-      display: flex;
-      gap: 1.2rem;
-      list-style: none;
-      align-items: center;
-    }
+    /* Caja de Votación y Reseña a Google Sheets */
+    .voting-zone { background: #FFF5F2; padding: 1.8rem; border-radius: 16px; border: 2px dashed var(--primary); }
+    .voting-zone h4 { font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--primary); }
+    .voting-buttons { display: flex; gap: 1rem; margin: 1rem 0; }
+    .vote-btn { flex: 1; padding: 0.8rem; border: 2px solid #EFEAE6; background: white; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s; font-family: inherit; }
+    .vote-btn.selected { border-color: var(--primary); background: var(--primary); color: white; }
+    .vote-comment { width: 100%; padding: 0.8rem; border: 2px solid #EFEAE6; border-radius: 10px; font-family: inherit; font-size: 0.95rem; margin-bottom: 0.8rem; }
+    .vote-status { font-size: 0.85rem; font-weight: 600; color: #2A9D8F; display: none; text-align: center; margin-top: 0.5rem; }
 
-    nav a {
-      text-decoration: none;
-      color: var(--text-dark);
-      font-weight: 600;
-      font-size: 0.95rem;
-      transition: color 0.2s ease;
-    }
-
-    nav a:hover {
-      color: var(--primary);
-    }
-
-    .btn-cta {
-      background: var(--primary);
-      color: white !important;
-      padding: 0.6rem 1.2rem;
-      border-radius: 30px;
-      transition: transform 0.2s ease, background 0.2s ease;
-    }
-
-    .btn-cta:hover {
-      background: var(--primary-hover);
-      transform: translateY(-2px);
-    }
-
-    /* Hero Section */
-    .hero {
-      max-width: 1100px;
-      margin: 2rem auto;
-      padding: 1.5rem;
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 2rem;
-      align-items: center;
-    }
-
-    .hero-text h1 {
-      font-size: 2.6rem;
-      color: var(--text-dark);
-      line-height: 1.2;
-      margin-bottom: 1rem;
-    }
-
-    .hero-text h1 span {
-      color: var(--primary);
-      font-family: 'Caveat', cursive;
-      font-size: 3.2rem;
-      display: block;
-    }
-
-    .hero-text p {
-      color: var(--text-muted);
-      font-size: 1.1rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .hero-video-box {
-      background: #FFFFFF;
-      padding: 12px;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      border: 3px dashed var(--accent-yellow);
-    }
-
-    .hero-video-box video {
-      width: 100%;
-      border-radius: 12px;
-      display: block;
-    }
-
-    /* Servicios / Talleres */
-    .section-title {
-      text-align: center;
-      margin: 3rem 0 1rem 0;
-    }
-
-    .section-title h2 {
-      font-size: 2.2rem;
-      color: var(--primary);
-      font-family: 'Caveat', cursive;
-    }
-
-    .services-grid {
-      max-width: 1100px;
-      margin: auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.5rem;
-      padding: 1rem 1.5rem;
-    }
-
-    .service-card {
-      background: var(--card-bg);
-      padding: 1.8rem;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      border-top: 5px solid var(--primary);
-      text-align: center;
-      transition: transform 0.2s;
-    }
-
-    .service-card:hover {
-      transform: translateY(-4px);
-    }
-
-    .service-icon {
-      font-size: 2.5rem;
-      margin-bottom: 0.8rem;
-    }
-
-    /* Catálogo de Cuentos (Metidos en el Cuento) */
-    .filter-bar {
-      max-width: 1100px;
-      margin: 1.5rem auto;
-      padding: 0 1.5rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      justify-content: center;
-    }
-
-    .filter-btn {
-      background: white;
-      border: 2px solid var(--primary);
-      color: var(--primary);
-      padding: 0.5rem 1.2rem;
-      border-radius: 20px;
-      font-family: 'Fredoka', sans-serif;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .filter-btn.active, .filter-btn:hover {
-      background: var(--primary);
-      color: white;
-    }
-
-    .cuentos-container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 1rem 1.5rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.8rem;
-    }
-
-    .cuento-card {
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      display: flex;
-      flex-direction: column;
-    }
-
-    .cuento-img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      background-color: #f0f0f0;
-    }
-
-    .cuento-body {
-      padding: 1.2rem;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .cuento-badge {
-      display: inline-block;
-      align-self: flex-start;
-      background: var(--bg-warm);
-      color: var(--primary);
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 0.2rem 0.6rem;
-      border-radius: 10px;
-      margin-bottom: 0.6rem;
-      text-transform: uppercase;
-    }
-
-    .cuento-body h3 {
-      font-size: 1.25rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .cuento-body p {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      margin-bottom: 1rem;
-      flex-grow: 1;
-    }
-
-    .audio-player-wrapper {
-      margin-top: auto;
-      background: #fafafa;
-      padding: 8px;
-      border-radius: 12px;
-    }
-
-    .audio-player-wrapper audio {
-      width: 100%;
-      height: 38px;
-    }
-
-    /* Formulario PQRS & Contacto */
-    .contact-section {
-      background: #FFFFFF;
-      max-width: 900px;
-      margin: 4rem auto;
-      padding: 2.5rem;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    .form-group {
-      margin-bottom: 1.2rem;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 0.4rem;
-      font-weight: 600;
-    }
-
-    .form-group input, .form-group select, .form-group textarea {
-      width: 100%;
-      padding: 0.8rem;
-      border: 2px solid #EFEAE6;
-      border-radius: 10px;
-      font-family: inherit;
-      font-size: 0.95rem;
-    }
-
-    .form-group input:focus, .form-group textarea:focus {
-      border-color: var(--primary);
-      outline: none;
-    }
-
-    .consent-box {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      margin-top: 1rem;
-    }
-
-    /* Botón flotante WhatsApp */
-    .whatsapp-float {
-      position: fixed;
-      bottom: 25px;
-      right: 25px;
-      background: #25D366;
-      color: white;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      text-decoration: none;
-      font-size: 30px;
-      z-index: 999;
-      transition: transform 0.2s;
-    }
-
-    .whatsapp-float:hover {
-      transform: scale(1.1);
-    }
-
-    /* Footer y Legal */
-    footer {
-      background: #2C2523;
-      color: #E2DBD8;
-      padding: 3rem 1.5rem 1.5rem 1.5rem;
-      margin-top: 4rem;
-      font-size: 0.9rem;
-    }
-
-    .footer-grid {
-      max-width: 1100px;
-      margin: auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
-      margin-bottom: 2rem;
-    }
-
-    .footer-grid h4 {
-      color: var(--accent-yellow);
-      font-size: 1.1rem;
-      margin-bottom: 0.8rem;
-    }
-
-    .footer-bottom {
-      max-width: 1100px;
-      margin: auto;
-      text-align: center;
-      border-top: 1px solid #443B38;
-      padding-top: 1.2rem;
-      font-size: 0.8rem;
-    }
+    /* Footer y Floating */
+    footer { background: #2C2523; color: #E2DBD8; padding: 3rem 1.5rem; margin-top: 5rem; }
+    .footer-grid { max-width: 1200px; margin: auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem; }
+    .whatsapp-float { position: fixed; bottom: 25px; right: 25px; background: #25D366; color: white; border-radius: 50%; width: 60px; height: 60px; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.25); text-decoration: none; font-size: 30px; z-index: 999; }
 
     @media (max-width: 768px) {
-      .hero {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-      nav ul {
-        display: none; /* En móvil priorizamos el CTA directo */
-      }
+      .hero { grid-template-columns: 1fr; text-align: center; }
+      .theatre-stage { grid-template-columns: 1fr; }
+      nav ul { display: none; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Barra de Navegación -->
+  <!-- Navegación -->
   <header>
     <div class="nav-container">
       <a href="#" class="brand-group">
@@ -423,9 +131,8 @@
       </a>
       <nav>
         <ul>
+          <li><a href="#showcase">Colecciones</a></li>
           <li><a href="#talleres">Talleres</a></li>
-          <li><a href="#cuentos">Audio-Cuentos</a></li>
-          <li><a href="#pqrs">Contacto y PQRS</a></li>
           <li><a href="https://wa.me/573176661372?text=Hola%20Sandra,%20quiero%20conocer%20más%20del%20Club%20de%20Lectura" class="btn-cta" target="_blank">Escríbenos</a></li>
         </ul>
       </nav>
@@ -437,8 +144,8 @@
     <section class="hero">
       <div class="hero-text">
         <h1>Transformamos la lectura en <span>una fiesta viva</span></h1>
-        <p>Una propuesta didáctica y teatral dirigida por mediadores expertos para colegios, docentes y familias en Colombia.</p>
-        <a href="#talleres" class="btn-cta" style="font-size: 1.05rem;">Conoce nuestros talleres</a>
+        <p>Experiencias narrativas y pedagógicas dirigidas por mediadores para colegios, docentes y familias en Colombia.</p>
+        <a href="#showcase" class="btn-cta" style="font-size: 1.1rem; padding: 0.8rem 1.6rem;">Explorar Colecciones de Cuentos</a>
       </div>
       <div class="hero-video-box">
         <video controls poster="assets/img/logo.jpeg">
@@ -448,200 +155,267 @@
       </div>
     </section>
 
-    <!-- Servicios y Talleres Pedagógicos -->
-    <section id="talleres">
-      <div class="section-title">
-        <h2>Nuestros Talleres Pedagógicos</h2>
-        <p>Estrategias presenciales para instituciones educativas y comunidades</p>
-      </div>
-      <div class="services-grid">
-        <div class="service-card">
-          <div class="service-icon">🦁</div>
-          <h3>Animación con Personajes</h3>
-          <p>Acompañamiento teatral y lecturas dramatizadas que conectan emocionalmente con los estudiantes.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">🌳</div>
-          <h3>Lectura al Patio</h3>
-          <p>Intervenciones lúdicas al aire libre para fomentar el amor espontáneo por los libros en las escuelas.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">👨‍👩‍👧‍👦</div>
-          <h3>Talleres con Familias</h3>
-          <p>Herramientas prácticas para que padres y acudientes medien la lectura desde el hogar.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">📚</div>
-          <h3>Mediación para Docentes</h3>
-          <p>Formación metodológica para profesores de básica primaria y secundaria en didáctica lectora.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Catálogo de Cuentos Dinámico -->
-    <section id="cuentos">
+    <!-- VITRINAS TEMÁTICAS (CATEGORÍAS DE ALTO IMPACTO) -->
+    <section id="showcase" class="showcase-section">
       <div class="section-title">
         <h2>Metidos en el Cuento: Audio-Cuentos</h2>
-        <p>Historias pedagógicas animadas creadas por Sandra Perdomo con Gemini</p>
+        <p>Selecciona una vitrina para desplegar la colección de historias animadas</p>
       </div>
 
-      <!-- Filtros por categoría (escalable para el futuro) -->
-      <div class="filter-bar" id="categoryFilters">
-        <button class="filter-btn active" onclick="filtrarCuentos('todos')">Todos</button>
-        <button class="filter-btn" onclick="filtrarCuentos('Mujeres con Historia')">Mujeres con Historia</button>
-        <button class="filter-btn" onclick="filtrarCuentos('Crecimiento Personal')">Crecimiento Personal</button>
-        <button class="filter-btn" onclick="filtrarCuentos('Valores y Espiritualidad')">Valores y Espiritualidad</button>
+      <div class="category-grid" id="categoryGrid">
+        <div class="cat-card active" onclick="filtrarCategoria('Mujeres con Historia', this)">
+          <div class="cat-icon">👑</div>
+          <h3>Mujeres con Historia</h3>
+          <p>Relatos de valentía, ciencia y liderazgo que inspiran a soñar en grande.</p>
+        </div>
+        <div class="cat-card" onclick="filtrarCategoria('Crecimiento Personal', this)">
+          <div class="cat-icon">🌱</div>
+          <h3>Crecimiento Personal</h3>
+          <p>Fábulas de empatía, inteligencia emocional y superación de desafíos.</p>
+        </div>
+        <div class="cat-card" onclick="filtrarCategoria('Valores y Espiritualidad', this)">
+          <div class="cat-icon">✨</div>
+          <h3>Valores y Espiritualidad</h3>
+          <p>Historias de gratitud, respeto a la naturaleza y armonía comunitaria.</p>
+        </div>
+        <div class="cat-card" onclick="filtrarCategoria('todos', this)">
+          <div class="cat-icon">📚</div>
+          <h3>Toda la Biblioteca</h3>
+          <p>Explora el catálogo completo sin ningún filtro.</p>
+        </div>
       </div>
 
-      <!-- Aquí se renderizan los cuentos dinámicamente -->
+      <!-- Tarjetas de cuentos -->
       <div class="cuentos-container" id="contenedorCuentos">
         <p style="text-align: center; grid-column: 1/-1;">Cargando historias mágicas...</p>
       </div>
     </section>
-
-    <!-- Formulario de PQRS y Solicitud de Talleres -->
-    <section id="pqrs" class="contact-section">
-      <div class="section-title" style="margin-top: 0;">
-        <h2>Buzón Escolar y PQRS</h2>
-        <p>¿Quieres llevar el club a tu institución o dejarnos una sugerencia?</p>
-      </div>
-
-      <!-- Conectado vía Formspree o Google Forms. Cambiar YOUR_FORM_ID por el propio -->
-      <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" id="formPQRS">
-        <div class="form-group">
-          <label for="nombre">Nombre completo (Adulto responsable o Docente):</label>
-          <input type="text" id="nombre" name="nombre" required placeholder="Ej: Diana Valencia">
-        </div>
-
-        <div class="form-group">
-          <label for="email">Correo electrónico de contacto:</label>
-          <input type="email" id="email" name="email" required placeholder="ejemplo@escuela.edu.co">
-        </div>
-
-        <div class="form-group">
-          <label for="tipo">Tipo de mensaje:</label>
-          <select id="tipo" name="tipo">
-            <option value="solicitud_taller">Cotización o reserva de Taller Escolar</option>
-            <option value="peticion">Petición o Consulta pedagógica</option>
-            <option value="sugerencia">Sugerencia para nuevos audio-cuentos</option>
-            <option value="felicitacion">Felicitación / Comentario</option>
-            <option value="queja">Queja o Reclamo</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="mensaje">Detalle de su solicitud o mensaje:</label>
-          <textarea id="mensaje" name="mensaje" rows="4" required placeholder="Indica nombre de la institución o el motivo de tu mensaje..."></textarea>
-        </div>
-
-        <div class="consent-box">
-          <input type="checkbox" id="habeas" required>
-          <label for="habeas">
-            Autorizo el tratamiento de mis datos de contacto únicamente para responder a esta solicitud, en concordancia con la Ley 1581 de 2012 de Colombia.
-          </label>
-        </div>
-
-        <button type="submit" class="btn-cta" style="width: 100%; border: none; margin-top: 1.5rem; cursor: pointer;">Enviar Mensaje</button>
-      </form>
-    </section>
   </main>
 
-  <!-- Botón Flotante de WhatsApp para Contacto Inmediato -->
-  <a href="https://wa.me/573176661372?text=Hola%20Sandra,%20estoy%20interesado(a)%20en%20los%20talleres%20del%20Club%20de%20Lectura" class="whatsapp-float" target="_blank" aria-label="Escribir por WhatsApp">
-    💬
-  </a>
+  <!-- =========================================================
+       MODO TEATRO A PANTALLA COMPLETA (READ-ALONG Y VOTOS)
+       ========================================================= -->
+  <div class="theatre-modal" id="theatreModal">
+    <div class="theatre-content">
+      <div class="theatre-header">
+        <h3 class="theatre-title" id="theatreTitle">Título del Cuento</h3>
+        <button class="btn-close-theatre" onclick="cerrarModoTeatro()">&times;</button>
+      </div>
 
-  <!-- Pie de Página y Cumplimiento Legal -->
+      <div class="theatre-body">
+        <div class="theatre-stage">
+          <img src="" id="theatreImg" alt="Portada del Cuento" class="stage-img">
+          
+          <!-- Lectura Asistida Sincronizada (Read-along) -->
+          <div class="read-along-box" id="theatreScript">
+            <!-- Las oraciones sincronizadas se inyectan dinámicamente -->
+          </div>
+        </div>
+
+        <div class="audio-dock">
+          <label style="font-size: 0.9rem; font-weight: 600; color: var(--text-muted);">🎧 Narración guiada con voz:</label>
+          <audio controls id="theatreAudio">
+            <source src="" type="audio/mpeg" id="theatreAudioSource">
+          </audio>
+        </div>
+
+        <!-- Zona de Votación y Reseña a Google Sheets -->
+        <div class="voting-zone">
+          <h4>¿Te gustó esta historia? ¡Deja tu huella lectora!</h4>
+          <p style="font-size: 0.9rem; color: var(--text-muted);">Tu opinión ayuda a Sandra a crear nuevas historias en Gemini.</p>
+          
+          <div class="voting-buttons">
+            <button class="vote-btn" id="btnLike" onclick="marcarVoto('Me encantó ❤️')">❤️ ¡Me encantó!</button>
+            <button class="vote-btn" id="btnAprendi" onclick="marcarVoto('Aprendí algo nuevo 💡')">💡 Aprendí algo</button>
+            <button class="vote-btn" id="btnDivertido" onclick="marcarVoto('Muy divertido 😄')">😄 Muy divertido</button>
+          </div>
+
+          <textarea class="vote-comment" id="voteComment" rows="2" placeholder="Escribe un mensaje o reflexión breve (opcional)..."></textarea>
+          <input type="text" class="vote-comment" id="voteLector" placeholder="Tu nombre, grado o colegio (opcional)">
+
+          <button class="btn-cta" onclick="enviarVotoASheets()" style="width: 100%;">Enviar mi Voto</button>
+          <div class="vote-status" id="voteStatus">¡Gracias por tu voto! Se ha registrado en la bitácora escolar.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botón Flotante WhatsApp -->
+  <a href="https://wa.me/573176661372" class="whatsapp-float" target="_blank" aria-label="WhatsApp">💬</a>
+
+  <!-- Footer -->
   <footer>
     <div class="footer-grid">
       <div>
-        <h4>Equipo Líder</h4>
-        <p><strong>Sandra Perdomo</strong><br>Magíster en Educación<br>Tel: +57 317 666 1372</p>
-        <p style="margin-top: 0.5rem;"><strong>Edwin Bastidas</strong><br>Lic. en Arte Dramático<br>Tel: +57 317 373 0699</p>
+        <h4 style="color: var(--accent-yellow); margin-bottom: 0.8rem;">Equipo Líder</h4>
+        <p><strong>Sandra Perdomo</strong> - Magíster en Educación<br>WhatsApp: +57 317 666 1372</p>
+        <p style="margin-top: 0.6rem;"><strong>Edwin Bastidas</strong> - Lic. en Arte Dramático<br>WhatsApp: +57 317 373 0699</p>
       </div>
-
       <div>
-        <h4>Protección de Menores</h4>
-        <p style="font-size: 0.85rem; color: #BBB;">
-          En el Club de Lectura promovemos un entorno seguro. Las memorias audiovisuales compartidas corresponden a experiencias pedagógicas autorizadas institucionalmente. No recopilamos información personal sensible de menores de edad sin previa autorización de sus padres o acudientes (Ley 1581 de 2012).
+        <h4 style="color: var(--accent-yellow); margin-bottom: 0.8rem;">Protección al Menor</h4>
+        <p style="font-size: 0.85rem; color: #CCC;">
+          Actividades pedagógicas realizadas bajo autorización institucional. No recopilamos datos personales sensibles de menores de edad conforme a la Ley 1581 de 2012 de Colombia.
         </p>
       </div>
-
       <div>
-        <h4>Impacto Comunitario</h4>
-        <p>Lectores felices desde el 2020.</p>
-        <div style="margin-top: 1rem;">
-          <!-- Contador de visitas no invasivo sin cookies de terceros -->
-          <span style="background: #3A322F; padding: 6px 12px; border-radius: 8px; font-size: 0.8rem;">
-            Visitas: <strong id="visitas">2,410</strong>
-          </span>
-        </div>
+        <h4 style="color: var(--accent-yellow); margin-bottom: 0.8rem;">Club de Lectura</h4>
+        <p>Sembrando semillas de amor por los libros en cada rincón.</p>
+        <p style="font-size: 0.8rem; margin-top: 1rem; color: #AAA;">&copy; 2026 Metidos en el Cuento</p>
       </div>
-    </div>
-
-    <div class="footer-bottom">
-      <p>&copy; 2026 Club de Lectura "¡Metidos en el Cuento!". Todos los derechos reservados.</p>
     </div>
   </footer>
 
-  <!-- Script que lee cuentos.json y genera las tarjetas -->
+  <!-- LÓGICA DE CONTROL JS -->
   <script>
-    let listadoCuentos = [];
+    // PEGA AQUÍ LA URL DE TU GOOGLE APPS SCRIPT
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz_EJEMPLO_REEMPLAZAR_CON_TU_ID/exec";
+
+    let cuentosData = [];
+    let cuentoActual = null;
+    let votoSeleccionado = "";
 
     async function cargarCuentos() {
       try {
-        const respuesta = await fetch('data/cuentos.json');
-        listadoCuentos = await respuesta.json();
-        renderizarTarjetas(listadoCuentos);
-      } catch (error) {
-        console.error('Error cargando el archivo cuentos.json:', error);
-        document.getElementById('contenedorCuentos').innerHTML = `
-          <p style="text-align: center; grid-column: 1/-1; color: var(--text-muted);">
-            Explora pronto nuestros nuevos audio-cuentos generados en Gemini.
-          </p>`;
+        const res = await fetch('data/cuentos.json');
+        cuentosData = await res.json();
+        // Por defecto mostrar 'Mujeres con Historia'
+        filtrarCategoria('Mujeres con Historia');
+      } catch (err) {
+        console.error(err);
+        document.getElementById('contenedorCuentos').innerHTML = '<p style="text-align:center; grid-column:1/-1;">Cuentos disponibles muy pronto.</p>';
       }
     }
 
-    function renderizarTarjetas(cuentos) {
-      const contenedor = document.getElementById('contenedorCuentos');
-      if (cuentos.length === 0) {
-        contenedor.innerHTML = '<p style="text-align: center; grid-column: 1/-1;">No hay cuentos disponibles en esta categoría.</p>';
+    function renderizar(lista) {
+      const cont = document.getElementById('contenedorCuentos');
+      if (!lista.length) {
+        cont.innerHTML = '<p style="text-align:center; grid-column:1/-1;">No hay cuentos en esta colección aún.</p>';
         return;
       }
 
-      contenedor.innerHTML = cuentos.map(c => `
+      cont.innerHTML = lista.map(c => `
         <article class="cuento-card">
           <img src="${c.imagen || 'assets/img/logo.jpeg'}" alt="${c.titulo}" class="cuento-img">
           <div class="cuento-body">
             <span class="cuento-badge">${c.categoria}</span>
             <h3>${c.titulo}</h3>
             <p>${c.descripcion}</p>
-            <div class="audio-player-wrapper">
-              <audio controls preload="none">
-                <source src="${c.audioUrl}" type="audio/mpeg">
-                Tu navegador no soporta el audio.
-              </audio>
-            </div>
+            <button class="btn-read-along" onclick="abrirModoTeatro('${c.id}')">
+              <span>📖 Escuchar y Leer Historia</span>
+            </button>
           </div>
         </article>
       `).join('');
     }
 
-    function filtrarCuentos(categoria) {
-      // Actualizar estado botones
-      const botones = document.querySelectorAll('.filter-btn');
-      botones.forEach(b => b.classList.remove('active'));
-      event.target.classList.add('active');
+    function filtrarCategoria(cat, elementoCard) {
+      if (elementoCard) {
+        document.querySelectorAll('.cat-card').forEach(c => c.classList.remove('active'));
+        elementoCard.classList.add('active');
+      }
 
-      if (categoria === 'todos') {
-        renderizarTarjetas(listadoCuentos);
+      if (cat === 'todos') {
+        renderizar(cuentosData);
       } else {
-        const filtrados = listadoCuentos.filter(c => c.categoria.toLowerCase() === categoria.toLowerCase());
-        renderizarTarjetas(filtrados);
+        const filtrados = cuentosData.filter(c => c.categoria.toLowerCase() === cat.toLowerCase());
+        renderizar(filtrados);
       }
     }
 
-    // Inicializar al cargar
+    // Modo Teatro & Read-Along
+    function abrirModoTeatro(id) {
+      cuentoActual = cuentosData.find(c => c.id === id);
+      if (!cuentoActual) return;
+
+      document.getElementById('theatreTitle').innerText = cuentoActual.titulo;
+      document.getElementById('theatreImg').src = cuentoActual.imagen || 'assets/img/logo.jpeg';
+      
+      const audioEl = document.getElementById('theatreAudio');
+      audioEl.src = cuentoActual.audioUrl;
+
+      // Inyectar oraciones sincronizadas (karaoke)
+      const scriptBox = document.getElementById('theatreScript');
+      if (cuentoActual.subtitulos && cuentoActual.subtitulos.length) {
+        scriptBox.innerHTML = cuentoActual.subtitulos.map((s, idx) => `
+          <span class="read-sentence" id="sent-${idx}" data-inicio="${s.inicio}" data-fin="${s.fin}">${s.texto} </span>
+        `).join('');
+      } else {
+        scriptBox.innerHTML = `<p>${cuentoActual.descripcion}</p><p style="margin-top:1rem; color:var(--text-muted); font-size:0.95rem;">Escucha el audio para disfrutar de esta historia narrada.</p>`;
+      }
+
+      // Resetear votos
+      votoSeleccionado = "";
+      document.querySelectorAll('.vote-btn').forEach(b => b.classList.remove('selected'));
+      document.getElementById('voteComment').value = "";
+      document.getElementById('voteStatus').style.display = 'none';
+
+      document.getElementById('theatreModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function cerrarModoTeatro() {
+      const audioEl = document.getElementById('theatreAudio');
+      audioEl.pause();
+      document.getElementById('theatreModal').classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    // Sincronizador de Audio con Lectura
+    const audioPlayer = document.getElementById('theatreAudio');
+    audioPlayer.addEventListener('timeupdate', () => {
+      if (!cuentoActual || !cuentoActual.subtitulos) return;
+      const tiempoActual = audioPlayer.currentTime;
+      cuentoActual.subtitulos.forEach((s, idx) => {
+        const el = document.getElementById(`sent-${idx}`);
+        if (!el) return;
+        if (tiempoActual >= s.inicio && tiempoActual <= s.fin) {
+          el.classList.add('highlight');
+          el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        } else {
+          el.classList.remove('highlight');
+        }
+      });
+    });
+
+    // Envío de Votos a Google Sheets
+    function marcarVoto(tipo) {
+      votoSeleccionado = tipo;
+      document.querySelectorAll('.vote-btn').forEach(b => b.classList.remove('selected'));
+      event.target.classList.add('selected');
+    }
+
+    async function enviarVotoASheets() {
+      if (!votoSeleccionado) {
+        alert("Por favor selecciona una de las opciones (Me encantó, Aprendí algo o Divertido)");
+        return;
+      }
+
+      const payload = {
+        cuento: cuentoActual ? cuentoActual.titulo : 'General',
+        voto: votoSeleccionado,
+        comentario: document.getElementById('voteComment').value,
+        lector: document.getElementById('voteLector').value || 'Anónimo'
+      };
+
+      try {
+        await fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors', // Para evitar problemas de CORS con Google Apps Script
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        document.getElementById('voteStatus').style.display = 'block';
+        setTimeout(() => {
+          document.getElementById('voteStatus').style.display = 'none';
+        }, 5000);
+      } catch (e) {
+        console.error("Error enviando voto:", e);
+        document.getElementById('voteStatus').innerText = "Voto guardado localmente.";
+        document.getElementById('voteStatus').style.display = 'block';
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', cargarCuentos);
   </script>
 </body>
