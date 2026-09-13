@@ -1,18 +1,29 @@
 [
   {
-    "id": "cuento-01",
-    "titulo": "Policarpa: La voz de la libertad",
+    "id": "alicia-petare",
+    "titulo": "Alicia: El Corazón Guerrero de Petare",
     "categoria": "Mujeres con Historia",
-    "descripcion": "Un relato infantil sobre la valentía de Policarpa Salavarrieta y su mensaje de igualdad y educación para todos.",
+    "descripcion": "La conmovedora historia de Alicia, una niña valiente que descubrió cómo las palabras y la solidaridad pueden transformar todo un barrio.",
     "imagen": "assets/img/logo.jpeg",
-    "audioUrl": "assets/audio/policarpa.mp3"
+    "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+    "subtitulos": [
+      { "inicio": 0, "fin": 4, "texto": "Había una vez en las colinas de Petare..." },
+      { "inicio": 4, "fin": 9, "texto": "una niña de ojos brillantes llamada Alicia." },
+      { "inicio": 9, "fin": 15, "texto": "Ella no tenía espadas ni capas mágicas, pero guardaba en su pecho un corazón invencible." },
+      { "inicio": 15, "fin": 22, "texto": "Cada tarde, Alicia reunía a sus amigos para compartir relatos que espantaban el miedo y encendían la esperanza." }
+    ]
   },
   {
-    "id": "cuento-02",
-    "titulo": "El león que aprendió a escuchar",
-    "categoria": "Crecimiento Personal",
-    "descripcion": "Una aventura donde nuestro león descubre el valor de la empatía y la paciencia al compartir historias.",
+    "id": "policarpa-libertad",
+    "titulo": "Policarpa: La voz de la libertad",
+    "categoria": "Mujeres con Historia",
+    "descripcion": "Un relato infantil sobre la valentía de Policarpa Salavarrieta y su mensaje de igualdad y educación.",
     "imagen": "assets/img/logo.jpeg",
-    "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+    "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+    "subtitulos": [
+      { "inicio": 0, "fin": 5, "texto": "En una época donde las niñas no podían ir a la escuela..." },
+      { "inicio": 5, "fin": 11, "texto": "la joven Pola aprendió a descifrar las letras en secreto." },
+      { "inicio": 11, "fin": 18, "texto": "Descubrió que el saber es la mayor fuerza de libertad que existe." }
+    ]
   }
 ]
