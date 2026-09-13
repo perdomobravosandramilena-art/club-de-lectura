@@ -1,29 +1,47 @@
 [
   {
     "id": "alicia-petare",
-    "titulo": "Alicia: El Corazón Guerrero de Petare",
+    "titulo": "Alicia: El Corazón Invencible de Petare",
     "categoria": "Mujeres con Historia",
-    "descripcion": "La conmovedora historia de Alicia, una niña valiente que descubrió cómo las palabras y la solidaridad pueden transformar todo un barrio.",
+    "autores": "Celenys Carmona y Dahixsonth Brito",
+    "descripcion": "La historia real y conmovedora de Alicia, una niña que junto a su abuela Vicenta aprendió que el amor, el trabajo incansable y la sazón de la cocina vencen cualquier obstáculo.",
     "imagen": "assets/img/logo.jpeg",
-    "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
     "subtitulos": [
-      { "inicio": 0, "fin": 4, "texto": "Había una vez en las colinas de Petare..." },
-      { "inicio": 4, "fin": 9, "texto": "una niña de ojos brillantes llamada Alicia." },
-      { "inicio": 9, "fin": 15, "texto": "Ella no tenía espadas ni capas mágicas, pero guardaba en su pecho un corazón invencible." },
-      { "inicio": 15, "fin": 22, "texto": "Cada tarde, Alicia reunía a sus amigos para compartir relatos que espantaban el miedo y encendían la esperanza." }
-    ]
-  },
-  {
-    "id": "policarpa-libertad",
-    "titulo": "Policarpa: La voz de la libertad",
-    "categoria": "Mujeres con Historia",
-    "descripcion": "Un relato infantil sobre la valentía de Policarpa Salavarrieta y su mensaje de igualdad y educación.",
-    "imagen": "assets/img/logo.jpeg",
-    "audioUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-    "subtitulos": [
-      { "inicio": 0, "fin": 5, "texto": "En una época donde las niñas no podían ir a la escuela..." },
-      { "inicio": 5, "fin": 11, "texto": "la joven Pola aprendió a descifrar las letras en secreto." },
-      { "inicio": 11, "fin": 18, "texto": "Descubrió que el saber es la mayor fuerza de libertad que existe." }
+      {
+        "inicio": 0,
+        "fin": 7,
+        "texto": "En las coloridas colinas de Petare nació en 1982 una niña llena de luz llamada Alicia."
+      },
+      {
+        "inicio": 7,
+        "fin": 14,
+        "texto": "De pequeña le fascinaba jugar a la pelota de goma y soñaba con ser una gran profesional para sacar adelante a su familia."
+      },
+      {
+        "inicio": 14,
+        "fin": 22,
+        "texto": "Fue criada por su sabia abuela Vicenta y sus tías, quienes le enseñaron el secreto de la vida: jamás rendirse ante la dificultad."
+      },
+      {
+        "inicio": 22,
+        "fin": 30,
+        "texto": "Aunque solo pudo estudiar hasta primer grado por falta de recursos, sus manos aprendieron el arte de cocinar con un sazón que alegraba los corazones."
+      },
+      {
+        "inicio": 30,
+        "fin": 38,
+        "texto": "Como hermana mayor, cuidó con paciencia y cariño de sus nueve hermanos, convirtiéndose en el sostén de su hogar."
+      },
+      {
+        "inicio": 38,
+        "fin": 46,
+        "texto": "Tiempo después el amor la llevó a Maturín, donde con esfuerzo inquebrantable formó a sus tres amadas hijas."
+      },
+      {
+        "inicio": 46,
+        "fin": 55,
+        "texto": "Alicia es una verdadera mujer guerrera, cuyo ejemplo nos enseña que el amor, la bondad y el trabajo diario son las huellas más hermosas que podemos dejar."
+      }
     ]
   }
 ]
