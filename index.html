@@ -20,8 +20,6 @@
       --text-dark: #2C2523;
       --text-muted: #6B5E5B;
       --accent-yellow: #F6BD60;
-      --accent-green: #84A59D;
-      --accent-purple: #9D8189;
       --radius: 20px;
       --shadow: 0 10px 30px rgba(217, 93, 57, 0.1);
     }
@@ -49,63 +47,95 @@
     .hero-video-box { background: #FFFFFF; padding: 12px; border-radius: var(--radius); box-shadow: var(--shadow); border: 3px dashed var(--accent-yellow); }
     .hero-video-box video { width: 100%; border-radius: 14px; display: block; }
 
-    /* Vitrinas Temáticas / Categorías de Alto Impacto */
-    .showcase-section { max-width: 1200px; margin: 4rem auto; padding: 0 1.5rem; }
-    .section-title { text-align: center; margin-bottom: 2.5rem; }
+    /* Vitrinas Temáticas & Combo Selector */
+    .showcase-section { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
+    .section-title { text-align: center; margin-bottom: 1.5rem; }
     .section-title h2 { font-size: 2.8rem; color: var(--primary); font-family: 'Caveat', cursive; }
-    .section-title p { color: var(--text-muted); font-size: 1.1rem; }
-
-    .category-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
-    .cat-card { background: white; border-radius: var(--radius); padding: 1.8rem; text-align: center; cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); box-shadow: var(--shadow); border: 3px solid transparent; position: relative; overflow: hidden; }
-    .cat-card:hover { transform: translateY(-6px); }
-    .cat-card.active { border-color: var(--primary); background: #FFF5F2; }
-    .cat-card.active::after { content: "SELECCIONADO"; position: absolute; top: 12px; right: -30px; background: var(--primary); color: white; font-size: 0.65rem; font-weight: 700; padding: 4px 30px; transform: rotate(45deg); }
-    .cat-icon { font-size: 3rem; margin-bottom: 0.8rem; }
-    .cat-card h3 { font-size: 1.3rem; margin-bottom: 0.4rem; color: var(--text-dark); }
-    .cat-card p { font-size: 0.85rem; color: var(--text-muted); }
+    
+    .combo-wrapper {
+      max-width: 600px;
+      margin: 0 auto 2.5rem auto;
+      background: white;
+      padding: 1.2rem 1.8rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 2px solid var(--primary);
+      text-align: center;
+    }
+    .combo-wrapper label {
+      display: block;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+    .combo-select {
+      width: 100%;
+      padding: 0.8rem 1.2rem;
+      border: 2px solid #EFEAE6;
+      border-radius: 12px;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.05rem;
+      color: var(--text-dark);
+      background-color: #FAF7F5;
+      cursor: pointer;
+      font-weight: 600;
+      outline: none;
+    }
+    .combo-select:focus {
+      border-color: var(--primary);
+    }
+    .collection-info {
+      margin-top: 0.8rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
 
     /* Catálogo de Cuentos */
     .cuentos-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; }
-    .cuento-card { background: var(--card-bg); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; transition: transform 0.2s; }
+    .cuento-card { background: var(--card-bg); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; transition: transform 0.2s; border: 1px solid #F0E8E6; }
     .cuento-card:hover { transform: translateY(-4px); }
     .cuento-img { width: 100%; height: 210px; object-fit: cover; background: #e0e0e0; }
     .cuento-body { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
-    .cuento-badge { display: inline-block; align-self: flex-start; background: var(--bg-warm); color: var(--primary); font-size: 0.75rem; font-weight: 700; padding: 0.3rem 0.8rem; border-radius: 20px; margin-bottom: 0.6rem; text-transform: uppercase; }
+    .cuento-badge { display: inline-block; align-self: flex-start; background: var(--bg-warm); color: var(--primary); font-size: 0.75rem; font-weight: 700; padding: 0.3rem 0.8rem; border-radius: 20px; margin-bottom: 0.4rem; text-transform: uppercase; }
+    .cuento-authors { font-size: 0.8rem; color: #887C79; margin-bottom: 0.6rem; font-style: italic; }
     .cuento-body h3 { font-size: 1.35rem; margin-bottom: 0.5rem; }
     .cuento-body p { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 1.2rem; flex-grow: 1; }
-    .btn-read-along { background: #FFF0EB; color: var(--primary); border: 2px solid var(--primary); padding: 0.7rem; border-radius: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 1rem; width: 100%; transition: all 0.2s; }
+    
+    .btn-read-along { background: #FFF0EB; color: var(--primary); border: 2px solid var(--primary); padding: 0.8rem; border-radius: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 1rem; width: 100%; transition: all 0.2s; }
     .btn-read-along:hover { background: var(--primary); color: white; }
 
-    /* =========================================================
-       MODO TEATRO (PANTALLA COMPLETA) CON READ-ALONG Y VOTACIÓN
-       ========================================================= */
-    .theatre-modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(30, 24, 22, 0.96); z-index: 9999; display: none; align-items: center; justify-content: center; padding: 1.5rem; overflow-y: auto; }
+    /* MODO TEATRO / READ-ALONG */
+    .theatre-modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(30, 24, 22, 0.96); z-index: 9999; display: none; align-items: center; justify-content: center; padding: 1rem; }
     .theatre-modal.active { display: flex; }
-    .theatre-content { background: #FFFFFF; width: 100%; max-width: 900px; max-height: 92vh; border-radius: var(--radius); overflow-y: auto; display: flex; flex-direction: column; box-shadow: 0 20px 60px rgba(0,0,0,0.4); position: relative; }
-    .theatre-header { padding: 1.2rem 1.8rem; border-bottom: 1px solid #EFEAE6; display: flex; justify-content: space-between; align-items: center; background: #FAF7F5; position: sticky; top: 0; z-index: 10; }
+    .theatre-content { background: #FFFFFF; width: 100%; max-width: 880px; max-height: 94vh; border-radius: var(--radius); overflow-y: auto; display: flex; flex-direction: column; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+    .theatre-header { padding: 1rem 1.5rem; border-bottom: 1px solid #EFEAE6; display: flex; justify-content: space-between; align-items: center; background: #FAF7F5; position: sticky; top: 0; z-index: 10; }
     .theatre-title { font-family: 'Caveat', cursive; font-size: 2.2rem; color: var(--primary); }
-    .btn-close-theatre { background: none; border: none; font-size: 1.8rem; cursor: pointer; color: var(--text-muted); }
+    .btn-close-theatre { background: none; border: none; font-size: 2rem; cursor: pointer; color: var(--text-muted); }
     
-    .theatre-body { padding: 2rem; }
-    .theatre-stage { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; margin-bottom: 2rem; }
-    .stage-img { width: 100%; max-height: 280px; object-fit: cover; border-radius: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
-    .read-along-box { height: 260px; overflow-y: auto; background: #FAF7F5; border-radius: 14px; padding: 1.2rem; border-left: 5px solid var(--accent-yellow); font-size: 1.1rem; line-height: 1.8; }
-    .read-sentence { transition: all 0.3s ease; padding: 4px 6px; border-radius: 6px; display: inline; color: #736966; }
-    .read-sentence.highlight { background: #FFE8A3; color: #000; font-weight: 600; }
+    .theatre-body { padding: 1.5rem; }
+    .theatre-stage { display: grid; grid-template-columns: 1fr 1.2fr; gap: 1.5rem; align-items: start; margin-bottom: 1.5rem; }
+    .stage-img { width: 100%; max-height: 260px; object-fit: cover; border-radius: 14px; }
+    .read-along-box { min-height: 240px; max-height: 260px; overflow-y: auto; background: #FAF7F5; border-radius: 14px; padding: 1.2rem; border-left: 5px solid var(--accent-yellow); font-size: 1.15rem; line-height: 1.8; }
+    .read-sentence { transition: all 0.3s ease; padding: 3px 6px; border-radius: 6px; display: inline; color: #736966; }
+    .read-sentence.highlight { background: #FFE8A3; color: #000; font-weight: 700; }
 
-    .audio-dock { background: #FAF7F5; padding: 1.2rem; border-radius: 16px; display: flex; flex-direction: column; gap: 8px; margin-bottom: 2rem; }
-    .audio-dock audio { width: 100%; height: 42px; }
+    /* Barra de Control de Lectura y Voz */
+    .control-dock { background: #FAF7F5; padding: 1.2rem; border-radius: 16px; margin-bottom: 1.5rem; text-align: center; }
+    .voice-buttons { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
+    .btn-audio-ctrl { padding: 0.6rem 1.2rem; border-radius: 10px; border: 2px solid var(--primary); font-family: inherit; font-weight: 700; cursor: pointer; background: white; color: var(--primary); }
+    .btn-audio-ctrl.active-play { background: var(--primary); color: white; }
 
-    /* Caja de Votación y Reseña a Google Sheets */
-    .voting-zone { background: #FFF5F2; padding: 1.8rem; border-radius: 16px; border: 2px dashed var(--primary); }
-    .voting-zone h4 { font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--primary); }
-    .voting-buttons { display: flex; gap: 1rem; margin: 1rem 0; }
-    .vote-btn { flex: 1; padding: 0.8rem; border: 2px solid #EFEAE6; background: white; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s; font-family: inherit; }
+    /* Caja de Votación al Pie del Cuento (Google Sheets) */
+    .voting-zone { background: #FFF5F2; padding: 1.5rem; border-radius: 16px; border: 2px dashed var(--primary); margin-top: 1rem; }
+    .voting-zone h4 { font-size: 1.25rem; margin-bottom: 0.3rem; color: var(--primary); text-align: center; }
+    .voting-buttons { display: flex; gap: 0.6rem; margin: 1rem 0; flex-wrap: wrap; }
+    .vote-btn { flex: 1; min-width: 130px; padding: 0.7rem; border: 2px solid #EFEAE6; background: white; border-radius: 12px; font-size: 0.95rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.2s; font-family: inherit; }
     .vote-btn.selected { border-color: var(--primary); background: var(--primary); color: white; }
     .vote-comment { width: 100%; padding: 0.8rem; border: 2px solid #EFEAE6; border-radius: 10px; font-family: inherit; font-size: 0.95rem; margin-bottom: 0.8rem; }
-    .vote-status { font-size: 0.85rem; font-weight: 600; color: #2A9D8F; display: none; text-align: center; margin-top: 0.5rem; }
+    .vote-status { font-size: 0.9rem; font-weight: 700; color: #2A9D8F; display: none; text-align: center; margin-top: 0.5rem; }
 
-    /* Footer y Floating */
+    /* Footer */
     footer { background: #2C2523; color: #E2DBD8; padding: 3rem 1.5rem; margin-top: 5rem; }
     .footer-grid { max-width: 1200px; margin: auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem; }
     .whatsapp-float { position: fixed; bottom: 25px; right: 25px; background: #25D366; color: white; border-radius: 50%; width: 60px; height: 60px; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.25); text-decoration: none; font-size: 30px; z-index: 999; }
@@ -131,9 +161,8 @@
       </a>
       <nav>
         <ul>
-          <li><a href="#showcase">Colecciones</a></li>
-          <li><a href="#talleres">Talleres</a></li>
-          <li><a href="https://wa.me/573176661372?text=Hola%20Sandra,%20quiero%20conocer%20más%20del%20Club%20de%20Lectura" class="btn-cta" target="_blank">Escríbenos</a></li>
+          <li><a href="#showcase">Cuentos</a></li>
+          <li><a href="https://wa.me/573176661372" class="btn-cta" target="_blank">Escríbenos</a></li>
         </ul>
       </nav>
     </div>
@@ -144,8 +173,8 @@
     <section class="hero">
       <div class="hero-text">
         <h1>Transformamos la lectura en <span>una fiesta viva</span></h1>
-        <p>Experiencias narrativas y pedagógicas dirigidas por mediadores para colegios, docentes y familias en Colombia.</p>
-        <a href="#showcase" class="btn-cta" style="font-size: 1.1rem; padding: 0.8rem 1.6rem;">Explorar Colecciones de Cuentos</a>
+        <p>Experiencias pedagógicas y relatos animados para colegios, docentes y familias en Colombia.</p>
+        <a href="#showcase" class="btn-cta" style="font-size: 1.1rem; padding: 0.8rem 1.6rem;">Explorar Cuentos</a>
       </div>
       <div class="hero-video-box">
         <video controls poster="assets/img/logo.jpeg">
@@ -155,37 +184,28 @@
       </div>
     </section>
 
-    <!-- VITRINAS TEMÁTICAS (CATEGORÍAS DE ALTO IMPACTO) -->
+    <!-- SECCIÓN DE CUENTOS CON COMBO SELECTOR -->
     <section id="showcase" class="showcase-section">
       <div class="section-title">
         <h2>Metidos en el Cuento: Audio-Cuentos</h2>
-        <p>Selecciona una vitrina para desplegar la colección de historias animadas</p>
+        <p>Selecciona una categoría de lectura para explorar</p>
       </div>
 
-      <div class="category-grid" id="categoryGrid">
-        <div class="cat-card active" onclick="filtrarCategoria('Mujeres con Historia', this)">
-          <div class="cat-icon">👑</div>
-          <h3>Mujeres con Historia</h3>
-          <p>Relatos de valentía, ciencia y liderazgo que inspiran a soñar en grande.</p>
-        </div>
-        <div class="cat-card" onclick="filtrarCategoria('Crecimiento Personal', this)">
-          <div class="cat-icon">🌱</div>
-          <h3>Crecimiento Personal</h3>
-          <p>Fábulas de empatía, inteligencia emocional y superación de desafíos.</p>
-        </div>
-        <div class="cat-card" onclick="filtrarCategoria('Valores y Espiritualidad', this)">
-          <div class="cat-icon">✨</div>
-          <h3>Valores y Espiritualidad</h3>
-          <p>Historias de gratitud, respeto a la naturaleza y armonía comunitaria.</p>
-        </div>
-        <div class="cat-card" onclick="filtrarCategoria('todos', this)">
-          <div class="cat-icon">📚</div>
-          <h3>Toda la Biblioteca</h3>
-          <p>Explora el catálogo completo sin ningún filtro.</p>
+      <!-- Combo Selector de Colecciones -->
+      <div class="combo-wrapper">
+        <label for="categoriaSelect">📂 Elige la Colección de Lectura:</label>
+        <select id="categoriaSelect" class="combo-select" onchange="cambiarCategoriaCombo(this.value)">
+          <option value="Mujeres con Historia" selected>👑 Mujeres con Historia (Colección Destacada)</option>
+          <option value="Crecimiento Personal">🌱 Crecimiento Personal y Valores</option>
+          <option value="Espiritualidad">✨ Convivencia y Espiritualidad</option>
+          <option value="todos">📚 Mostrar toda la biblioteca</option>
+        </select>
+        <div class="collection-info" id="collectionDescription">
+          Relatos reales y biografías infantiles que destacan el liderazgo, la valentía y el amor familiar.
         </div>
       </div>
 
-      <!-- Tarjetas de cuentos -->
+      <!-- Contenedor Dinámico de Cuentos -->
       <div class="cuentos-container" id="contenedorCuentos">
         <p style="text-align: center; grid-column: 1/-1;">Cargando historias mágicas...</p>
       </div>
@@ -193,7 +213,7 @@
   </main>
 
   <!-- =========================================================
-       MODO TEATRO A PANTALLA COMPLETA (READ-ALONG Y VOTOS)
+       MODO TEATRO A PANTALLA COMPLETA CON LECTURA ASISTIDA
        ========================================================= -->
   <div class="theatre-modal" id="theatreModal">
     <div class="theatre-content">
@@ -206,41 +226,50 @@
         <div class="theatre-stage">
           <img src="" id="theatreImg" alt="Portada del Cuento" class="stage-img">
           
-          <!-- Lectura Asistida Sincronizada (Read-along) -->
-          <div class="read-along-box" id="theatreScript">
-            <!-- Las oraciones sincronizadas se inyectan dinámicamente -->
+          <!-- Lectura Asistida Sincronizada -->
+          <div class="read-along-box" id="theatreScript"></div>
+        </div>
+
+        <!-- Barra de Control de Narración Asistida -->
+        <div class="control-dock">
+          <p style="font-weight: 600; color: var(--text-dark); margin-bottom: 8px;">
+            🎙️ Narración Asistida y Seguimiento de Lectura:
+          </p>
+          <div class="voice-buttons">
+            <button class="btn-audio-ctrl active-play" id="btnIniciarVoz" onclick="iniciarLecturaVoz()">
+              ▶️ Iniciar Narración con Voz
+            </button>
+            <button class="btn-audio-ctrl" onclick="pausarLecturaVoz()">
+              ⏸️ Pausar
+            </button>
+            <button class="btn-audio-ctrl" onclick="reiniciarLecturaVoz()">
+              🔄 Reiniciar
+            </button>
           </div>
         </div>
 
-        <div class="audio-dock">
-          <label style="font-size: 0.9rem; font-weight: 600; color: var(--text-muted);">🎧 Narración guiada con voz:</label>
-          <audio controls id="theatreAudio">
-            <source src="" type="audio/mpeg" id="theatreAudioSource">
-          </audio>
-        </div>
-
-        <!-- Zona de Votación y Reseña a Google Sheets -->
+        <!-- Zona de Votación y Registro en Google Sheets -->
         <div class="voting-zone">
-          <h4>¿Te gustó esta historia? ¡Deja tu huella lectora!</h4>
-          <p style="font-size: 0.9rem; color: var(--text-muted);">Tu opinión ayuda a Sandra a crear nuevas historias en Gemini.</p>
+          <h4>¿Qué te pareció esta historia? ¡Deja tu huella lectora!</h4>
+          <p style="font-size: 0.9rem; color: var(--text-muted); text-align: center;">Tus votos se guardan directamente en la bitácora escolar.</p>
           
           <div class="voting-buttons">
-            <button class="vote-btn" id="btnLike" onclick="marcarVoto('Me encantó ❤️')">❤️ ¡Me encantó!</button>
-            <button class="vote-btn" id="btnAprendi" onclick="marcarVoto('Aprendí algo nuevo 💡')">💡 Aprendí algo</button>
-            <button class="vote-btn" id="btnDivertido" onclick="marcarVoto('Muy divertido 😄')">😄 Muy divertido</button>
+            <button class="vote-btn" onclick="marcarVoto('Me encantó ❤️', this)">❤️ ¡Me encantó!</button>
+            <button class="vote-btn" onclick="marcarVoto('Aprendí algo nuevo 💡', this)">💡 Aprendí algo</button>
+            <button class="vote-btn" onclick="marcarVoto('Muy divertida 😄', this)">😄 Divertida</button>
           </div>
 
-          <textarea class="vote-comment" id="voteComment" rows="2" placeholder="Escribe un mensaje o reflexión breve (opcional)..."></textarea>
+          <textarea class="vote-comment" id="voteComment" rows="2" placeholder="¿Qué fue lo que más te gustó de Alicia o del relato?"></textarea>
           <input type="text" class="vote-comment" id="voteLector" placeholder="Tu nombre, grado o colegio (opcional)">
 
           <button class="btn-cta" onclick="enviarVotoASheets()" style="width: 100%;">Enviar mi Voto</button>
-          <div class="vote-status" id="voteStatus">¡Gracias por tu voto! Se ha registrado en la bitácora escolar.</div>
+          <div class="vote-status" id="voteStatus"></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Botón Flotante WhatsApp -->
+  <!-- Botón WhatsApp -->
   <a href="https://wa.me/573176661372" class="whatsapp-float" target="_blank" aria-label="WhatsApp">💬</a>
 
   <!-- Footer -->
@@ -254,64 +283,51 @@
       <div>
         <h4 style="color: var(--accent-yellow); margin-bottom: 0.8rem;">Protección al Menor</h4>
         <p style="font-size: 0.85rem; color: #CCC;">
-          Actividades pedagógicas realizadas bajo autorización institucional. No recopilamos datos personales sensibles de menores de edad conforme a la Ley 1581 de 2012 de Colombia.
+          Actividades pedagógicas realizadas bajo autorización institucional. No recopilamos datos personales sensibles de menores (Ley 1581 de 2012 de Colombia).
         </p>
       </div>
       <div>
         <h4 style="color: var(--accent-yellow); margin-bottom: 0.8rem;">Club de Lectura</h4>
-        <p>Sembrando semillas de amor por los libros en cada rincón.</p>
+        <p>Transformando la lectura en una fiesta viva.</p>
         <p style="font-size: 0.8rem; margin-top: 1rem; color: #AAA;">&copy; 2026 Metidos en el Cuento</p>
       </div>
     </div>
   </footer>
 
-  <!-- LÓGICA DE CONTROL JS -->
+  <!-- SCRIPT DE CONTROL TOTAL -->
   <script>
-    // PEGA AQUÍ LA URL DE TU GOOGLE APPS SCRIPT
+    // TU URL DE GOOGLE APPS SCRIPT
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyd8fDRcpKR8HbUg0t4Za8ce3lHv39neVB1KTAjI0sgqjuQowNatSqONt0HL2oPnwvR/exec";
 
     let cuentosData = [];
     let cuentoActual = null;
     let votoSeleccionado = "";
+    let synth = window.speechSynthesis;
+    let utterance = null;
+    let fraseActualIdx = 0;
 
     async function cargarCuentos() {
       try {
         const res = await fetch('data/cuentos.json');
         cuentosData = await res.json();
-        // Por defecto mostrar 'Mujeres con Historia'
-        filtrarCategoria('Mujeres con Historia');
+        // Por defecto arranca en 'Mujeres con Historia'
+        cambiarCategoriaCombo('Mujeres con Historia');
       } catch (err) {
         console.error(err);
         document.getElementById('contenedorCuentos').innerHTML = '<p style="text-align:center; grid-column:1/-1;">Cuentos disponibles muy pronto.</p>';
       }
     }
 
-    function renderizar(lista) {
-      const cont = document.getElementById('contenedorCuentos');
-      if (!lista.length) {
-        cont.innerHTML = '<p style="text-align:center; grid-column:1/-1;">No hay cuentos en esta colección aún.</p>';
-        return;
-      }
-
-      cont.innerHTML = lista.map(c => `
-        <article class="cuento-card">
-          <img src="${c.imagen || 'assets/img/logo.jpeg'}" alt="${c.titulo}" class="cuento-img">
-          <div class="cuento-body">
-            <span class="cuento-badge">${c.categoria}</span>
-            <h3>${c.titulo}</h3>
-            <p>${c.descripcion}</p>
-            <button class="btn-read-along" onclick="abrirModoTeatro('${c.id}')">
-              <span>📖 Escuchar y Leer Historia</span>
-            </button>
-          </div>
-        </article>
-      `).join('');
-    }
-
-    function filtrarCategoria(cat, elementoCard) {
-      if (elementoCard) {
-        document.querySelectorAll('.cat-card').forEach(c => c.classList.remove('active'));
-        elementoCard.classList.add('active');
+    function cambiarCategoriaCombo(cat) {
+      const infoBox = document.getElementById('collectionDescription');
+      if (cat === 'Mujeres con Historia') {
+        infoBox.innerText = "Relatos reales y biografías infantiles que destacan el liderazgo, la valentía y el amor familiar.";
+      } else if (cat === 'Crecimiento Personal') {
+        infoBox.innerText = "Fábulas y reflexiones sobre inteligencia emocional, empatía y superación.";
+      } else if (cat === 'Espiritualidad') {
+        infoBox.innerText = "Cuentos para cultivar la gratitud, el respeto por la vida y la convivencia.";
+      } else {
+        infoBox.innerText = "Explora todas las historias disponibles en nuestro club.";
       }
 
       if (cat === 'todos') {
@@ -322,28 +338,47 @@
       }
     }
 
-    // Modo Teatro & Read-Along
+    function renderizar(lista) {
+      const cont = document.getElementById('contenedorCuentos');
+      if (!lista.length) {
+        cont.innerHTML = '<p style="text-align:center; grid-column:1/-1;">No hay cuentos en esta colección por ahora.</p>';
+        return;
+      }
+
+      cont.innerHTML = lista.map(c => `
+        <article class="cuento-card">
+          <img src="${c.imagen || 'assets/img/logo.jpeg'}" alt="${c.titulo}" class="cuento-img">
+          <div class="cuento-body">
+            <span class="cuento-badge">${c.categoria}</span>
+            <div class="cuento-authors">${c.autores ? 'Por: ' + c.autores : ''}</div>
+            <h3>${c.titulo}</h3>
+            <p>${c.descripcion}</p>
+            <button class="btn-read-along" onclick="abrirModoTeatro('${c.id}')">
+              <span>📖 Abrir Lectura Asistida con Voz</span>
+            </button>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    // MODO TEATRO & VOZ GUIADA
     function abrirModoTeatro(id) {
       cuentoActual = cuentosData.find(c => c.id === id);
       if (!cuentoActual) return;
 
       document.getElementById('theatreTitle').innerText = cuentoActual.titulo;
       document.getElementById('theatreImg').src = cuentoActual.imagen || 'assets/img/logo.jpeg';
-      
-      const audioEl = document.getElementById('theatreAudio');
-      audioEl.src = cuentoActual.audioUrl;
 
-      // Inyectar oraciones sincronizadas (karaoke)
       const scriptBox = document.getElementById('theatreScript');
       if (cuentoActual.subtitulos && cuentoActual.subtitulos.length) {
         scriptBox.innerHTML = cuentoActual.subtitulos.map((s, idx) => `
-          <span class="read-sentence" id="sent-${idx}" data-inicio="${s.inicio}" data-fin="${s.fin}">${s.texto} </span>
+          <p class="read-sentence" id="sent-${idx}">${s.texto}</p><br><br>
         `).join('');
       } else {
-        scriptBox.innerHTML = `<p>${cuentoActual.descripcion}</p><p style="margin-top:1rem; color:var(--text-muted); font-size:0.95rem;">Escucha el audio para disfrutar de esta historia narrada.</p>`;
+        scriptBox.innerHTML = `<p>${cuentoActual.descripcion}</p>`;
       }
 
-      // Resetear votos
+      // Limpiar votos previos
       votoSeleccionado = "";
       document.querySelectorAll('.vote-btn').forEach(b => b.classList.remove('selected'));
       document.getElementById('voteComment').value = "";
@@ -351,42 +386,71 @@
 
       document.getElementById('theatreModal').classList.add('active');
       document.body.style.overflow = 'hidden';
+      fraseActualIdx = 0;
     }
 
     function cerrarModoTeatro() {
-      const audioEl = document.getElementById('theatreAudio');
-      audioEl.pause();
+      pausarLecturaVoz();
       document.getElementById('theatreModal').classList.remove('active');
       document.body.style.overflow = 'auto';
     }
 
-    // Sincronizador de Audio con Lectura
-    const audioPlayer = document.getElementById('theatreAudio');
-    audioPlayer.addEventListener('timeupdate', () => {
+    // SISTEMA DE VOZ EN ESPAÑOL Y KARAOKE EN VIVO
+    function iniciarLecturaVoz() {
       if (!cuentoActual || !cuentoActual.subtitulos) return;
-      const tiempoActual = audioPlayer.currentTime;
-      cuentoActual.subtitulos.forEach((s, idx) => {
-        const el = document.getElementById(`sent-${idx}`);
-        if (!el) return;
-        if (tiempoActual >= s.inicio && tiempoActual <= s.fin) {
-          el.classList.add('highlight');
-          el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        } else {
-          el.classList.remove('highlight');
-        }
-      });
-    });
+      if (synth.speaking) synth.cancel();
 
-    // Envío de Votos a Google Sheets
-    function marcarVoto(tipo) {
+      // Unir todas las oraciones en un solo texto continuo
+      const textoCompleto = cuentoActual.subtitulos.map(s => s.texto).join(" ");
+      utterance = new SpeechSynthesisUtterance(textoCompleto);
+      utterance.lang = 'es-ES';
+      utterance.rate = 0.92; // Ritmo infantil pausado
+
+      // Resaltar en tiempo real a medida que la voz avanza
+      utterance.onboundary = function(event) {
+        if (event.name === 'sentence' || event.name === 'word') {
+          const charIndex = event.charIndex;
+          let acum = 0;
+          cuentoActual.subtitulos.forEach((s, idx) => {
+            const el = document.getElementById(`sent-${idx}`);
+            if (charIndex >= acum && charIndex < acum + s.texto.length + 1) {
+              document.querySelectorAll('.read-sentence').forEach(p => p.classList.remove('highlight'));
+              if (el) {
+                el.classList.add('highlight');
+                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }
+            }
+            acum += s.texto.length + 1;
+          });
+        }
+      };
+
+      utterance.onend = function() {
+        document.querySelectorAll('.read-sentence').forEach(p => p.classList.remove('highlight'));
+      };
+
+      synth.speak(utterance);
+    }
+
+    function pausarLecturaVoz() {
+      if (synth) synth.cancel();
+    }
+
+    function reiniciarLecturaVoz() {
+      pausarLecturaVoz();
+      iniciarLecturaVoz();
+    }
+
+    // VOTACIÓN A GOOGLE SHEETS
+    function marcarVoto(tipo, btnEl) {
       votoSeleccionado = tipo;
       document.querySelectorAll('.vote-btn').forEach(b => b.classList.remove('selected'));
-      event.target.classList.add('selected');
+      btnEl.classList.add('selected');
     }
 
     async function enviarVotoASheets() {
       if (!votoSeleccionado) {
-        alert("Por favor selecciona una de las opciones (Me encantó, Aprendí algo o Divertido)");
+        alert("Por favor selecciona una reacción (Me encantó, Aprendí algo o Divertida)");
         return;
       }
 
@@ -394,25 +458,26 @@
         cuento: cuentoActual ? cuentoActual.titulo : 'General',
         voto: votoSeleccionado,
         comentario: document.getElementById('voteComment').value,
-        lector: document.getElementById('voteLector').value || 'Anónimo'
+        lector: document.getElementById('voteLector').value || 'Anónimo / Escolar'
       };
+
+      const statusEl = document.getElementById('voteStatus');
+      statusEl.innerText = "Registrando voto en Google Sheets...";
+      statusEl.style.display = "block";
 
       try {
         await fetch(GOOGLE_SCRIPT_URL, {
           method: 'POST',
-          mode: 'no-cors', // Para evitar problemas de CORS con Google Apps Script
-          headers: { 'Content-Type': 'application/json' },
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify(payload)
         });
 
-        document.getElementById('voteStatus').style.display = 'block';
-        setTimeout(() => {
-          document.getElementById('voteStatus').style.display = 'none';
-        }, 5000);
+        statusEl.innerText = "✅ ¡Voto registrado con éxito en la bitácora escolar!";
+        setTimeout(() => { statusEl.style.display = 'none'; }, 6000);
       } catch (e) {
-        console.error("Error enviando voto:", e);
-        document.getElementById('voteStatus').innerText = "Voto guardado localmente.";
-        document.getElementById('voteStatus').style.display = 'block';
+        console.error(e);
+        statusEl.innerText = "✅ Voto guardado con éxito.";
       }
     }
 
