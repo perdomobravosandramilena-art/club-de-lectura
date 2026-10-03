@@ -212,27 +212,39 @@
     function paginaSiguiente() { if (indicePagina < cuentoActual.paginas.length - 1) { indicePagina++; actualizarPaginaLibro(); } }
     function paginaAnterior() { if (indicePagina > 0) { indicePagina--; actualizarPaginaLibro(); } }
 
-  function narrarPaginaActual() {
+function narrarPaginaActual() {
       if (window.speechSynthesis.speaking) window.speechSynthesis.cancel();
       
       const texto = cuentoActual.paginas[indicePagina].texto;
       const utterance = new SpeechSynthesisUtterance(texto);
-      utterance.lang = 'es-MX'; 
-      utterance.rate = 0.85;
+      
+      // 1. Obtener todas las voces instaladas en el celular o PC
+      let voces = window.speechSynthesis.getVoices();
+      
+      // 2. Buscar voces latinas específicas de alta calidad (Paulina, Angélica, Soledad, etc.)
+      // o cualquier voz en español que NO sea de España (es-ES).
+      let vozLatina = voces.find(v => v.name.includes('Paulina') || v.name.includes('Angélica')) || 
+                      voces.find(v => v.lang === 'es-CO' || v.lang === 'es-MX' || v.lang === 'es-419') ||
+                      voces.find(v => v.lang.startsWith('es') && !v.lang.includes('ES'));
 
-      // El truco: Cuando termine de leer esta página...
+      if (vozLatina) {
+        utterance.voice = vozLatina;
+      } else {
+        utterance.lang = 'es-MX'; // Fallback seguro
+      }
+      
+      utterance.rate = 0.85; // Velocidad pausada y pedagógica
+
+      // Pasar de página automáticamente
       utterance.onend = function() {
-        // ...revisa si hay una página siguiente
         if (indicePagina < cuentoActual.paginas.length - 1) {
-          paginaSiguiente(); // Pasa la hoja visualmente
-          // Espera medio segundo y empieza a leer la nueva hoja
+          paginaSiguiente(); 
           setTimeout(() => { narrarPaginaActual(); }, 500);
         }
       };
 
       window.speechSynthesis.speak(utterance);
     }
-
     function cerrarModoTeatro() {
       if (synth) synth.cancel();
       document.getElementById('theatreModal').classList.remove('active');
