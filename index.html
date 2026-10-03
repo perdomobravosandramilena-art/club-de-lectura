@@ -212,13 +212,25 @@
     function paginaSiguiente() { if (indicePagina < cuentoActual.paginas.length - 1) { indicePagina++; actualizarPaginaLibro(); } }
     function paginaAnterior() { if (indicePagina > 0) { indicePagina--; actualizarPaginaLibro(); } }
 
-    function narrarPaginaActual() {
-      if (synth.speaking) synth.cancel();
+  function narrarPaginaActual() {
+      if (window.speechSynthesis.speaking) window.speechSynthesis.cancel();
+      
       const texto = cuentoActual.paginas[indicePagina].texto;
       const utterance = new SpeechSynthesisUtterance(texto);
-      utterance.lang = 'es-CO';
-      utterance.rate = 0.90;
-      synth.speak(utterance);
+      utterance.lang = 'es-MX'; 
+      utterance.rate = 0.85;
+
+      // El truco: Cuando termine de leer esta página...
+      utterance.onend = function() {
+        // ...revisa si hay una página siguiente
+        if (indicePagina < cuentoActual.paginas.length - 1) {
+          paginaSiguiente(); // Pasa la hoja visualmente
+          // Espera medio segundo y empieza a leer la nueva hoja
+          setTimeout(() => { narrarPaginaActual(); }, 500);
+        }
+      };
+
+      window.speechSynthesis.speak(utterance);
     }
 
     function cerrarModoTeatro() {
