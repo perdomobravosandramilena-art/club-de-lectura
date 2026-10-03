@@ -6,9 +6,13 @@
     "autores": "Celenys Carmona y Dahixsonth Brito",
     "descripcion": "La valiente historia de Alicia, quien desde Petare hasta Maturín demostró que el amor y el trabajo duro son la receta para la esperanza.",
     "imagen": "assets/img/logo.jpeg",
-    "geminiShareUrl": "https://share.gemini.google/ZqzaWQdg1moR",
+    "geminiShareUrl": "",
     "paginas": [
-      { "numero": 1, "texto": "Conoce la historia de Alicia tocando el botón azul de arriba para abrir el libro animado oficial.", "imagen": "assets/img/logo.jpeg" }
+      { "numero": 1, "texto": "En las coloridas colinas de Petare nació en 1982 Alicia, una niña de risa fácil a quien le encantaba jugar a la pelota de goma.", "imagen": "assets/img/logo.jpeg" },
+      { "numero": 2, "texto": "Fue criada con inmenso amor por su abuela Vicenta y sus tías, quienes le enseñaron el valor de jamás rendirse ante las dificultades.", "imagen": "assets/img/logo.jpeg" },
+      { "numero": 3, "texto": "Aunque solo cursó hasta primer grado por falta de recursos, sus manos aprendieron el arte de cocinar con un sazón que alegraba el alma de todos.", "imagen": "assets/img/logo.jpeg" },
+      { "numero": 4, "texto": "Como hermana mayor cuidó de sus nueve hermanos, y años más tarde en Maturín formó con valentía y dedicación a sus tres amadas hijas.", "imagen": "assets/img/logo.jpeg" },
+      { "numero": 5, "texto": "Alicia nos demuestra que no se necesitan títulos para ser una heroína: un corazón trabajador, digno y bondadoso transforma el mundo.", "imagen": "assets/img/logo.jpeg" }
     ]
   },
   {
@@ -18,9 +22,12 @@
     "autores": "Elena Gutierrez y Sergi Valencia",
     "descripcion": "Descubre la historia de Wbaldina, una mujer valiente que transformó las dificultades en amor y dejó una huella de honestidad y solidaridad en su gran familia.",
     "imagen": "assets/img/logo.jpeg",
-    "geminiShareUrl": "https://share.gemini.google/CqzvE2rgTKrt",
+    "geminiShareUrl": "",
     "paginas": [
-      { "numero": 1, "texto": "Descubre el gran corazón de Wbaldina tocando el botón azul de arriba para abrir el libro animado oficial.", "imagen": "assets/img/logo.jpeg" }
+      { "numero": 1, "texto": "En un rincón lleno de memorias y calor de hogar, Wbaldina comenzó a tejer su historia con hilos de ternura y generosidad.", "imagen": "assets/img/logo.jpeg" },
+      { "numero": 2, "texto": "Su corazón era tan grande que siempre había un plato de comida, una palabra de aliento y un abrazo sincero para quien tocara a su puerta.", "imagen": "assets/img/logo.jpeg" },
+      { "numero": 3, "texto": "A través de los años, su ejemplo inspiró a los más jóvenes a entender que la verdadera riqueza no se cuenta en monedas, sino en sonrisas compartidas.", "imagen": "assets/img/logo.jpeg" },
+      { "numero": 4, "texto": "Hoy, el legado de Wbaldina florece en cada rincón de nuestra comunidad, recordándonos que el amor que se da nunca se pierde: se multiplica.", "imagen": "assets/img/logo.jpeg" }
     ]
   },
   {
@@ -30,9 +37,12 @@
     "autores": "Jhon, Lizeth y Luciana Quistial",
     "descripcion": "La inspiradora historia de Danya, una niña sonriente envuelta en una cálida ruana andina frente a las montañas neblinosas de Ipiales y el Santuario de Las Lajas.",
     "imagen": "assets/img/logo.jpeg",
-    "geminiShareUrl": "https://share.gemini.google/MU64BYdEt8GE",
+    "geminiShareUrl": "",
     "paginas": [
-      { "numero": 1, "texto": "Acompaña a Danya en su aventura andina tocando el botón azul de arriba para abrir el libro animado oficial.", "imagen": "assets/img/logo.jpeg" }
+      { "numero": 1, "texto": "En las frías y hermosas montañas de Ipiales, donde la niebla abraza la tierra, vivía Danya, una niña con una sonrisa que iluminaba los días grises.", "imagen": "assets/img/logo.jpeg" },
+      { "numero": 2, "texto": "Siempre envuelta en su cálida ruana andina, Danya recorría los senderos soñando con grandes aventuras bajo el cielo del sur.", "imagen": "assets/img/logo.jpeg" },
+      { "numero": 3, "texto": "Frente a la silueta mágica del Santuario de Las Lajas, ella aprendió de sus abuelos el valor de su cultura y la fuerza de sus raíces.", "imagen": "assets/img/logo.jpeg" },
+      { "numero": 4, "texto": "Hoy, Danya es conocida como la Guerrera de las Nubes, demostrando que con orgullo y valentía se pueden alcanzar los sueños más altos.", "imagen": "assets/img/logo.jpeg" }
     ]
   }
 ]
