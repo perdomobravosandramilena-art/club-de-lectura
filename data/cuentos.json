@@ -4,44 +4,35 @@
     "titulo": "Alicia: El Corazón Invencible de Petare",
     "categoria": "Mujeres con Historia",
     "autores": "Celenys Carmona y Dahixsonth Brito",
-    "descripcion": "La historia real y conmovedora de Alicia, una niña que junto a su abuela Vicenta aprendió que el amor, el trabajo incansable y la sazón de la cocina vencen cualquier obstáculo.",
+    "descripcion": "La valiente historia de Alicia, quien desde Petare hasta Maturín demostró que el amor y el trabajo duro son la receta para la esperanza.",
     "imagen": "assets/img/logo.jpeg",
-    "subtitulos": [
-      {
-        "inicio": 0,
-        "fin": 7,
-        "texto": "En las coloridas colinas de Petare nació en 1982 una niña llena de luz llamada Alicia."
-      },
-      {
-        "inicio": 7,
-        "fin": 14,
-        "texto": "De pequeña le fascinaba jugar a la pelota de goma y soñaba con ser una gran profesional para sacar adelante a su familia."
-      },
-      {
-        "inicio": 14,
-        "fin": 22,
-        "texto": "Fue criada por su sabia abuela Vicenta y sus tías, quienes le enseñaron el secreto de la vida: jamás rendirse ante la dificultad."
-      },
-      {
-        "inicio": 22,
-        "fin": 30,
-        "texto": "Aunque solo pudo estudiar hasta primer grado por falta de recursos, sus manos aprendieron el arte de cocinar con un sazón que alegraba los corazones."
-      },
-      {
-        "inicio": 30,
-        "fin": 38,
-        "texto": "Como hermana mayor, cuidó con paciencia y cariño de sus nueve hermanos, convirtiéndose en el sostén de su hogar."
-      },
-      {
-        "inicio": 38,
-        "fin": 46,
-        "texto": "Tiempo después el amor la llevó a Maturín, donde con esfuerzo inquebrantable formó a sus tres amadas hijas."
-      },
-      {
-        "inicio": 46,
-        "fin": 55,
-        "texto": "Alicia es una verdadera mujer guerrera, cuyo ejemplo nos enseña que el amor, la bondad y el trabajo diario son las huellas más hermosas que podemos dejar."
-      }
+    "geminiShareUrl": "https://share.gemini.google/ZqzaWQdg1moR",
+    "paginas": [
+      { "numero": 1, "texto": "Conoce la historia de Alicia tocando el botón azul de arriba para abrir el libro animado oficial.", "imagen": "assets/img/logo.jpeg" }
+    ]
+  },
+  {
+    "id": "wbaldina-corazon",
+    "titulo": "El Gran Corazón de Wbaldina",
+    "categoria": "Mujeres con Historia",
+    "autores": "Elena Gutierrez y Sergi Valencia",
+    "descripcion": "Descubre la historia de Wbaldina, una mujer valiente que transformó las dificultades en amor y dejó una huella de honestidad y solidaridad en su gran familia.",
+    "imagen": "assets/img/logo.jpeg",
+    "geminiShareUrl": "https://share.gemini.google/CqzvE2rgTKrt",
+    "paginas": [
+      { "numero": 1, "texto": "Descubre el gran corazón de Wbaldina tocando el botón azul de arriba para abrir el libro animado oficial.", "imagen": "assets/img/logo.jpeg" }
+    ]
+  },
+  {
+    "id": "danya-guerrera",
+    "titulo": "Danya: La Guerrera de las Nubes",
+    "categoria": "Mujeres con Historia",
+    "autores": "Jhon, Lizeth y Luciana Quistial",
+    "descripcion": "La inspiradora historia de Danya, una niña sonriente envuelta en una cálida ruana andina frente a las montañas neblinosas de Ipiales y el Santuario de Las Lajas.",
+    "imagen": "assets/img/logo.jpeg",
+    "geminiShareUrl": "https://share.gemini.google/MU64BYdEt8GE",
+    "paginas": [
+      { "numero": 1, "texto": "Acompaña a Danya en su aventura andina tocando el botón azul de arriba para abrir el libro animado oficial.", "imagen": "assets/img/logo.jpeg" }
     ]
   }
 ]
