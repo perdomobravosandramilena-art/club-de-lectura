@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>¡Metidos en el Cuento! - Club de Lectura</title>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Chart.js para estadísticas -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     :root {
       --primary: #c85a32;
@@ -23,7 +25,7 @@
       padding: 0;
     }
     header {
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(10px);
       padding: 1rem 2rem;
       box-shadow: 0 4px 20px rgba(0,0,0,0.05);
@@ -32,63 +34,113 @@
       gap: 1rem;
       position: sticky; top: 0; z-index: 100;
     }
-    header img { height: 55px; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    header img { height: 50px; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
     header h1 { font-family: 'Caveat', cursive; color: var(--primary); font-size: 2.2rem; margin: 0; }
     
     .hero {
       text-align: center;
-      padding: 3rem 1rem 2rem 1rem;
+      padding: 2.5rem 1rem 2rem 1rem;
       background: linear-gradient(135deg, #fae1d2 0%, #fdfbf7 100%);
       border-bottom: 3px dashed #f4c430;
     }
-    .hero h2 { font-size: 3rem; color: var(--primary); font-family: 'Caveat', cursive; margin: 0 0 10px 0; }
-    .hero p { font-size: 1.1rem; color: #555; max-width: 600px; margin: 0 auto; }
+    .hero h2 { font-size: 2.8rem; color: var(--primary); font-family: 'Caveat', cursive; margin: 0 0 10px 0; }
+    .hero p { font-size: 1.05rem; color: #555; max-width: 600px; margin: 0 auto; }
 
-    .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem; }
 
-    .cuentos-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 2.5rem; margin-top: 1rem; }
+    /* Sección de Estadísticas */
+    .stats-section {
+      background: white;
+      border-radius: 20px;
+      padding: 1.5rem 2rem;
+      margin-bottom: 3rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+      border: 2px solid #fae1d2;
+    }
+    .stats-section h3 {
+      font-family: 'Caveat', cursive;
+      color: var(--primary);
+      font-size: 2rem;
+      margin-top: 0;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .chart-container {
+      position: relative;
+      width: 100%;
+      max-height: 250px;
+      margin: 0 auto;
+    }
+
+    .section-heading { font-family: 'Caveat', cursive; color: var(--primary); font-size: 2.5rem; margin-bottom: 1.5rem; text-align: center; }
+
+    .cuentos-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 2.5rem; }
     
     .cuento-card {
       background: var(--card-bg);
-      border-radius: 24px;
+      border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 15px 35px rgba(200, 90, 50, 0.08);
+      box-shadow: 0 10px 25px rgba(200, 90, 50, 0.08);
       transition: all 0.3s ease;
       display: flex;
       flex-direction: column;
       border: 2px solid #fae1d2;
-      position: relative;
+      height: 100%;
     }
-    .cuento-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(200, 90, 50, 0.15); }
+    .cuento-card:hover { transform: translateY(-6px); box-shadow: 0 15px 35px rgba(200, 90, 50, 0.15); }
     
     .card-banner {
-      height: 180px;
-      background: linear-gradient(45deg, var(--primary), var(--accent-yellow));
+      height: 140px;
+      background: linear-gradient(135deg, var(--primary), var(--accent-yellow));
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
     }
-    .card-banner span { font-size: 4rem; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2)); }
+    .card-banner span { font-size: 3.5rem; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15)); }
     
-    .cuento-content { padding: 1.8rem; display: flex; flex-direction: column; flex-grow: 1; }
-    .categoria-badge { background: #fae1d2; color: var(--primary); padding: 5px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; width: fit-content; margin-bottom: 12px; }
-    .autor-text { font-size: 0.85rem; color: #666; margin-bottom: 8px; font-style: italic; }
-    .cuento-content h3 { font-size: 1.5rem; margin: 0 0 10px 0; color: var(--text-dark); font-family: 'Quicksand', sans-serif; font-weight: 700; }
-    .descripcion-corta { font-size: 0.95rem; color: #555; flex-grow: 1; margin-bottom: 20px; line-height: 1.5; }
+    .cuento-content { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
+    .categoria-badge { background: #fae1d2; color: var(--primary); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; width: fit-content; margin-bottom: 10px; }
+    .autor-text { font-size: 0.85rem; color: #666; margin-bottom: 6px; font-style: italic; }
+    
+    /* Títulos corregidos para evitar cortes o compresión */
+    .cuento-content h3 { 
+      font-size: 1.35rem; 
+      margin: 0 0 10px 0; 
+      color: var(--text-dark); 
+      font-family: 'Quicksand', sans-serif; 
+      font-weight: 700; 
+      line-height: 1.35; 
+      min-height: 3.6rem; /* Espacio uniforme para 2 líneas */
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    
+    .descripcion-corta { 
+      font-size: 0.92rem; 
+      color: #555; 
+      flex-grow: 1; 
+      margin-bottom: 1.5rem; 
+      line-height: 1.5; 
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
 
     .btn-leer {
       background: var(--primary);
       color: white;
       border: none;
-      padding: 12px 20px;
-      border-radius: 14px;
+      padding: 11px 18px;
+      border-radius: 12px;
       cursor: pointer;
       font-weight: bold;
-      font-size: 1rem;
+      font-size: 0.95rem;
       width: 100%;
       transition: background 0.2s;
-      box-shadow: 0 4px 12px rgba(200, 90, 50, 0.3);
+      box-shadow: 0 4px 12px rgba(200, 90, 50, 0.25);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -96,7 +148,7 @@
     }
     .btn-leer:hover { background: var(--primary-hover); }
 
-    /* Modal de Pantalla Completa para el Libro Interactivo */
+    /* Modal de Pantalla Completa */
     .modal {
       display: none;
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -109,29 +161,22 @@
     .modal-header {
       background: #1a1a1a;
       color: white;
-      padding: 1rem 2rem;
+      padding: 0.8rem 1.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .modal-header h2 { margin: 0; font-family: 'Caveat', cursive; font-size: 1.8rem; color: var(--accent-yellow); }
+    .modal-header h2 { margin: 0; font-family: 'Caveat', cursive; font-size: 1.6rem; color: var(--accent-yellow); }
     .close-btn {
       background: var(--primary); color: white; border: none;
-      padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1rem;
+      padding: 6px 14px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 0.9rem;
     }
     .close-btn:hover { background: var(--primary-hover); }
 
-    .modal-body {
-      flex-grow: 1;
-      width: 100%;
-      height: calc(100% - 70px);
-      background: #000;
-    }
-    .modal-body iframe {
-      width: 100%; height: 100%; border: none;
-    }
+    .modal-body { flex-grow: 1; width: 100%; height: calc(100% - 60px); background: #000; }
+    .modal-body iframe { width: 100%; height: 100%; border: none; }
 
-    footer { text-align: center; padding: 2rem; color: #777; font-size: 0.9rem; border-top: 1px solid #eee; margin-top: 3rem; }
+    footer { text-align: center; padding: 2rem; color: #777; font-size: 0.85rem; border-top: 1px solid #eee; margin-top: 3rem; }
   </style>
 </head>
 <body>
@@ -147,16 +192,27 @@
   </div>
 
   <div class="container">
+    
+    <!-- SECCIÓN DE ESTADÍSTICAS VISUALES -->
+    <div class="stats-section">
+      <h3>📊 Ranking de Cuentos Más Leídos</h3>
+      <div class="chart-container">
+        <canvas id="statsChart"></canvas>
+      </div>
+    </div>
+
+    <h2 class="section-heading">Nuestra Biblioteca de Historias</h2>
+    
     <div id="contenedorCuentos" class="cuentos-container">
-      <p style="text-align: center; width: 100%; grid-column: 1/-1; font-size: 1.2rem; color: #888;">Cuentos mágicos cargándose...</p>
+      <p style="text-align: center; width: 100%; grid-column: 1/-1; color: #888;">Cargando cuentos mágicos...</p>
     </div>
   </div>
 
-  <!-- MODAL DE PANTALLA COMPLETA PARA EL LIBRO INTERACTIVO -->
+  <!-- MODAL DE PANTALLA COMPLETA -->
   <div id="theatreModal" class="modal">
     <div class="modal-header">
       <h2 id="modalTitle">Cuento Interactivo</h2>
-      <button class="close-btn" onclick="cerrarLibro()">✕ Cerrar y Volver</button>
+      <button class="close-btn" onclick="cerrarLibro()">✕ Cerrar</button>
     </div>
     <div class="modal-body">
       <iframe id="bookFrame" src="" allowfullscreen></iframe>
@@ -172,27 +228,35 @@
     
     let cuentosData = [];
 
-    async function cargarCuentos() {
+    async function cargarDatos() {
       try {
         const response = await fetch(GOOGLE_SCRIPT_URL);
         const data = await response.json();
-        if (Array.isArray(data)) {
-          cuentosData = data;
-          renderizar(cuentosData);
-        } else {
-          document.getElementById('contenedorCuentos').innerHTML = '<p style="text-align:center; grid-column: 1/-1;">No hay cuentos disponibles por el momento.</p>';
+        
+        if (data && Array.isArray(data.cuentos)) {
+          cuentosData = data.cuentos;
+          renderizarCuentos(cuentosData);
+        }
+        
+        if (data && Array.isArray(data.stats)) {
+          renderizarGrafico(data.stats);
         }
       } catch (err) {
-        console.error("Error al cargar cuentos:", err);
+        console.error("Error al cargar datos:", err);
         document.getElementById('contenedorCuentos').innerHTML = '<p style="text-align:center; color:red; grid-column: 1/-1;">Error al conectar con la base de datos.</p>';
       }
     }
 
-    function renderizar(cuentos) {
+    function renderizarCuentos(cuentos) {
       const contenedor = document.getElementById('contenedorCuentos');
       contenedor.innerHTML = '';
       
       const emojis = ['📖', '✨', '🌟', '🎨', '🚀', '💖'];
+
+      if (cuentos.length === 0) {
+        contenedor.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color:#888;">No hay cuentos publicados todavía.</p>';
+        return;
+      }
 
       cuentos.forEach((cuento, index) => {
         const idSeguro = cuento.id || cuento.titulo;
@@ -206,14 +270,51 @@
             <span>${emojiRandom}</span>
           </div>
           <div class="cuento-content">
-            <span class="categoria-badge">${cuento.categoria || 'Cuento'}</span>
-            <p class="autor-text">Por: ${autores}</p>
-            <h3>${cuento.titulo}</h3>
-            <p class="descripcion-corta">${cuento.descripcion || 'Una hermosa historia llena de valores y magia.'}</p>
+            <div>
+              <span class="categoria-badge">${cuento.categoria || 'Cuento'}</span>
+              <p class="autor-text">Por: ${autores}</p>
+              <h3>${cuento.titulo}</h3>
+              <p class="descripcion-corta">${cuento.descripcion || 'Una hermosa historia llena de valores y magia para compartir.'}</p>
+            </div>
             <button class="btn-leer" onclick="abrirLibro('${idSeguro}')">📖 Leer Libro Interactivo</button>
           </div>
         `;
         contenedor.appendChild(card);
+      });
+    }
+
+    function renderizarGrafico(stats) {
+      const ctx = document.getElementById('statsChart').getContext('2d');
+      
+      const labels = stats.map(s => s.cuento);
+      const dataValues = stats.map(s => s.clics);
+
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels.length > 0 ? labels : ['Sin datos'],
+          datasets: [{
+            label: 'Lecturas / Clics',
+            data: dataValues.length > 0 ? dataValues : [0],
+            backgroundColor: '#fae1d2',
+            borderColor: '#c85a32',
+            borderWidth: 2,
+            borderRadius: 8
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { stepSize: 1 }
+            }
+          }
+        }
       });
     }
 
@@ -240,10 +341,10 @@
     function cerrarLibro() {
       document.getElementById('theatreModal').classList.remove('active');
       document.body.style.overflow = 'auto';
-      document.getElementById('bookFrame').src = ''; // Detiene audio y animaciones
+      document.getElementById('bookFrame').src = '';
     }
 
-    cargarCuentos();
+    cargarDatos();
   </script>
 </body>
 </html>
