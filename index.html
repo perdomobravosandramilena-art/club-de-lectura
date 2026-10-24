@@ -170,11 +170,18 @@
 
     async function cargarCuentos() {
       try {
-        const res = await fetch('data/cuentos.json');
+        // Ahora lee directamente desde Google Sheets a través de tu URL mágica
+        const res = await fetch(GOOGLE_SCRIPT_URL);
         cuentosData = await res.json();
-        renderizar(cuentosData);
+        
+        // Si hay cuentos, los muestra. Si no, avisa.
+        if(cuentosData && cuentosData.length > 0) {
+          renderizar(cuentosData);
+        } else {
+          document.getElementById('contenedorCuentos').innerHTML = '<p style="text-align:center; grid-column:1/-1;">Aún no hay cuentos publicados.</p>';
+        }
       } catch (err) {
-        console.error(err);
+        console.error("Error cargando la base de datos:", err);
       }
     }
 
