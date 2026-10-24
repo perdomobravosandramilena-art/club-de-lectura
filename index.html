@@ -390,16 +390,15 @@
         return;
       }
       
-      document.getElementById('modalTitle').innerText = cuento.titulo;
-      document.getElementById('bookFrame').src = cuento.enlaceGemini;
-      document.getElementById('theatreModal').classList.add('active');
-      document.body.style.overflow = 'hidden';
-
+      // Registramos la estadística de clic en segundo plano
       fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST', mode: 'no-cors',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify({ accion: 'clic', idCuento: id, cuento: cuento.titulo })
       }).catch(err => console.log("Estadística no registrada", err));
+
+      // Abrimos el cuento directamente en una pestaña limpia del navegador para evitar el bloqueo de Google
+      window.open(cuento.enlaceGemini, '_blank');
     }
 
     function cerrarLibro() {
