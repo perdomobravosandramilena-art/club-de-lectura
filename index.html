@@ -193,38 +193,60 @@
       }
     }
 
-    function renderizar(lista) {
-      const cont = document.getElementById('contenedorCuentos');
-      cont.innerHTML = lista.map(c => `
-        <article class="cuento-card">
-          <img src="${c.imagen || 'assets/img/logo.jpeg'}" alt="${c.titulo}" class="cuento-img">
-          <div class="cuento-body">
-            <span class="cuento-badge">${c.categoria}</span>
-            <div class="cuento-authors">${c.autores ? 'Por: ' + c.autores : ''}</div>
-            <h3>${c.titulo}</h3>
-            <p>${c.descripcion}</p>
-            <button class="btn-read-along" onclick="abrirModoLibro('${c.id}')">📖 Abrir Libro Interactivo</button>
+    function renderizar(cuentos) {
+      const contenedor = document.getElementById('contenedorCuentos');
+      contenedor.innerHTML = '';
+      
+      cuentos.forEach(cuento => {
+        // Aseguramos que siempre haya un ID válido
+        const idSeguro = cuento.id || cuento.titulo;
+        const imagenSegura = cuento.imagen || 'assets/img/logo.jpeg';
+        const autores = cuento.autores || 'Autor Anónimo';
+        
+        const card = document.createElement('div');
+        card.className = 'cuento-card';
+        card.innerHTML = `
+          <img src="${imagenSegura}" alt="${cuento.titulo}" class="cuento-img">
+          <div class="cuento-content">
+            <span class="categoria-badge">${cuento.categoria || 'Cuento'}</span>
+            <p class="autor-text">Por: ${autores}</p>
+            <h3>${cuento.titulo}</h3>
+            <p class="descripcion-corta">${cuento.descripcion || ''}</p>
+            <!-- Las comillas simples ('') alrededor de idSeguro son vitales aquí -->
+            <button class="btn" style="width: 100%; margin-top: 15px; border: 1px solid var(--primary); background: transparent; color: var(--primary); padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold;" onclick="abrirModoLibro('${idSeguro}')">📖 Abrir Libro Interactivo</button>
           </div>
-        </article>
-      `).join('');
+        `;
+        contenedor.appendChild(card);
+      });
     }
 
 function abrirModoLibro(id) {
-      cuentoActual = cuentosData.find(c => c.id === id);
-      if (!cuentoActual) return;
-      indicePagina = 0;
-      document.getElementById('theatreTitle').innerText = cuentoActual.titulo;
-      actualizarPaginaLibro();
-      
-      // REGISTRO DE ESTADÍSTICA (CLIC)
-      fetch(GOOGLE_SCRIPT_URL, {
-        method: 'POST', mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({ accion: 'clic', idCuento: id, cuento: cuentoActual.titulo })
-      });
+      try {
+        // Busca por ID, o si falla, busca por título
+        cuentoActual = cuentosData.find(c => (c.id === id) || (c.titulo === id));
+        
+        if (!cuentoActual) {
+          console.error("No se encontró el cuento con ID:", id);
+          return;
+        }
+        
+        indicePagina = 0;
+        document.getElementById('theatreTitle').innerText = cuentoActual.titulo;
+        
+        actualizarPaginaLibro();
+        
+        // REGISTRO DE ESTADÍSTICA (CLIC)
+        fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST', mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ accion: 'clic', idCuento: id, cuento: cuentoActual.titulo })
+        }).catch(err => console.log("Clic no registrado", err));
 
-      document.getElementById('theatreModal').classList.add('active');
-      document.body.style.overflow = 'hidden';
+        document.getElementById('theatreModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+      } catch (error) {
+        console.error("Error protegiendo el clic del botón:", error);
+      }
     }
 
     async function enviarVotoASheets() {
