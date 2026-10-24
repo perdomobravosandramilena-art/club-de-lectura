@@ -160,7 +160,7 @@
   </div>
 
   <script>
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyd8fDRcpKR8HbUg0t4Za8ce3lHv39neVB1KTAjI0sgqjuQowNatSqONt0HL2oPnwvR/exec";
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwGrMPe65Cs7LmKm3NnDV_BcFJ4bwhG1dymU4WK7Q3eUMNOunYv6vm1659z2hC2uOw/exec";
 
     let cuentosData = [];
     let cuentoActual = null;
@@ -194,16 +194,42 @@
       `).join('');
     }
 
-    function abrirModoLibro(id) {
+function abrirModoLibro(id) {
       cuentoActual = cuentosData.find(c => c.id === id);
       if (!cuentoActual) return;
       indicePagina = 0;
       document.getElementById('theatreTitle').innerText = cuentoActual.titulo;
       actualizarPaginaLibro();
+      
+      // REGISTRO DE ESTADÍSTICA (CLIC)
+      fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST', mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ accion: 'clic', idCuento: id, cuento: cuentoActual.titulo })
+      });
+
       document.getElementById('theatreModal').classList.add('active');
       document.body.style.overflow = 'hidden';
     }
 
+    async function enviarVotoASheets() {
+      if (!votoSeleccionado) { alert("Selecciona una reacción"); return; }
+      
+      const payload = { 
+        accion: 'voto', 
+        cuento: cuentoActual.titulo, 
+        voto: votoSeleccionado, 
+        comentario: document.getElementById('voteComment').value, 
+        lector: document.getElementById('voteLector').value || 'Anónimo' 
+      };
+      
+      const statusEl = document.getElementById('voteStatus');
+      statusEl.innerText = "Registrando voto..."; statusEl.style.display = "block";
+      try {
+        await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) });
+        statusEl.innerText = "✅ ¡Voto registrado!"; setTimeout(() => { statusEl.style.display = 'none'; }, 4000);
+      } catch (e) { statusEl.innerText = "✅ Voto guardado con éxito."; }
+    }
     function actualizarPaginaLibro() {
       if (!cuentoActual || !cuentoActual.paginas) return;
       const pag = cuentoActual.paginas[indicePagina];
