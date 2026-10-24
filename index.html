@@ -25,7 +25,6 @@
       padding: 0;
     }
     
-    /* Header compacto y limpio a la izquierda */
     header {
       background: #ffffff;
       padding: 0.8rem 2rem;
@@ -38,7 +37,6 @@
     header img { height: 45px; border-radius: 50%; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
     header h1 { font-family: 'Caveat', cursive; color: var(--primary); font-size: 1.8rem; margin: 0; }
     
-    /* Hero discreto sobre fondo claro */
     .hero {
       text-align: center;
       padding: 1.5rem 1rem 1rem 1rem;
@@ -50,7 +48,6 @@
 
     .container { max-width: 1300px; margin: 0 auto; padding: 1.5rem 2rem; }
 
-    /* Layout Principal: Contenedor de Cuentos + Widget de Estadística Lateral (Hover) */
     .main-layout {
       display: flex;
       gap: 2rem;
@@ -58,9 +55,7 @@
       position: relative;
     }
 
-    .biblioteca-section {
-      flex: 1;
-    }
+    .biblioteca-section { flex: 1; }
 
     .section-heading { 
       font-family: 'Caveat', cursive; 
@@ -72,10 +67,10 @@
       padding-bottom: 5px;
     }
 
-    /* Widget de Estadística Compacto con Expansión en Hover */
+    /* Widget de Estadística Lateral (Hover) */
     .stats-widget {
       width: 80px;
-      background: #2c2c2c; /* Fondo oscuro elegante */
+      background: #2c2c2c;
       color: white;
       border-radius: 16px;
       padding: 15px 10px;
@@ -89,7 +84,7 @@
       border: 2px solid var(--accent-yellow);
     }
     .stats-widget:hover {
-      width: 420px; /* Se amplía al pasar el cursor */
+      width: 420px;
       background: #1e1e1e;
     }
     .stats-header {
@@ -107,9 +102,7 @@
       transition: opacity 0.3s ease;
       white-space: nowrap;
     }
-    .stats-widget:hover .stats-title-text {
-      opacity: 1;
-    }
+    .stats-widget:hover .stats-title-text { opacity: 1; }
     .chart-container {
       position: relative;
       width: 390px;
@@ -119,12 +112,8 @@
       transition: opacity 0.3s ease;
       pointer-events: none;
     }
-    .stats-widget:hover .chart-container {
-      opacity: 1;
-      pointer-events: auto;
-    }
+    .stats-widget:hover .chart-container { opacity: 1; pointer-events: auto; }
 
-    /* Cuadrícula de Tarjetas Completas y Proporcionadas */
     .cuentos-container { 
       display: grid; 
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
@@ -201,7 +190,6 @@
     }
     .btn-leer:hover { background: var(--primary-hover); }
 
-    /* Modal de Pantalla Completa */
     .modal {
       display: none;
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -231,7 +219,6 @@
 
     footer { text-align: center; padding: 1.5rem; color: #777; font-size: 0.85rem; border-top: 1px solid #eee; margin-top: 3rem; }
 
-    /* Responsive para celulares */
     @media (max-width: 768px) {
       .main-layout { flex-direction: column; }
       .stats-widget { width: 100%; position: static; margin-bottom: 1.5rem; }
@@ -257,7 +244,6 @@
     
     <div class="main-layout">
       
-      <!-- SECCIÓN PRINCIPAL: BIBLIOTECA DE TARJETAS -->
       <div class="biblioteca-section">
         <h2 class="section-heading">Nuestra Biblioteca de Historias</h2>
         <div id="contenedorCuentos" class="cuentos-container">
@@ -265,7 +251,6 @@
         </div>
       </div>
 
-      <!-- WIDGET LATERAL DE ESTADÍSTICAS (SE AMPLÍA AL PASAR EL CURSOR) -->
       <div class="stats-widget" title="Pasa el cursor para ver el ranking">
         <div class="stats-header">
           <div class="stats-icon">📊</div>
@@ -280,7 +265,6 @@
 
   </div>
 
-  <!-- MODAL DE PANTALLA COMPLETA -->
   <div id="theatreModal" class="modal">
     <div class="modal-header">
       <h2 id="modalTitle">Cuento Interactivo</h2>
@@ -296,7 +280,8 @@
   </footer>
 
   <script>
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxMdhPSsxWtuFITLK_ediuHhPVqXCiDoX6qEmjUSo-pYdoaW52HS6cdz32Q3nVvVYON/exec";
+    // URL ACTUALIZADA CON TU NUEVO ID DE IMPLEMENTACIÓN
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzuqA_8haJ9jPbyciHWid6oC8G4TOVCfierDFXEVIsJZJ0K_qcsNSf1LRoCKyLIcK-o/exec";
     
     let cuentosData = [];
     let myChart = null;
@@ -333,7 +318,7 @@
 
       cuentos.forEach((cuento, index) => {
         const idSeguro = cuento.id || cuento.titulo;
-        const autores = cuento.autores || 'Autor Anónimo';
+        const autores = cuento.autores || 'Autores del Club';
         const emojiRandom = emojis[index % emojis.length];
         
         const card = document.createElement('div');
@@ -344,7 +329,7 @@
           </div>
           <div class="cuento-content">
             <div>
-              <span class="categoria-badge">${cuento.categoria || 'Cuento'}</span>
+              <span class="categoria-badge">${cuento.categoria || 'Mujeres con Historia'}</span>
               <p class="autor-text">Por: ${autores}</p>
               <h3>${cuento.titulo}</h3>
               <p class="descripcion-corta">${cuento.descripcion || 'Una hermosa historia llena de valores y magia para compartir.'}</p>
@@ -410,7 +395,6 @@
       document.getElementById('theatreModal').classList.add('active');
       document.body.style.overflow = 'hidden';
 
-      // Registrar estadística de clic en segundo plano
       fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST', mode: 'no-cors',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
