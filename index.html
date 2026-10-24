@@ -279,15 +279,22 @@ function abrirModoLibro(id) {
         if (contenedorTexto) contenedorTexto.classList.remove('animacion-pagina');
         if (contenedorImagen) contenedorImagen.classList.remove('animacion-pagina');
         
-        // Forzar reinicio del CSS
         if (contenedorTexto) void contenedorTexto.offsetWidth; 
         
-        // Cargamos la imagen: Si la página no tiene, usa la portada. Si la portada no tiene, usa el logo.
+        // IMAGEN SEGURA: Si la página tiene imagen la usa; si no, usa la portada; si no, usa el logo por defecto.
+        const imagenFinal = (pag && pag.imagen) ? pag.imagen : (cuentoActual.imagen || 'assets/img/logo.jpeg');
+        const textoFinal = (pag && pag.texto) ? pag.texto : (pag || "Texto no disponible.");
+        
         if (contenedorImagen) {
-          contenedorImagen.src = pag.imagen || cuentoActual.imagen || "assets/img/logo.jpeg";
+          contenedorImagen.src = imagenFinal;
+          // Si la imagen falla al cargar, pone el logo por defecto automáticamente
+          contenedorImagen.onerror = function() {
+            this.src = 'assets/img/logo.jpeg';
+          };
         }
+        
         if (contenedorTexto) {
-          contenedorTexto.innerText = pag.texto || "Texto no disponible.";
+          contenedorTexto.innerText = textoFinal;
         }
         
         const indicador = document.getElementById('pageIndicator');
@@ -295,7 +302,6 @@ function abrirModoLibro(id) {
           indicador.innerText = `Página ${indicePagina + 1} de ${cuentoActual.paginas.length}`;
         }
         
-        // Encendemos animación
         if (contenedorTexto) contenedorTexto.classList.add('animacion-pagina');
         if (contenedorImagen) contenedorImagen.classList.add('animacion-pagina');
 
@@ -304,7 +310,7 @@ function abrirModoLibro(id) {
         if (btnPrev) btnPrev.disabled = (indicePagina === 0);
         if (btnNext) btnNext.disabled = (indicePagina === cuentoActual.paginas.length - 1);
       } catch (error) {
-        console.error("Error protegido al pasar página:", error);
+        console.error("Error al actualizar la página del libro:", error);
       }
     }
 
