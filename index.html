@@ -246,31 +246,44 @@ function abrirModoLibro(id) {
       } catch (e) { statusEl.innerText = "✅ Voto guardado con éxito."; }
     }
     function actualizarPaginaLibro() {
-      if (!cuentoActual) return;
-      const pag = cuentoActual.paginas[indicePagina];
-      
-      const contenedorTexto = document.getElementById('theatreText');
-      const contenedorImagen = document.getElementById('theatreImage');
-      
-      // 1. Apagamos la animación
-      contenedorTexto.classList.remove('animacion-pagina');
-      contenedorImagen.classList.remove('animacion-pagina');
-      
-      // 2. Truco para forzar al navegador a reiniciar el CSS
-      void contenedorTexto.offsetWidth; 
-      void contenedorImagen.offsetWidth;
-      
-      // 3. Cambiamos el contenido (imagen y texto)
-      contenedorImagen.src = pag.imagen || cuentoActual.imagen;
-      contenedorTexto.innerText = pag.texto;
-      document.getElementById('pageIndicator').innerText = `Página ${indicePagina + 1} de ${cuentoActual.paginas.length}`;
-      
-      // 4. Encendemos la animación de nuevo
-      contenedorTexto.classList.add('animacion-pagina');
-      contenedorImagen.classList.add('animacion-pagina');
+      try {
+        if (!cuentoActual || !cuentoActual.paginas) return;
+        const pag = cuentoActual.paginas[indicePagina];
+        
+        const contenedorTexto = document.getElementById('theatreText');
+        const contenedorImagen = document.getElementById('theatreImage');
+        
+        // Apagamos animación de forma segura
+        if (contenedorTexto) contenedorTexto.classList.remove('animacion-pagina');
+        if (contenedorImagen) contenedorImagen.classList.remove('animacion-pagina');
+        
+        // Forzar reinicio del CSS
+        if (contenedorTexto) void contenedorTexto.offsetWidth; 
+        
+        // Cargamos la imagen: Si la página no tiene, usa la portada. Si la portada no tiene, usa el logo.
+        if (contenedorImagen) {
+          contenedorImagen.src = pag.imagen || cuentoActual.imagen || "assets/img/logo.jpeg";
+        }
+        if (contenedorTexto) {
+          contenedorTexto.innerText = pag.texto || "Texto no disponible.";
+        }
+        
+        const indicador = document.getElementById('pageIndicator');
+        if (indicador) {
+          indicador.innerText = `Página ${indicePagina + 1} de ${cuentoActual.paginas.length}`;
+        }
+        
+        // Encendemos animación
+        if (contenedorTexto) contenedorTexto.classList.add('animacion-pagina');
+        if (contenedorImagen) contenedorImagen.classList.add('animacion-pagina');
 
-      document.getElementById('btnPrev').disabled = (indicePagina === 0);
-      document.getElementById('btnNext').disabled = (indicePagina === cuentoActual.paginas.length - 1);
+        const btnPrev = document.getElementById('btnPrev');
+        const btnNext = document.getElementById('btnNext');
+        if (btnPrev) btnPrev.disabled = (indicePagina === 0);
+        if (btnNext) btnNext.disabled = (indicePagina === cuentoActual.paginas.length - 1);
+      } catch (error) {
+        console.error("Error protegido al pasar página:", error);
+      }
     }
 
     function paginaSiguiente() { if (indicePagina < cuentoActual.paginas.length - 1) { indicePagina++; actualizarPaginaLibro(); } }
