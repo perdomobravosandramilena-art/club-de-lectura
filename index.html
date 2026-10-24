@@ -24,93 +24,146 @@
       margin: 0;
       padding: 0;
     }
+    
+    /* Header compacto y limpio a la izquierda */
     header {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      padding: 1rem 2rem;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      background: #ffffff;
+      padding: 0.8rem 2rem;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.04);
       display: flex;
       align-items: center;
       gap: 1rem;
       position: sticky; top: 0; z-index: 100;
     }
-    header img { height: 50px; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-    header h1 { font-family: 'Caveat', cursive; color: var(--primary); font-size: 2.2rem; margin: 0; }
+    header img { height: 45px; border-radius: 50%; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    header h1 { font-family: 'Caveat', cursive; color: var(--primary); font-size: 1.8rem; margin: 0; }
     
+    /* Hero discreto sobre fondo claro */
     .hero {
       text-align: center;
-      padding: 2.5rem 1rem 2rem 1rem;
-      background: linear-gradient(135deg, #fae1d2 0%, #fdfbf7 100%);
-      border-bottom: 3px dashed #f4c430;
+      padding: 1.5rem 1rem 1rem 1rem;
+      background: var(--bg-cream);
+      border-bottom: 2px dashed #fae1d2;
     }
-    .hero h2 { font-size: 2.8rem; color: var(--primary); font-family: 'Caveat', cursive; margin: 0 0 10px 0; }
-    .hero p { font-size: 1.05rem; color: #555; max-width: 600px; margin: 0 auto; }
+    .hero h2 { font-size: 2.2rem; color: var(--primary); font-family: 'Caveat', cursive; margin: 0 0 5px 0; }
+    .hero p { font-size: 0.95rem; color: #666; max-width: 600px; margin: 0 auto; }
 
-    .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .container { max-width: 1300px; margin: 0 auto; padding: 1.5rem 2rem; }
 
-    /* Sección de Estadísticas */
-    .stats-section {
-      background: white;
-      border-radius: 20px;
-      padding: 1.5rem 2rem;
-      margin-bottom: 3rem;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.04);
-      border: 2px solid #fae1d2;
+    /* Layout Principal: Contenedor de Cuentos + Widget de Estadística Lateral (Hover) */
+    .main-layout {
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+      position: relative;
     }
-    .stats-section h3 {
-      font-family: 'Caveat', cursive;
-      color: var(--primary);
-      font-size: 2rem;
+
+    .biblioteca-section {
+      flex: 1;
+    }
+
+    .section-heading { 
+      font-family: 'Caveat', cursive; 
+      color: var(--primary); 
+      font-size: 2.2rem; 
       margin-top: 0;
-      margin-bottom: 1rem;
-      text-align: center;
+      margin-bottom: 1.2rem; 
+      border-bottom: 2px solid #fae1d2;
+      padding-bottom: 5px;
+    }
+
+    /* Widget de Estadística Compacto con Expansión en Hover */
+    .stats-widget {
+      width: 80px;
+      background: #2c2c2c; /* Fondo oscuro elegante */
+      color: white;
+      border-radius: 16px;
+      padding: 15px 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      position: sticky;
+      top: 90px;
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s;
+      overflow: hidden;
+      cursor: pointer;
+      z-index: 50;
+      border: 2px solid var(--accent-yellow);
+    }
+    .stats-widget:hover {
+      width: 420px; /* Se amplía al pasar el cursor */
+      background: #1e1e1e;
+    }
+    .stats-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      white-space: nowrap;
+    }
+    .stats-icon { font-size: 1.8rem; min-width: 40px; text-align: center; }
+    .stats-title-text {
+      font-family: 'Caveat', cursive;
+      font-size: 1.5rem;
+      color: var(--accent-yellow);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      white-space: nowrap;
+    }
+    .stats-widget:hover .stats-title-text {
+      opacity: 1;
     }
     .chart-container {
       position: relative;
-      width: 100%;
-      max-height: 250px;
-      margin: 0 auto;
+      width: 390px;
+      height: 240px;
+      margin-top: 15px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+    .stats-widget:hover .chart-container {
+      opacity: 1;
+      pointer-events: auto;
     }
 
-    .section-heading { font-family: 'Caveat', cursive; color: var(--primary); font-size: 2.5rem; margin-bottom: 1.5rem; text-align: center; }
-
-    .cuentos-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 2.5rem; }
+    /* Cuadrícula de Tarjetas Completas y Proporcionadas */
+    .cuentos-container { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+      gap: 2rem; 
+    }
     
     .cuento-card {
       background: var(--card-bg);
-      border-radius: 20px;
+      border-radius: 18px;
       overflow: hidden;
-      box-shadow: 0 10px 25px rgba(200, 90, 50, 0.08);
+      box-shadow: 0 8px 20px rgba(200, 90, 50, 0.06);
       transition: all 0.3s ease;
       display: flex;
       flex-direction: column;
       border: 2px solid #fae1d2;
       height: 100%;
     }
-    .cuento-card:hover { transform: translateY(-6px); box-shadow: 0 15px 35px rgba(200, 90, 50, 0.15); }
+    .cuento-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(200, 90, 50, 0.12); }
     
     .card-banner {
-      height: 140px;
+      height: 120px;
       background: linear-gradient(135deg, var(--primary), var(--accent-yellow));
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    .card-banner span { font-size: 3.5rem; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15)); }
+    .card-banner span { font-size: 3rem; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.15)); }
     
-    .cuento-content { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
-    .categoria-badge { background: #fae1d2; color: var(--primary); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; width: fit-content; margin-bottom: 10px; }
-    .autor-text { font-size: 0.85rem; color: #666; margin-bottom: 6px; font-style: italic; }
+    .cuento-content { padding: 1.2rem; display: flex; flex-direction: column; flex-grow: 1; }
+    .categoria-badge { background: #fae1d2; color: var(--primary); padding: 3px 10px; border-radius: 15px; font-size: 0.7rem; font-weight: bold; width: fit-content; margin-bottom: 8px; }
+    .autor-text { font-size: 0.8rem; color: #666; margin-bottom: 5px; font-style: italic; }
     
-    /* Títulos corregidos para evitar cortes o compresión */
     .cuento-content h3 { 
-      font-size: 1.35rem; 
-      margin: 0 0 10px 0; 
+      font-size: 1.2rem; 
+      margin: 0 0 8px 0; 
       color: var(--text-dark); 
-      font-family: 'Quicksand', sans-serif; 
       font-weight: 700; 
-      line-height: 1.35; 
-      min-height: 3.6rem; /* Espacio uniforme para 2 líneas */
+      line-height: 1.3; 
+      min-height: 3.2rem;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
@@ -118,11 +171,11 @@
     }
     
     .descripcion-corta { 
-      font-size: 0.92rem; 
+      font-size: 0.88rem; 
       color: #555; 
       flex-grow: 1; 
-      margin-bottom: 1.5rem; 
-      line-height: 1.5; 
+      margin-bottom: 1.2rem; 
+      line-height: 1.4; 
       display: -webkit-box;
       -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
@@ -133,18 +186,18 @@
       background: var(--primary);
       color: white;
       border: none;
-      padding: 11px 18px;
-      border-radius: 12px;
+      padding: 10px 15px;
+      border-radius: 10px;
       cursor: pointer;
       font-weight: bold;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       width: 100%;
       transition: background 0.2s;
-      box-shadow: 0 4px 12px rgba(200, 90, 50, 0.25);
+      box-shadow: 0 3px 10px rgba(200, 90, 50, 0.2);
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
     }
     .btn-leer:hover { background: var(--primary-hover); }
 
@@ -176,7 +229,16 @@
     .modal-body { flex-grow: 1; width: 100%; height: calc(100% - 60px); background: #000; }
     .modal-body iframe { width: 100%; height: 100%; border: none; }
 
-    footer { text-align: center; padding: 2rem; color: #777; font-size: 0.85rem; border-top: 1px solid #eee; margin-top: 3rem; }
+    footer { text-align: center; padding: 1.5rem; color: #777; font-size: 0.85rem; border-top: 1px solid #eee; margin-top: 3rem; }
+
+    /* Responsive para celulares */
+    @media (max-width: 768px) {
+      .main-layout { flex-direction: column; }
+      .stats-widget { width: 100%; position: static; margin-bottom: 1.5rem; }
+      .stats-widget:hover { width: 100%; }
+      .chart-container { width: 100%; opacity: 1; pointer-events: auto; }
+      .stats-title-text { opacity: 1; }
+    }
   </style>
 </head>
 <body>
@@ -188,24 +250,34 @@
 
   <div class="hero">
     <h2>Transformamos la lectura en una fiesta viva</h2>
-    <p>Disfruta experiencias pedagógicas y relatos animados interactivos para colegios y familias en Colombia.</p>
+    <p>Relatos animados interactivos para inspirar a niños y familias en Colombia.</p>
   </div>
 
   <div class="container">
     
-    <!-- SECCIÓN DE ESTADÍSTICAS VISUALES -->
-    <div class="stats-section">
-      <h3>📊 Ranking de Cuentos Más Leídos</h3>
-      <div class="chart-container">
-        <canvas id="statsChart"></canvas>
+    <div class="main-layout">
+      
+      <!-- SECCIÓN PRINCIPAL: BIBLIOTECA DE TARJETAS -->
+      <div class="biblioteca-section">
+        <h2 class="section-heading">Nuestra Biblioteca de Historias</h2>
+        <div id="contenedorCuentos" class="cuentos-container">
+          <p style="text-align: center; width: 100%; grid-column: 1/-1; color: #888;">Cargando cuentos mágicos...</p>
+        </div>
       </div>
+
+      <!-- WIDGET LATERAL DE ESTADÍSTICAS (SE AMPLÍA AL PASAR EL CURSOR) -->
+      <div class="stats-widget" title="Pasa el cursor para ver el ranking">
+        <div class="stats-header">
+          <div class="stats-icon">📊</div>
+          <div class="stats-title-text">Ranking de Lectura</div>
+        </div>
+        <div class="chart-container">
+          <canvas id="statsChart"></canvas>
+        </div>
+      </div>
+
     </div>
 
-    <h2 class="section-heading">Nuestra Biblioteca de Historias</h2>
-    
-    <div id="contenedorCuentos" class="cuentos-container">
-      <p style="text-align: center; width: 100%; grid-column: 1/-1; color: #888;">Cargando cuentos mágicos...</p>
-    </div>
   </div>
 
   <!-- MODAL DE PANTALLA COMPLETA -->
@@ -227,6 +299,7 @@
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxMdhPSsxWtuFITLK_ediuHhPVqXCiDoX6qEmjUSo-pYdoaW52HS6cdz32Q3nVvVYON/exec";
     
     let cuentosData = [];
+    let myChart = null;
 
     async function cargarDatos() {
       try {
@@ -289,17 +362,19 @@
       const labels = stats.map(s => s.cuento);
       const dataValues = stats.map(s => s.clics);
 
-      new Chart(ctx, {
+      if (myChart) myChart.destroy();
+
+      myChart = new Chart(ctx, {
         type: 'bar',
         data: {
           labels: labels.length > 0 ? labels : ['Sin datos'],
           datasets: [{
-            label: 'Lecturas / Clics',
+            label: 'Lecturas',
             data: dataValues.length > 0 ? dataValues : [0],
-            backgroundColor: '#fae1d2',
+            backgroundColor: '#f4c430',
             borderColor: '#c85a32',
-            borderWidth: 2,
-            borderRadius: 8
+            borderWidth: 1,
+            borderRadius: 6
           }]
         },
         options: {
@@ -309,9 +384,14 @@
             legend: { display: false }
           },
           scales: {
+            x: {
+              ticks: { color: '#ffffff', font: { size: 10 } },
+              grid: { color: 'rgba(255,255,255,0.1)' }
+            },
             y: {
               beginAtZero: true,
-              ticks: { stepSize: 1 }
+              ticks: { color: '#ffffff', stepSize: 1 },
+              grid: { color: 'rgba(255,255,255,0.1)' }
             }
           }
         }
