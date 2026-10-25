@@ -22,12 +22,29 @@
       color: var(--text-dark);
       margin: 0;
       padding: 0;
+      position: relative;
     }
     
-    /* Header con Azul Infantil Cálido (#1e3a8a) */
+    /* Logotipo en marca de agua de fondo */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px; height: 500px;
+      background-image: url('assets/img/logo.jpeg');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Header Azul Infantil Cálido (#1e3a8a) */
     header {
       background: #1e3a8a;
-      padding: 0.8rem 2rem;
+      padding: 1rem 2rem;
       box-shadow: 0 4px 15px rgba(0,0,0,0.15);
       display: flex;
       flex-direction: column;
@@ -42,22 +59,22 @@
       align-items: center;
       justify-content: space-between;
     }
-    .header-left { display: flex; align-items: center; gap: 1rem; }
-    header img { height: 48px; width: 48px; object-fit: cover; border-radius: 50%; border: 2px solid var(--accent-yellow); }
-    header h1 { font-family: 'Caveat', cursive; color: white; font-size: 2.3rem; margin: 0; letter-spacing: 0.5px; }
+    .header-left { display: flex; align-items: center; gap: 1.2rem; }
+    header img { height: 55px; width: 55px; object-fit: cover; border-radius: 50%; border: 2px solid var(--accent-yellow); }
+    header h1 { font-family: 'Caveat', cursive; color: white; font-size: 2.6rem; margin: 0; letter-spacing: 0.5px; }
     
     .header-subtitle {
       color: var(--accent-yellow);
       font-family: 'Caveat', cursive;
-      font-size: 1.25rem;
-      margin-top: 4px;
+      font-size: 1.35rem;
+      margin-top: 6px;
       font-weight: 700;
     }
 
     /* Menú Desplegable Compacto */
     .user-profile-menu { position: relative; cursor: pointer; }
     .avatar-btn {
-      width: 40px; height: 40px;
+      width: 42px; height: 42px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--primary), var(--accent-yellow));
       display: flex; align-items: center; justify-content: center;
@@ -70,7 +87,7 @@
     
     .profile-dropdown {
       display: none;
-      position: absolute; right: 0; top: 48px;
+      position: absolute; right: 0; top: 50px;
       background: white; width: 280px;
       border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
       border: 2px solid var(--primary); padding: 1rem; z-index: 200; text-align: left;
@@ -82,28 +99,35 @@
     .dropdown-link { display: block; padding: 6px 0; color: var(--text-dark); text-decoration: none; font-size: 0.88rem; font-weight: 600; }
     .dropdown-link:hover { color: var(--primary); }
 
-    .container { max-width: 1300px; margin: 0 auto; padding: 1.5rem 2rem; }
+    .container { max-width: 1300px; margin: 0 auto; padding: 1.5rem 2rem; position: relative; z-index: 1; }
 
-    /* Barra Superior para Biblioteca y Combo Selector */
+    /* Barra Superior para Biblioteca y Combo Selector en dos líneas a la derecha */
     .library-header-bar {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 1rem;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
       border-bottom: 2px solid #fae1d2;
-      padding-bottom: 10px;
+      padding-bottom: 12px;
     }
 
     .section-heading { 
       font-family: 'Caveat', cursive; 
       color: var(--primary); 
-      font-size: 2.2rem; 
+      font-size: 2.3rem; 
       margin: 0;
     }
 
-    .categoria-select-container { display: flex; align-items: center; gap: 10px; }
+    .categoria-select-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+      max-width: 600px;
+    }
+    .categoria-select-container { display: flex; align-items: center; gap: 8px; }
     .categoria-select-container label { font-weight: 600; font-size: 0.9rem; color: var(--text-dark); }
     .categoria-select {
       background: white; border: 2px solid var(--primary); padding: 8px 14px;
@@ -111,23 +135,14 @@
       color: var(--text-dark); cursor: pointer; font-size: 0.9rem;
       box-shadow: 0 2px 8px rgba(200,90,50,0.1);
     }
-
-    /* Caja de Reseña Pedagógica en Fondo Oscuro (Azul Infantil) */
-    .resena-box-dark {
-      background: #1e3a8a;
-      border-left: 5px solid var(--accent-yellow);
-      color: white;
-      padding: 0.9rem 1.2rem;
-      border-radius: 0 10px 10px 0;
-      margin-bottom: 2rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1.5rem;
+    
+    .resena-inline {
+      font-size: 0.85rem;
+      color: #555;
+      text-align: right;
+      line-height: 1.3;
+      font-style: italic;
     }
-    .resena-left h4 { margin: 0 0 3px 0; color: var(--accent-yellow); font-size: 1.1rem; }
-    .resena-left p { margin: 0; font-size: 0.88rem; color: #e2e8f0; line-height: 1.3; }
 
     .main-layout { display: flex; gap: 2rem; align-items: flex-start; position: relative; }
     .biblioteca-section { flex: 1; }
@@ -136,7 +151,7 @@
     .stats-widget {
       width: 75px; background: #2c2c2c; color: white; border-radius: 16px;
       padding: 15px 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-      position: sticky; top: 110px; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: sticky; top: 120px; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       overflow: hidden; cursor: pointer; z-index: 50; border: 2px solid var(--accent-yellow);
     }
     .stats-widget:hover { width: 400px; background: #1e1e1e; }
@@ -235,6 +250,8 @@
 
     @media (max-width: 768px) {
       .library-header-bar { flex-direction: column; align-items: flex-start; }
+      .categoria-select-wrapper { align-items: flex-start; }
+      .resena-inline { text-align: left; }
       .main-layout { flex-direction: column; }
       .stats-widget { width: 100%; position: static; margin-bottom: 1.5rem; }
       .stats-widget:hover { width: 100%; }
@@ -269,22 +286,20 @@
 
   <div class="container">
     
-    <!-- Biblioteca y Combo Selector Alineados -->
+    <!-- Biblioteca y Combo Selector con Descripción y Reseña a la derecha en dos líneas -->
     <div class="library-header-bar">
       <h2 class="section-heading">Nuestra Biblioteca de Historias</h2>
-      <div class="categoria-select-container">
-        <label for="categoriaSelect">📂 Filtrar Categoría:</label>
-        <select id="categoriaSelect" class="categoria-select" onchange="cambiarCategoria(this.value)">
-          <option value="todas">📖 Todas las historias</option>
-        </select>
-      </div>
-    </div>
-
-    <!-- Caja de Reseña en Azul Infantil -->
-    <div class="resena-box-dark">
-      <div class="resena-left">
-        <h4 id="resenaTitulo">Biblioteca General</h4>
-        <p id="resenaTexto">Explora nuestra colección completa de relatos animados diseñados para inspirar a estudiantes, padres y educadores.</p>
+      
+      <div class="categoria-select-wrapper">
+        <div class="categoria-select-container">
+          <label for="categoriaSelect">📂 Filtrar Categoría:</label>
+          <select id="categoriaSelect" class="categoria-select" onchange="cambiarCategoria(this.value)">
+            <option value="todas">📖 Todas las historias</option>
+          </select>
+        </div>
+        <div id="resenaInline" class="resena-inline">
+          Explora nuestra colección completa de relatos animados diseñados para inspirar a estudiantes, padres y educadores.
+        </div>
       </div>
     </div>
 
@@ -388,9 +403,7 @@
 
         if (data && Array.isArray(data.cuentos)) {
           cuentosData = data.cuentos;
-          // Seleccionar por defecto la primera categoría del orden si existe, o 'todas'
-          const catDefault = categoriasData.length > 0 ? categoriasData[0].nombre : 'todas';
-          cambiarCategoria(catDefault);
+          cambiarCategoria('todas');
         }
         
         if (data && Array.isArray(data.stats)) {
@@ -446,17 +459,14 @@
       categoriaActiva = nombreCat;
       document.getElementById('categoriaSelect').value = nombreCat;
 
-      const resenaTitulo = document.getElementById('resenaTitulo');
-      const resenaTexto = document.getElementById('resenaTexto');
+      const resenaInline = document.getElementById('resenaInline');
       
       if (nombreCat === 'todas') {
-        resenaTitulo.innerText = "Biblioteca General";
-        resenaTexto.innerText = "Explora nuestra colección completa de relatos animados diseñados para inspirar a estudiantes, padres y educadores.";
+        resenaInline.innerText = "Explora nuestra colección completa de relatos animados diseñados para inspirar a estudiantes, padres y educadores.";
       } else {
         const catInfo = categoriasData.find(c => c.nombre === nombreCat);
         if (catInfo) {
-          resenaTitulo.innerText = `${catInfo.emoji || '📖'} ${catInfo.nombre}`;
-          resenaTexto.innerText = `${catInfo.descripcion} | Reseña pedagógica: ${catInfo.resena}`;
+          resenaInline.innerText = `${catInfo.descripcion} | Reseña: ${catInfo.resena}`;
         }
       }
 
