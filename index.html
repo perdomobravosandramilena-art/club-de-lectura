@@ -25,7 +25,6 @@
       position: relative;
     }
     
-    /* Marca de agua institucional geométrica garantizada por CSS */
     body::before {
       content: "";
       position: fixed;
@@ -38,7 +37,6 @@
       z-index: 0;
     }
 
-    /* Header con Azul Infantil Cálido (#1e3a8a) */
     header {
       background: #1e3a8a;
       padding: 1rem 2rem;
@@ -71,7 +69,6 @@
     }
     .header-subtitle span { color: var(--accent-yellow); font-weight: 700; }
 
-    /* Menú Desplegable Compacto */
     .user-profile-menu { position: relative; cursor: pointer; }
     .avatar-btn {
       width: 42px; height: 42px;
@@ -101,21 +98,6 @@
 
     .container { max-width: 1300px; margin: 0 auto; padding: 1.5rem 2rem; position: relative; z-index: 1; }
 
-    /* Contenedor del Video en Portada (Visible y listo) */
-    .video-portada-container {
-      background: white;
-      border: 2px dashed #fae1d2;
-      border-radius: 16px;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-      text-align: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.02);
-    }
-    .video-portada-container iframe {
-      width: 100%; max-width: 700px; height: 380px; border-radius: 12px; border: none;
-    }
-
-    /* Barra Superior para Biblioteca y Combo Selector */
     .library-header-bar {
       display: flex;
       align-items: center;
@@ -141,7 +123,6 @@
       box-shadow: 0 2px 8px rgba(200,90,50,0.1);
     }
 
-    /* Caja de Reseña Pedagógica en Banda Elegante Azul (Recuperada) */
     .resena-box-dark {
       background: #1e3a8a;
       border-left: 6px solid var(--accent-yellow);
@@ -157,7 +138,6 @@
     .main-layout { display: flex; gap: 2rem; align-items: flex-start; position: relative; }
     .biblioteca-section { flex: 1; }
 
-    /* Widget de Estadísticas */
     .stats-widget {
       width: 75px; background: #2c2c2c; color: white; border-radius: 16px;
       padding: 15px 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
@@ -224,7 +204,6 @@
     }
     .btn-votar:hover { background: #e0b028; }
 
-    /* Modal de PQRS */
     .modal-voto {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center;
@@ -245,7 +224,6 @@
     .btn-enviar-voto { background: var(--primary); color: white; border: none; padding: 10px; border-radius: 8px; font-weight: bold; flex: 1; cursor: pointer; }
     .btn-cancelar { background: #ddd; color: #333; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; }
 
-    /* Muro de Opiniones Inferior */
     .muro-opiniones {
       margin-top: 4rem; background: white; border: 2px solid #fae1d2;
       border-radius: 16px; padding: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.03);
@@ -270,11 +248,10 @@
 </head>
 <body>
 
-  <!-- Header con Azul Infantil (#1e3a8a) -->
   <header>
     <div class="header-top">
       <div class="header-left">
-        <img src="assets/img/logo.jpeg" alt="Logo Club de Lectura">
+        <img src="assets/img/logo.jpeg" alt="Logo Club de Lectura" onerror="this.style.display='none'">
         <h1>¡Metidos en el Cuento!</h1>
       </div>
       <div class="user-profile-menu">
@@ -294,12 +271,6 @@
 
   <div class="container">
     
-    <!-- Contenedor del Video en Portada (Para insertar tu video cuando lo desees) -->
-    <div id="videoContainer" class="video-portada-container" style="display: none;">
-      <iframe src="" title="Video de Portada" allowfullscreen></iframe>
-    </div>
-
-    <!-- Biblioteca y Combo Selector de Categorías -->
     <div class="library-header-bar">
       <h2 class="section-heading">Nuestra Biblioteca de Historias</h2>
       <div class="categoria-select-container">
@@ -310,7 +281,6 @@
       </div>
     </div>
 
-    <!-- Caja de Reseña Pedagógica en Banda Elegante Azul (Recuperada) -->
     <div class="resena-box-dark">
       <div class="resena-left">
         <h4 id="resenaTitulo">Biblioteca General</h4>
@@ -325,7 +295,6 @@
         </div>
       </div>
 
-      <!-- Widget de Ranking Lateral -->
       <div class="stats-widget" title="Pasa el cursor para ver el ranking">
         <div class="stats-header">
           <div class="stats-icon">📊</div>
@@ -337,7 +306,6 @@
       </div>
     </div>
 
-    <!-- Muro de Opiniones Inferior -->
     <div class="muro-opiniones">
       <h3>✨ Opiniones y Reseñas Recientes del Club</h3>
       <p style="font-size: 0.9rem; color: #666; margin-top: -5px;">Lo que dicen nuestros pequeños lectores y familias en Colombia:</p>
@@ -348,7 +316,6 @@
 
   </div>
 
-  <!-- Modal de Calificación y PQRS -->
   <div id="votoModal" class="modal-voto">
     <div class="modal-voto-content">
       <h3 id="modalVotoTitle">¡Deja tu Opinión!</h3>
@@ -383,4 +350,266 @@
         </div>
 
         <div class="modal-actions">
-          <button type="submit" class="btn-enviar-voto">
+          <button type="submit" class="btn-enviar-voto">Enviar Opinión</button>
+          <button type="button" class="btn-cancelar" onclick="cerrarModalVoto()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 Club de Lectura · Metidos en el Cuento · Creado con amor para la niñez</p>
+  </footer>
+
+  <script>
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzIQE371oemKiyqG_3QsqhrP53_xGoPE-bvGtcOVv7itSNSb7aDG2LtdE8HPNDAt39F/exec";
+    
+    let cuentosData = [];
+    let categoriasData = [];
+    let categoriaActiva = 'todas';
+    let myChart = null;
+
+    async function cargarDatos() {
+      try {
+        const response = await fetch(GOOGLE_SCRIPT_URL);
+        if (!response.ok) throw new Error("Error en la red");
+        const data = await response.json();
+        
+        if (data && Array.isArray(data.categorias)) {
+          categoriasData = data.categorias;
+          poblarComboCategorias(categoriasData);
+        }
+
+        if (data && Array.isArray(data.menu)) {
+          renderizarMenu(data.menu);
+        }
+
+        if (data && Array.isArray(data.cuentos)) {
+          cuentosData = data.cuentos;
+          const catDefault = categoriasData.length > 0 ? categoriasData[0].nombre : 'todas';
+          cambiarCategoria(catDefault);
+        }
+        
+        if (data && Array.isArray(data.stats)) {
+          renderizarGrafico(data.stats);
+        }
+
+        if (data && Array.isArray(data.reseñas)) {
+          renderizarReseñas(data.reseñas);
+        }
+      } catch (err) {
+        console.error("Error al cargar datos:", err);
+        document.getElementById('contenedorCuentos').innerHTML = '<p style="text-align:center; color:red; grid-column: 1/-1;">Error al conectar con la base de datos o carga en progreso.</p>';
+      }
+    }
+
+    function poblarComboCategorias(cats) {
+      const select = document.getElementById('categoriaSelect');
+      select.innerHTML = `<option value="todas">📖 Todas las historias</option>`;
+      
+      cats.forEach(cat => {
+        const opt = document.createElement('option');
+        opt.value = cat.nombre;
+        opt.innerText = `${cat.emoji || '✨'} ${cat.nombre}`;
+        select.appendChild(opt);
+      });
+    }
+
+    function renderizarMenu(menuItems) {
+      const container = document.getElementById('menuItemsContainer');
+      container.innerHTML = '';
+      
+      menuItems.forEach(item => {
+        const a = document.createElement('a');
+        a.className = 'dropdown-link';
+        a.innerText = item.texto;
+        a.title = item.desc;
+        
+        if (item.accion.startsWith('http')) {
+          a.href = item.accion;
+          a.target = '_blank';
+        } else {
+          a.href = '#';
+          a.onclick = (e) => {
+            e.preventDefault();
+            try { eval(item.accion); } catch(ex) { alert(item.texto); }
+          };
+        }
+        container.appendChild(a);
+      });
+    }
+
+    function cambiarCategoria(nombreCat) {
+      categoriaActiva = nombreCat;
+      document.getElementById('categoriaSelect').value = nombreCat;
+
+      const resenaTitulo = document.getElementById('resenaTitulo');
+      const resenaTexto = document.getElementById('resenaTexto');
+      
+      if (nombreCat === 'todas') {
+        resenaTitulo.innerText = "Biblioteca General";
+        resenaTexto.innerText = "Explora nuestra colección completa de relatos animados diseñados para inspirar a estudiantes, padres y educadores.";
+      } else {
+        const catInfo = categoriasData.find(c => c.nombre === nombreCat);
+        if (catInfo) {
+          resenaTitulo.innerText = `${catInfo.emoji || '📖'} ${catInfo.nombre}`;
+          resenaTexto.innerText = `${catInfo.descripcion} | Reseña pedagógica: ${catInfo.resena}`;
+        }
+      }
+
+      const cuentosFiltrados = nombreCat === 'todas' 
+        ? cuentosData 
+        : cuentosData.filter(c => c.categoria.toLowerCase().trim() === nombreCat.toLowerCase().trim());
+      
+      renderizarCuentos(cuentosFiltrados);
+    }
+
+    function renderizarCuentos(cuentos) {
+      const contenedor = document.getElementById('contenedorCuentos');
+      contenedor.innerHTML = '';
+      
+      const emojis = ['📖', '✨', '🌟', '🎨', '🚀', '💖'];
+
+      if (cuentos.length === 0) {
+        contenedor.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color:#888;">No hay cuentos publicados en esta categoría todavía.</p>';
+        return;
+      }
+
+      cuentos.forEach((cuento, index) => {
+        const idSeguro = cuento.id || cuento.titulo;
+        const autores = cuento.autores || 'Autores del Club';
+        const emojiRandom = emojis[index % emojis.length];
+        
+        const card = document.createElement('div');
+        card.className = 'cuento-card';
+        card.innerHTML = `
+          <div class="card-banner">
+            <span>${emojiRandom}</span>
+          </div>
+          <div class="cuento-content">
+            <div>
+              <span class="categoria-badge">${cuento.categoria || 'Mujeres con historia'}</span>
+              <p class="autor-text">Por: ${autores}</p>
+              <h3>${cuento.titulo}</h3>
+              <p class="descripcion-corta">${cuento.descripcion}</p>
+            </div>
+            <div class="card-buttons">
+              <button class="btn-leer" onclick="abrirLibro('${idSeguro}')">📖 Leer</button>
+              <button class="btn-votar" onclick="abrirModalVoto('${cuento.titulo.replace(/'/g, "\\'")}')">💬 Opinión</button>
+            </div>
+          </div>
+        `;
+        contenedor.appendChild(card);
+      });
+    }
+
+    function renderizarGrafico(stats) {
+      const ctx = document.getElementById('statsChart').getContext('2d');
+      const labels = stats.map(s => s.cuento);
+      const dataValues = stats.map(s => s.clics);
+
+      if (myChart) myChart.destroy();
+
+      myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels.length > 0 ? labels : ['Sin datos'],
+          datasets: [{
+            label: 'Lecturas',
+            data: dataValues.length > 0 ? dataValues : [0],
+            backgroundColor: '#f4c430',
+            borderColor: '#c85a32',
+            borderWidth: 1,
+            borderRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { ticks: { color: '#ffffff', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.1)' } },
+            y: { beginAtZero: true, ticks: { color: '#ffffff', stepSize: 1 }, grid: { color: 'rgba(255,255,255,0.1)' } }
+          }
+        }
+      });
+    }
+
+    function renderizarReseñas(reseñas) {
+      const container = document.getElementById('opinionesContainer');
+      if (reseñas.length === 0) {
+        container.innerHTML = '<p style="color:#888; font-size:0.9rem;">Sé el primero en dejar tu opinión sobre nuestros cuentos.</p>';
+        return;
+      }
+      container.innerHTML = '';
+      reseñas.forEach(r => {
+        const div = document.createElement('div');
+        div.className = 'opinion-card';
+        div.innerHTML = `
+          <p>“${r.comentario}”</p>
+          <div class="opinion-author">⭐ ${r.voto} — ${r.lector} (${r.cuento})</div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function abrirLibro(id) {
+      const cuento = cuentosData.find(c => (c.id === id) || (c.titulo === id));
+      if (!cuento || !cuento.enlaceGemini) {
+        alert("El enlace interactivo de este cuento no está disponible todavía.");
+        return;
+      }
+      
+      fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST', mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ accion: 'clic', idCuento: id, cuento: cuento.titulo })
+      }).catch(err => console.log("Estadística no registrada", err));
+
+      window.open(cuento.enlaceGemini, '_blank');
+    }
+
+    function abrirModalVoto(nombreCuento) {
+      document.getElementById('modalVotoTitle').innerText = `Opinión: ${nombreCuento}`;
+      document.getElementById('cuentoVotoInput').value = nombreCuento;
+      document.getElementById('formVoto').reset();
+      document.getElementById('votoModal').classList.add('active');
+    }
+
+    function cerrarModalVoto() {
+      document.getElementById('votoModal').classList.remove('active');
+    }
+
+    async function enviarVoto(event) {
+      event.preventDefault();
+      
+      const payload = {
+        accion: 'voto',
+        cuento: document.getElementById('cuentoVotoInput').value,
+        voto: document.getElementById('votoSelect').value,
+        lector: document.getElementById('lectorInput').value,
+        comentario: document.getElementById('comentarioInput').value,
+        sugerencia: document.getElementById('sugerenciaInput').value,
+        idUsuario: 'web-visitor-' + Math.floor(Math.random() * 10000)
+      };
+
+      try {
+        await fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST', mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+        
+        alert("¡Mil gracias por compartir tu opinión! Ha sido guardada con éxito en nuestro club.");
+        cerrarModalVoto();
+        setTimeout(cargarDatos, 1000);
+      } catch (err) {
+        console.error("Error al enviar voto:", err);
+        alert("Hubo un error al enviar tu opinión. Inténtalo nuevamente.");
+      }
+    }
+
+    cargarDatos();
+  </script>
+</body>
+</html>
