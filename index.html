@@ -25,101 +25,121 @@
       padding: 0;
     }
     
+    /* Header con fondo oscuro, elegante y profesional */
     header {
-      background: #ffffff;
-      padding: 0.8rem 2rem;
-      box-shadow: 0 2px 15px rgba(0,0,0,0.04);
+      background: #1e1e1e;
+      padding: 0.6rem 2rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
       display: flex;
       align-items: center;
       justify-content: space-between;
       position: sticky; top: 0; z-index: 100;
+      border-bottom: 3px solid var(--accent-yellow);
     }
     .header-left { display: flex; align-items: center; gap: 1rem; }
-    header img { height: 45px; width: 45px; object-fit: cover; border-radius: 50%; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-    header h1 { font-family: 'Caveat', cursive; color: var(--primary); font-size: 1.8rem; margin: 0; }
+    header img { height: 40px; width: 40px; object-fit: cover; border-radius: 50%; border: 2px solid var(--accent-yellow); }
+    header h1 { font-family: 'Caveat', cursive; color: white; font-size: 1.8rem; margin: 0; letter-spacing: 0.5px; }
     
-    /* Menú de Perfil / Usuario */
+    .header-center {
+      color: #f4c430;
+      font-family: 'Caveat', cursive;
+      font-size: 1.3rem;
+      margin: 0;
+      text-align: center;
+    }
+
+    /* Menú Desplegable Compacto (Expansión por Hover / Click) */
     .user-profile-menu {
       position: relative;
       cursor: pointer;
     }
     .avatar-btn {
-      width: 42px; height: 42px;
+      width: 36px; height: 36px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--primary), var(--accent-yellow));
       display: flex; align-items: center; justify-content: center;
-      color: white; font-weight: bold; font-size: 1.1rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      color: white; font-weight: bold; font-size: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
       border: 2px solid white;
+      transition: transform 0.2s;
     }
+    .avatar-btn:hover { transform: scale(1.08); }
+    
     .profile-dropdown {
       display: none;
-      position: absolute; right: 0; top: 50px;
+      position: absolute; right: 0; top: 45px;
       background: white; width: 280px;
-      border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-      border: 1px solid #fae1d2; padding: 1rem; z-index: 200;
+      border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      border: 2px solid var(--primary); padding: 1rem; z-index: 200;
     }
-    .profile-dropdown.active { display: block; }
+    .user-profile-menu:hover .profile-dropdown, .profile-dropdown.active { display: block; }
     .profile-dropdown h4 { margin: 0 0 5px 0; color: var(--primary); font-size: 1.1rem; }
-    .profile-dropdown p { font-size: 0.85rem; color: #666; margin: 0 0 10px 0; line-height: 1.3; }
-    .profile-dropdown hr { border: none; border-top: 1px solid #eee; margin: 10px 0; }
-    .dropdown-link { display: block; padding: 6px 0; color: var(--text-dark); text-decoration: none; font-size: 0.9rem; font-weight: 600; }
+    .profile-dropdown p { font-size: 0.82rem; color: #666; margin: 0 0 10px 0; line-height: 1.3; }
+    .profile-dropdown hr { border: none; border-top: 1px solid #eee; margin: 8px 0; }
+    .dropdown-link { display: block; padding: 5px 0; color: var(--text-dark); text-decoration: none; font-size: 0.88rem; font-weight: 600; }
     .dropdown-link:hover { color: var(--primary); }
-
-    .hero {
-      text-align: center;
-      padding: 1.5rem 1rem 1rem 1rem;
-      background: var(--bg-cream);
-      border-bottom: 2px dashed #fae1d2;
-    }
-    .hero h2 { font-size: 2.2rem; color: var(--primary); font-family: 'Caveat', cursive; margin: 0 0 5px 0; }
-    .hero p { font-size: 0.95rem; color: #666; max-width: 600px; margin: 0 auto; }
 
     .container { max-width: 1300px; margin: 0 auto; padding: 1.5rem 2rem; }
 
-    /* Pestañas de Categorías Dinámicas */
-    .categorias-tabs {
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      padding-bottom: 10px;
-      margin-bottom: 1.5rem;
-    }
-    .cat-tab {
-      background: #ffffff;
-      border: 2px solid #fae1d2;
-      padding: 10px 18px;
-      border-radius: 25px;
-      cursor: pointer;
-      font-weight: 600;
-      color: var(--text-dark);
-      white-space: nowrap;
-      transition: all 0.2s;
+    /* Barra Superior para Biblioteca y Combo Selector en la misma línea */
+    .library-header-bar {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 0.95rem;
-    }
-    .cat-tab:hover { border-color: var(--primary); color: var(--primary); }
-    .cat-tab.active {
-      background: var(--primary);
-      color: white;
-      border-color: var(--primary);
-      box-shadow: 0 4px 12px rgba(200, 90, 50, 0.25);
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #fae1d2;
+      padding-bottom: 10px;
     }
 
-    /* Caja de Reseña Pedagógica de la Categoría Activa */
-    .resena-box {
-      background: #ffffff;
-      border-left: 5px solid var(--accent-yellow);
-      border-top: 1px solid #fae1d2; border-right: 1px solid #fae1d2; border-bottom: 1px solid #fae1d2;
-      padding: 1rem 1.5rem;
-      border-radius: 0 12px 12px 0;
-      margin-bottom: 2rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+    .section-heading { 
+      font-family: 'Caveat', cursive; 
+      color: var(--primary); 
+      font-size: 2.2rem; 
+      margin: 0;
     }
-    .resena-box h3 { margin: 0 0 5px 0; color: var(--primary); font-size: 1.2rem; }
-    .resena-box p { margin: 0; font-size: 0.9rem; color: #555; line-height: 1.4; }
+
+    /* Combo Selector Moderno */
+    .categoria-select-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .categoria-select-container label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text-dark);
+    }
+    .categoria-select {
+      background: white;
+      border: 2px solid var(--primary);
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      color: var(--text-dark);
+      cursor: pointer;
+      font-size: 0.9rem;
+      box-shadow: 0 2px 8px rgba(200,90,50,0.1);
+    }
+
+    /* Caja de Reseña Pedagógica Compacta (Fondo Oscuro y Letras Claras) */
+    .resena-box-dark {
+      background: #1e1e1e;
+      border-left: 5px solid var(--accent-yellow);
+      color: white;
+      padding: 0.9rem 1.2rem;
+      border-radius: 0 10px 10px 0;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .resena-left h4 { margin: 0 0 3px 0; color: var(--accent-yellow); font-size: 1.1rem; }
+    .resena-left p { margin: 0; font-size: 0.88rem; color: #ddd; line-height: 1.3; }
 
     .main-layout {
       display: flex;
@@ -130,33 +150,23 @@
 
     .biblioteca-section { flex: 1; }
 
-    .section-heading { 
-      font-family: 'Caveat', cursive; 
-      color: var(--primary); 
-      font-size: 2.2rem; 
-      margin-top: 0;
-      margin-bottom: 1.2rem; 
-      border-bottom: 2px solid #fae1d2;
-      padding-bottom: 5px;
-    }
-
     /* Widget de Estadística Lateral */
     .stats-widget {
-      width: 80px;
+      width: 75px;
       background: #2c2c2c;
       color: white;
       border-radius: 16px;
       padding: 15px 10px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.15);
       position: sticky;
-      top: 90px;
-      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s;
+      top: 80px;
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       overflow: hidden;
       cursor: pointer;
       z-index: 50;
       border: 2px solid var(--accent-yellow);
     }
-    .stats-widget:hover { width: 420px; background: #1e1e1e; }
+    .stats-widget:hover { width: 400px; background: #1e1e1e; }
     .stats-header { display: flex; align-items: center; gap: 12px; white-space: nowrap; }
     .stats-icon { font-size: 1.8rem; min-width: 40px; text-align: center; }
     .stats-title-text {
@@ -165,7 +175,7 @@
     }
     .stats-widget:hover .stats-title-text { opacity: 1; }
     .chart-container {
-      position: relative; width: 390px; height: 240px; margin-top: 15px;
+      position: relative; width: 370px; height: 220px; margin-top: 15px;
       opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
     }
     .stats-widget:hover .chart-container { opacity: 1; pointer-events: auto; }
@@ -190,23 +200,23 @@
     .cuento-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(200, 90, 50, 0.12); }
     
     .card-banner {
-      height: 120px;
+      height: 110px;
       background: linear-gradient(135deg, var(--primary), var(--accent-yellow));
       display: flex; align-items: center; justify-content: center;
     }
-    .card-banner span { font-size: 3rem; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.15)); }
+    .card-banner span { font-size: 2.8rem; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.15)); }
     
     .cuento-content { padding: 1.2rem; display: flex; flex-direction: column; flex-grow: 1; }
     .categoria-badge { background: #fae1d2; color: var(--primary); padding: 3px 10px; border-radius: 15px; font-size: 0.7rem; font-weight: bold; width: fit-content; margin-bottom: 8px; }
     .autor-text { font-size: 0.8rem; color: #666; margin-bottom: 5px; font-style: italic; }
     
     .cuento-content h3 { 
-      font-size: 1.2rem; margin: 0 0 8px 0; color: var(--text-dark); font-weight: 700; line-height: 1.3; 
-      min-height: 3.2rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+      font-size: 1.15rem; margin: 0 0 8px 0; color: var(--text-dark); font-weight: 700; line-height: 1.3; 
+      min-height: 3rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
     }
     
     .descripcion-corta { 
-      font-size: 0.88rem; color: #555; flex-grow: 1; margin-bottom: 1.2rem; line-height: 1.4; 
+      font-size: 0.86rem; color: #555; flex-grow: 1; margin-bottom: 1.2rem; line-height: 1.4; 
       display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
     }
 
@@ -248,9 +258,26 @@
     .btn-enviar-voto { background: var(--primary); color: white; border: none; padding: 10px; border-radius: 8px; font-weight: bold; flex: 1; cursor: pointer; }
     .btn-cancelar { background: #ddd; color: #333; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; }
 
+    /* Muro de Opiniones Inferior */
+    .muro-opiniones {
+      margin-top: 4rem;
+      background: white;
+      border: 2px solid #fae1d2;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    }
+    .muro-opiniones h3 { font-family: 'Caveat', cursive; color: var(--primary); font-size: 1.8rem; margin-top: 0; }
+    .opiniones-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1rem; }
+    .opinion-card { background: var(--bg-cream); border-left: 4px solid var(--accent-yellow); padding: 1rem; border-radius: 8px; font-size: 0.9rem; }
+    .opinion-card p { margin: 0 0 8px 0; color: #444; font-style: italic; }
+    .opinion-author { font-size: 0.8rem; font-weight: bold; color: var(--primary); }
+
     footer { text-align: center; padding: 1.5rem; color: #777; font-size: 0.85rem; border-top: 1px solid #eee; margin-top: 3rem; }
 
     @media (max-width: 768px) {
+      header { flex-direction: column; gap: 0.5rem; text-align: center; }
+      .library-header-bar { flex-direction: column; align-items: flex-start; }
       .main-layout { flex-direction: column; }
       .stats-widget { width: 100%; position: static; margin-bottom: 1.5rem; }
       .stats-widget:hover { width: 100%; }
@@ -261,52 +288,62 @@
 </head>
 <body>
 
+  <!-- Header Oscuro Profesional -->
   <header>
     <div class="header-left">
       <img src="assets/img/logo.jpeg" alt="Logo Club de Lectura">
       <h1>¡Metidos en el Cuento!</h1>
     </div>
-    <!-- Menú de Perfil / Menú Flotante -->
+    
+    <div class="header-center">
+      Transformamos la lectura en una fiesta viva
+    </div>
+
+    <!-- Menú Desplegable Parametrizable (Dinámico) -->
     <div class="user-profile-menu">
-      <div class="avatar-btn" onclick="toggleMenu(event)">M</div>
+      <div class="avatar-btn" title="Menú del Club">M</div>
       <div id="profileDropdown" class="profile-dropdown">
         <h4>Club de Lectura</h4>
-        <p>Transformamos la lectura en una fiesta viva para la niñez y las familias en Colombia.</p>
+        <p>Relatos animados interactivos para inspirar a niños y familias en Colombia.</p>
         <hr>
-        <a href="#" class="dropdown-link" onclick="alert('Proyecto oficial del Club de Lectura - Metidos en el Cuento (2026).');">📖 Acerca de Nosotros</a>
-        <a href="#" class="dropdown-link" onclick="alert('Para unirte al selecto grupo de cuenteros o recibir convocatorias, escríbenos a través de nuestras redes o canales oficiales.');">✨ Únete al Grupo de Cuenteros</a>
-        <a href="#" class="dropdown-link" onclick="alert('Contenido protegido bajo licencias pedagógicas comunitarias y derechos de autor del club.');">© Derechos de Autor</a>
+        <div id="menuItemsContainer">
+          <!-- Se llena dinámicamente desde Parametros_Menu -->
+        </div>
       </div>
     </div>
   </header>
 
-  <div class="hero">
-    <h2>Transformamos la lectura en una fiesta viva</h2>
-    <p>Relatos animados interactivos para inspirar a niños y familias en Colombia.</p>
-  </div>
-
   <div class="container">
     
-    <!-- Pestañas de Categorías Dinámicas -->
-    <div id="categoriasTabsContainer" class="categorias-tabs">
-      <div class="cat-tab active" onclick="filtrarCategoria('todas')">📖 Todas las historias</div>
+    <!-- Barra superior para Nuestra Biblioteca y Combo Selector de Categorías alineados -->
+    <div class="library-header-bar">
+      <h2 class="section-heading">Nuestra Biblioteca de Historias</h2>
+      
+      <div class="categoria-select-container">
+        <label for="categoriaSelect">📂 Filtrar Categoría:</label>
+        <select id="categoriaSelect" class="categoria-select" onchange="cambiarCategoria(this.value)">
+          <option value="todas">📖 Todas las historias</option>
+        </select>
+      </div>
     </div>
 
-    <!-- Caja de Reseña Pedagógica -->
-    <div id="resenaBoxContainer" class="resena-box">
-      <h3 id="resenaTitulo">Biblioteca General</h3>
-      <p id="resenaTexto">Explora nuestra colección completa de relatos animados diseñados para inspirar a estudiantes, padres y educadores.</p>
+    <!-- Caja de Reseña Pedagógica en Fondo Oscuro y Letras Claras -->
+    <div class="resena-box-dark">
+      <div class="resena-left">
+        <h4 id="resenaTitulo">Biblioteca General</h4>
+        <p id="resenaTexto">Explora nuestra colección completa de relatos animados diseñados para inspirar a estudiantes, padres y educadores.</p>
+      </div>
     </div>
 
     <div class="main-layout">
       
       <div class="biblioteca-section">
-        <h2 class="section-heading">Nuestra Biblioteca de Historias</h2>
         <div id="contenedorCuentos" class="cuentos-container">
           <p style="text-align: center; width: 100%; grid-column: 1/-1; color: #888;">Cargando cuentos mágicos...</p>
         </div>
       </div>
 
+      <!-- Widget de Ranking Lateral -->
       <div class="stats-widget" title="Pasa el cursor para ver el ranking">
         <div class="stats-header">
           <div class="stats-icon">📊</div>
@@ -317,6 +354,15 @@
         </div>
       </div>
 
+    </div>
+
+    <!-- Muro de Opiniones Inferior -->
+    <div class="muro-opiniones">
+      <h3>✨ Opiniones y Reseñas Recientes del Club</h3>
+      <p style="font-size: 0.9rem; color: #666; margin-top: -5px;">Lo que dicen nuestros pequeños lectores y familias en Colombia:</p>
+      <div id="opinionesContainer" class="opiniones-grid">
+        <p style="color: #888; font-size: 0.9rem;">Cargando opiniones...</p>
+      </div>
     </div>
 
   </div>
@@ -368,22 +414,12 @@
   </footer>
 
   <script>
-    // URL OFICIAL ACTUALIZADA Y LIMPIA CON LA VERSIÓN 13
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzIQE371oemKiyqG_3QsqhrP53_xGoPE-bvGtcOVv7itSNSb7aDG2LtdE8HPNDAt39F/exec";
     
     let cuentosData = [];
     let categoriasData = [];
     let categoriaActiva = 'todas';
     let myChart = null;
-
-    // Control del menú de perfil desplegable
-    function toggleMenu(event) {
-      event.stopPropagation();
-      document.getElementById('profileDropdown').classList.toggle('active');
-    }
-    window.onclick = function() {
-      document.getElementById('profileDropdown').classList.remove('active');
-    }
 
     async function cargarDatos() {
       try {
@@ -392,16 +428,24 @@
         
         if (data && Array.isArray(data.categorias)) {
           categoriasData = data.categorias;
-          renderizarCategorias(categoriasData);
+          poblarComboCategorias(categoriasData);
+        }
+
+        if (data && Array.isArray(data.menu)) {
+          renderizarMenu(data.menu);
         }
 
         if (data && Array.isArray(data.cuentos)) {
           cuentosData = data.cuentos;
-          filtrarCategoria('todas');
+          cambiarCategoria('todas');
         }
         
         if (data && Array.isArray(data.stats)) {
           renderizarGrafico(data.stats);
+        }
+
+        if (data && Array.isArray(data.reseñas)) {
+          renderizarReseñas(data.reseñas);
         }
       } catch (err) {
         console.error("Error al cargar datos:", err);
@@ -409,35 +453,47 @@
       }
     }
 
-    function renderizarCategorias(cats) {
-      const contenedor = document.getElementById('categoriasTabsContainer');
-      contenedor.innerHTML = `<div class="cat-tab active" onclick="filtrarCategoria('todas')">📖 Todas las historias</div>`;
+    function poblarComboCategorias(cats) {
+      const select = document.getElementById('categoriaSelect');
+      select.innerHTML = `<option value="todas">📖 Todas las historias</option>`;
       
       cats.forEach(cat => {
-        const tab = document.createElement('div');
-        tab.className = 'cat-tab';
-        tab.setAttribute('data-cat', cat.nombre);
-        tab.innerHTML = `${cat.emoji || '✨'} ${cat.nombre}`;
-        tab.onclick = () => filtrarCategoria(cat.nombre);
-        contenedor.appendChild(tab);
+        const opt = document.createElement('option');
+        opt.value = cat.nombre;
+        opt.innerText = `${cat.emoji || '✨'} ${cat.nombre}`;
+        select.appendChild(opt);
       });
     }
 
-    function filtrarCategoria(nombreCat) {
-      categoriaActiva = nombreCat;
+    function renderizarMenu(menuItems) {
+      const container = document.getElementById('menuItemsContainer');
+      container.innerHTML = '';
       
-      // Actualizar pestañas activas
-      document.querySelectorAll('.cat-tab').forEach(tab => {
-        if (nombreCat === 'todas' && tab.innerText.includes('Todas')) {
-          tab.classList.add('active');
-        } else if (tab.getAttribute('data-cat') === nombreCat) {
-          tab.classList.add('active');
+      menuItems.forEach(item => {
+        const a = document.createElement('a');
+        a.className = 'dropdown-link';
+        a.innerText = item.texto;
+        a.title = item.desc;
+        
+        if (item.accion.startsWith('http')) {
+          a.href = item.accion;
+          a.target = '_blank';
         } else {
-          tab.classList.remove('active');
+          a.href = '#';
+          a.onclick = (e) => {
+            e.preventDefault();
+            // Ejecutar la acción configurada en la hoja
+            try { eval(item.accion); } catch(ex) { alert(item.texto); }
+          };
         }
+        container.appendChild(a);
       });
+    }
 
-      // Actualizar Caja de Reseña Pedagógica
+    function cambiarCategoria(nombreCat) {
+      categoriaActiva = nombreCat;
+      document.getElementById('categoriaSelect').value = nombreCat;
+
       const resenaTitulo = document.getElementById('resenaTitulo');
       const resenaTexto = document.getElementById('resenaTexto');
       
@@ -448,11 +504,10 @@
         const catInfo = categoriasData.find(c => c.nombre === nombreCat);
         if (catInfo) {
           resenaTitulo.innerText = `${catInfo.emoji || '📖'} ${catInfo.nombre}`;
-          resenaTexto.innerText = `${catInfo.descripcion} Reseña pedagógica: ${catInfo.resena}`;
+          resenaTexto.innerText = `${catInfo.descripcion} | Reseña pedagógica: ${catInfo.resena}`;
         }
       }
 
-      // Filtrar cuentos
       const cuentosFiltrados = nombreCat === 'todas' 
         ? cuentosData 
         : cuentosData.filter(c => c.categoria.toLowerCase().trim() === nombreCat.toLowerCase().trim());
@@ -501,7 +556,6 @@
 
     function renderizarGrafico(stats) {
       const ctx = document.getElementById('statsChart').getContext('2d');
-      
       const labels = stats.map(s => s.cuento);
       const dataValues = stats.map(s => s.clics);
 
@@ -532,6 +586,24 @@
       });
     }
 
+    function renderizarReseñas(reseñas) {
+      const container = document.getElementById('opinionesContainer');
+      if (reseñas.length === 0) {
+        container.innerHTML = '<p style="color:#888; font-size:0.9rem;">Sé el primero en dejar tu opinión sobre nuestros cuentos.</p>';
+        return;
+      }
+      container.innerHTML = '';
+      reseñas.forEach(r => {
+        const div = document.createElement('div');
+        div.className = 'opinion-card';
+        div.innerHTML = `
+          <p>“${r.comentario}”</p>
+          <div class="opinion-author">⭐ ${r.voto} — ${r.lector} (${r.cuento})</div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
     function abrirLibro(id) {
       const cuento = cuentosData.find(c => (c.id === id) || (c.titulo === id));
       if (!cuento || !cuento.enlaceGemini) {
@@ -539,18 +611,15 @@
         return;
       }
       
-      // Registrar estadística de clic en segundo plano
       fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST', mode: 'no-cors',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify({ accion: 'clic', idCuento: id, cuento: cuento.titulo })
       }).catch(err => console.log("Estadística no registrada", err));
 
-      // Abrir en pestaña nueva
       window.open(cuento.enlaceGemini, '_blank');
     }
 
-    // Funciones del Modal de Votos y PQRS
     function abrirModalVoto(nombreCuento) {
       document.getElementById('modalVotoTitle').innerText = `Opinión: ${nombreCuento}`;
       document.getElementById('cuentoVotoInput').value = nombreCuento;
@@ -584,6 +653,7 @@
         
         alert("¡Mil gracias por compartir tu opinión! Ha sido guardada con éxito en nuestro club.");
         cerrarModalVoto();
+        setTimeout(cargarDatos, 1000); // Recargar datos para mostrar la nueva opinión abajo
       } catch (err) {
         console.error("Error al enviar voto:", err);
         alert("Hubo un error al enviar tu opinión. Inténtalo nuevamente.");
