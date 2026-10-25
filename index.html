@@ -31,12 +31,41 @@
       box-shadow: 0 2px 15px rgba(0,0,0,0.04);
       display: flex;
       align-items: center;
-      gap: 1rem;
+      justify-content: space-between;
       position: sticky; top: 0; z-index: 100;
     }
-    header img { height: 45px; border-radius: 50%; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    .header-left { display: flex; align-items: center; gap: 1rem; }
+    header img { height: 45px; width: 45px; object-fit: cover; border-radius: 50%; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
     header h1 { font-family: 'Caveat', cursive; color: var(--primary); font-size: 1.8rem; margin: 0; }
     
+    /* Menú de Perfil / Usuario */
+    .user-profile-menu {
+      position: relative;
+      cursor: pointer;
+    }
+    .avatar-btn {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--accent-yellow));
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-weight: bold; font-size: 1.1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      border: 2px solid white;
+    }
+    .profile-dropdown {
+      display: none;
+      position: absolute; right: 0; top: 50px;
+      background: white; width: 280px;
+      border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      border: 1px solid #fae1d2; padding: 1rem; z-index: 200;
+    }
+    .profile-dropdown.active { display: block; }
+    .profile-dropdown h4 { margin: 0 0 5px 0; color: var(--primary); font-size: 1.1rem; }
+    .profile-dropdown p { font-size: 0.85rem; color: #666; margin: 0 0 10px 0; line-height: 1.3; }
+    .profile-dropdown hr { border: none; border-top: 1px solid #eee; margin: 10px 0; }
+    .dropdown-link { display: block; padding: 6px 0; color: var(--text-dark); text-decoration: none; font-size: 0.9rem; font-weight: 600; }
+    .dropdown-link:hover { color: var(--primary); }
+
     .hero {
       text-align: center;
       padding: 1.5rem 1rem 1rem 1rem;
@@ -47,6 +76,50 @@
     .hero p { font-size: 0.95rem; color: #666; max-width: 600px; margin: 0 auto; }
 
     .container { max-width: 1300px; margin: 0 auto; padding: 1.5rem 2rem; }
+
+    /* Pestañas de Categorías Dinámicas */
+    .categorias-tabs {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      margin-bottom: 1.5rem;
+    }
+    .cat-tab {
+      background: #ffffff;
+      border: 2px solid #fae1d2;
+      padding: 10px 18px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text-dark);
+      white-space: nowrap;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.95rem;
+    }
+    .cat-tab:hover { border-color: var(--primary); color: var(--primary); }
+    .cat-tab.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(200, 90, 50, 0.25);
+    }
+
+    /* Caja de Reseña Pedagógica de la Categoría Activa */
+    .resena-box {
+      background: #ffffff;
+      border-left: 5px solid var(--accent-yellow);
+      border-top: 1px solid #fae1d2; border-right: 1px solid #fae1d2; border-bottom: 1px solid #fae1d2;
+      padding: 1rem 1.5rem;
+      border-radius: 0 12px 12px 0;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+    }
+    .resena-box h3 { margin: 0 0 5px 0; color: var(--primary); font-size: 1.2rem; }
+    .resena-box p { margin: 0; font-size: 0.9rem; color: #555; line-height: 1.4; }
 
     .main-layout {
       display: flex;
@@ -67,7 +140,7 @@
       padding-bottom: 5px;
     }
 
-    /* Widget de Estadística Lateral (Hover) */
+    /* Widget de Estadística Lateral */
     .stats-widget {
       width: 80px;
       background: #2c2c2c;
@@ -83,34 +156,17 @@
       z-index: 50;
       border: 2px solid var(--accent-yellow);
     }
-    .stats-widget:hover {
-      width: 420px;
-      background: #1e1e1e;
-    }
-    .stats-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      white-space: nowrap;
-    }
+    .stats-widget:hover { width: 420px; background: #1e1e1e; }
+    .stats-header { display: flex; align-items: center; gap: 12px; white-space: nowrap; }
     .stats-icon { font-size: 1.8rem; min-width: 40px; text-align: center; }
     .stats-title-text {
-      font-family: 'Caveat', cursive;
-      font-size: 1.5rem;
-      color: var(--accent-yellow);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      white-space: nowrap;
+      font-family: 'Caveat', cursive; font-size: 1.5rem; color: var(--accent-yellow);
+      opacity: 0; transition: opacity 0.3s ease; white-space: nowrap;
     }
     .stats-widget:hover .stats-title-text { opacity: 1; }
     .chart-container {
-      position: relative;
-      width: 390px;
-      height: 240px;
-      margin-top: 15px;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      pointer-events: none;
+      position: relative; width: 390px; height: 240px; margin-top: 15px;
+      opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
     }
     .stats-widget:hover .chart-container { opacity: 1; pointer-events: auto; }
 
@@ -136,9 +192,7 @@
     .card-banner {
       height: 120px;
       background: linear-gradient(135deg, var(--primary), var(--accent-yellow));
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
     }
     .card-banner span { font-size: 3rem; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.15)); }
     
@@ -147,75 +201,52 @@
     .autor-text { font-size: 0.8rem; color: #666; margin-bottom: 5px; font-style: italic; }
     
     .cuento-content h3 { 
-      font-size: 1.2rem; 
-      margin: 0 0 8px 0; 
-      color: var(--text-dark); 
-      font-weight: 700; 
-      line-height: 1.3; 
-      min-height: 3.2rem;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
+      font-size: 1.2rem; margin: 0 0 8px 0; color: var(--text-dark); font-weight: 700; line-height: 1.3; 
+      min-height: 3.2rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
     }
     
     .descripcion-corta { 
-      font-size: 0.88rem; 
-      color: #555; 
-      flex-grow: 1; 
-      margin-bottom: 1.2rem; 
-      line-height: 1.4; 
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
+      font-size: 0.88rem; color: #555; flex-grow: 1; margin-bottom: 1.2rem; line-height: 1.4; 
+      display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
     }
 
+    .card-buttons { display: flex; gap: 8px; }
     .btn-leer {
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 0.9rem;
-      width: 100%;
-      transition: background 0.2s;
-      box-shadow: 0 3px 10px rgba(200, 90, 50, 0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
+      background: var(--primary); color: white; border: none; padding: 10px 12px; border-radius: 10px;
+      cursor: pointer; font-weight: bold; font-size: 0.85rem; flex: 2;
+      transition: background 0.2s; box-shadow: 0 3px 10px rgba(200, 90, 50, 0.2);
+      display: flex; align-items: center; justify-content: center; gap: 4px;
     }
     .btn-leer:hover { background: var(--primary-hover); }
 
-    .modal {
-      display: none;
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.85);
-      z-index: 1000;
-      flex-direction: column;
+    .btn-votar {
+      background: #f4c430; color: #2c2c2c; border: none; padding: 10px 10px; border-radius: 10px;
+      cursor: pointer; font-weight: bold; font-size: 0.85rem; flex: 1;
+      transition: background 0.2s; box-shadow: 0 3px 10px rgba(244, 196, 48, 0.2);
+      display: flex; align-items: center; justify-content: center; gap: 4px;
     }
-    .modal.active { display: flex; }
-    
-    .modal-header {
-      background: #1a1a1a;
-      color: white;
-      padding: 0.8rem 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .modal-header h2 { margin: 0; font-family: 'Caveat', cursive; font-size: 1.6rem; color: var(--accent-yellow); }
-    .close-btn {
-      background: var(--primary); color: white; border: none;
-      padding: 6px 14px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 0.9rem;
-    }
-    .close-btn:hover { background: var(--primary-hover); }
+    .btn-votar:hover { background: #e0b028; }
 
-    .modal-body { flex-grow: 1; width: 100%; height: calc(100% - 60px); background: #000; }
-    .modal-body iframe { width: 100%; height: 100%; border: none; }
+    /* Modal de PQRS y Votos */
+    .modal-voto {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center;
+    }
+    .modal-voto.active { display: flex; }
+    .modal-voto-content {
+      background: white; width: 90%; max-width: 450px; border-radius: 16px; padding: 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2); position: relative; border: 2px solid var(--primary);
+    }
+    .modal-voto-content h3 { margin-top: 0; color: var(--primary); font-family: 'Caveat', cursive; font-size: 1.8rem; }
+    .form-group { margin-bottom: 1rem; text-align: left; }
+    .form-group label { display: block; font-size: 0.85rem; font-weight: bold; margin-bottom: 4px; color: var(--text-dark); }
+    .form-group select, .form-group input, .form-group textarea {
+      width: 100%; padding: 8px 12px; border: 1px solid #ccc; border-radius: 8px; font-family: 'Quicksand', sans-serif; font-size: 0.9rem;
+    }
+    .form-group textarea { resize: vertical; height: 70px; }
+    .modal-actions { display: flex; gap: 10px; margin-top: 1.5rem; }
+    .btn-enviar-voto { background: var(--primary); color: white; border: none; padding: 10px; border-radius: 8px; font-weight: bold; flex: 1; cursor: pointer; }
+    .btn-cancelar { background: #ddd; color: #333; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; }
 
     footer { text-align: center; padding: 1.5rem; color: #777; font-size: 0.85rem; border-top: 1px solid #eee; margin-top: 3rem; }
 
@@ -231,8 +262,22 @@
 <body>
 
   <header>
-    <img src="assets/img/logo.jpeg" alt="Logo Club de Lectura">
-    <h1>¡Metidos en el Cuento!</h1>
+    <div class="header-left">
+      <img src="assets/img/logo.jpeg" alt="Logo Club de Lectura">
+      <h1>¡Metidos en el Cuento!</h1>
+    </div>
+    <!-- Menú de Perfil / Menú Flotante -->
+    <div class="user-profile-menu">
+      <div class="avatar-btn" onclick="toggleMenu(event)">M</div>
+      <div id="profileDropdown" class="profile-dropdown">
+        <h4>Club de Lectura</h4>
+        <p>Transformamos la lectura en una fiesta viva para la niñez y las familias en Colombia.</p>
+        <hr>
+        <a href="#" class="dropdown-link" onclick="alert('Proyecto oficial del Club de Lectura - Metidos en el Cuento (2026).');">📖 Acerca de Nosotros</a>
+        <a href="#" class="dropdown-link" onclick="alert('Para unirte al selecto grupo de cuenteros o recibir convocatorias, escríbenos a través de nuestras redes o canales oficiales.');">✨ Únete al Grupo de Cuenteros</a>
+        <a href="#" class="dropdown-link" onclick="alert('Contenido protegido bajo licencias pedagógicas comunitarias y derechos de autor del club.');">© Derechos de Autor</a>
+      </div>
+    </div>
   </header>
 
   <div class="hero">
@@ -242,6 +287,17 @@
 
   <div class="container">
     
+    <!-- Pestañas de Categorías Dinámicas -->
+    <div id="categoriasTabsContainer" class="categorias-tabs">
+      <div class="cat-tab active" onclick="filtrarCategoria('todas')">📖 Todas las historias</div>
+    </div>
+
+    <!-- Caja de Reseña Pedagógica -->
+    <div id="resenaBoxContainer" class="resena-box">
+      <h3 id="resenaTitulo">Biblioteca General</h3>
+      <p id="resenaTexto">Explora nuestra colección completa de relatos animados diseñados para inspirar a estudiantes, padres y educadores.</p>
+    </div>
+
     <div class="main-layout">
       
       <div class="biblioteca-section">
@@ -265,13 +321,45 @@
 
   </div>
 
-  <div id="theatreModal" class="modal">
-    <div class="modal-header">
-      <h2 id="modalTitle">Cuento Interactivo</h2>
-      <button class="close-btn" onclick="cerrarLibro()">✕ Cerrar</button>
-    </div>
-    <div class="modal-body">
-      <iframe id="bookFrame" src="" allowfullscreen></iframe>
+  <!-- Modal de Calificación y PQRS -->
+  <div id="votoModal" class="modal-voto">
+    <div class="modal-voto-content">
+      <h3 id="modalVotoTitle">¡Deja tu Opinión!</h3>
+      <p style="font-size: 0.85rem; color: #666; margin-top: -5px;">Tu retroalimentación es vital para nuestro club de lectura.</p>
+      
+      <form id="formVoto" onsubmit="enviarVoto(event)">
+        <input type="hidden" id="cuentoVotoInput">
+        
+        <div class="form-group">
+          <label>¿Qué te pareció el cuento?</label>
+          <select id="votoSelect" required>
+            <option value="Me encantó ❤️">Me encantó ❤️</option>
+            <option value="Aprendí algo nuevo 💡">Aprendí algo nuevo 💡</option>
+            <option value="Muy divertido ⭐">Muy divertido ⭐</option>
+            <option value="Para reflexionar 🌿">Para reflexionar 🌿</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>¿Quién nos lee hoy?</label>
+          <input type="text" id="lectorInput" placeholder="Ej: Estudiante Primaria / Padre de Familia" required>
+        </div>
+
+        <div class="form-group">
+          <label>Comentario o Reseña:</label>
+          <textarea id="comentarioInput" placeholder="Cuéntanos qué fue lo que más te gustó..." required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Sugerencia o PQRS (Opcional):</label>
+          <input type="text" id="sugerenciaInput" placeholder="Ideas para futuros cuentos...">
+        </div>
+
+        <div class="modal-actions">
+          <button type="submit" class="btn-enviar-voto">Enviar Opinión</button>
+          <button type="button" class="btn-cancelar" onclick="cerrarModalVoto()">Cancelar</button>
+        </div>
+      </form>
     </div>
   </div>
 
@@ -280,20 +368,36 @@
   </footer>
 
   <script>
-    // URL ACTUALIZADA CON TU NUEVO ID DE IMPLEMENTACIÓN
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzuqA_8haJ9jPbyciHWid6oC8G4TOVCfierDFXEVIsJZJ0K_qcsNSf1LRoCKyLIcK-o/exec";
+    // URL OFICIAL ACTUALIZADA Y LIMPIA CON LA VERSIÓN 13
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzIQE371oemKiyqG_3QsqhrP53_xGoPE-bvGtcOVv7itSNSb7aDG2LtdE8HPNDAt39F/exec";
     
     let cuentosData = [];
+    let categoriasData = [];
+    let categoriaActiva = 'todas';
     let myChart = null;
+
+    // Control del menú de perfil desplegable
+    function toggleMenu(event) {
+      event.stopPropagation();
+      document.getElementById('profileDropdown').classList.toggle('active');
+    }
+    window.onclick = function() {
+      document.getElementById('profileDropdown').classList.remove('active');
+    }
 
     async function cargarDatos() {
       try {
         const response = await fetch(GOOGLE_SCRIPT_URL);
         const data = await response.json();
         
+        if (data && Array.isArray(data.categorias)) {
+          categoriasData = data.categorias;
+          renderizarCategorias(categoriasData);
+        }
+
         if (data && Array.isArray(data.cuentos)) {
           cuentosData = data.cuentos;
-          renderizarCuentos(cuentosData);
+          filtrarCategoria('todas');
         }
         
         if (data && Array.isArray(data.stats)) {
@@ -305,6 +409,57 @@
       }
     }
 
+    function renderizarCategorias(cats) {
+      const contenedor = document.getElementById('categoriasTabsContainer');
+      contenedor.innerHTML = `<div class="cat-tab active" onclick="filtrarCategoria('todas')">📖 Todas las historias</div>`;
+      
+      cats.forEach(cat => {
+        const tab = document.createElement('div');
+        tab.className = 'cat-tab';
+        tab.setAttribute('data-cat', cat.nombre);
+        tab.innerHTML = `${cat.emoji || '✨'} ${cat.nombre}`;
+        tab.onclick = () => filtrarCategoria(cat.nombre);
+        contenedor.appendChild(tab);
+      });
+    }
+
+    function filtrarCategoria(nombreCat) {
+      categoriaActiva = nombreCat;
+      
+      // Actualizar pestañas activas
+      document.querySelectorAll('.cat-tab').forEach(tab => {
+        if (nombreCat === 'todas' && tab.innerText.includes('Todas')) {
+          tab.classList.add('active');
+        } else if (tab.getAttribute('data-cat') === nombreCat) {
+          tab.classList.add('active');
+        } else {
+          tab.classList.remove('active');
+        }
+      });
+
+      // Actualizar Caja de Reseña Pedagógica
+      const resenaTitulo = document.getElementById('resenaTitulo');
+      const resenaTexto = document.getElementById('resenaTexto');
+      
+      if (nombreCat === 'todas') {
+        resenaTitulo.innerText = "Biblioteca General";
+        resenaTexto.innerText = "Explora nuestra colección completa de relatos animados diseñados para inspirar a estudiantes, padres y educadores.";
+      } else {
+        const catInfo = categoriasData.find(c => c.nombre === nombreCat);
+        if (catInfo) {
+          resenaTitulo.innerText = `${catInfo.emoji || '📖'} ${catInfo.nombre}`;
+          resenaTexto.innerText = `${catInfo.descripcion} Reseña pedagógica: ${catInfo.resena}`;
+        }
+      }
+
+      // Filtrar cuentos
+      const cuentosFiltrados = nombreCat === 'todas' 
+        ? cuentosData 
+        : cuentosData.filter(c => c.categoria.toLowerCase().trim() === nombreCat.toLowerCase().trim());
+      
+      renderizarCuentos(cuentosFiltrados);
+    }
+
     function renderizarCuentos(cuentos) {
       const contenedor = document.getElementById('contenedorCuentos');
       contenedor.innerHTML = '';
@@ -312,7 +467,7 @@
       const emojis = ['📖', '✨', '🌟', '🎨', '🚀', '💖'];
 
       if (cuentos.length === 0) {
-        contenedor.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color:#888;">No hay cuentos publicados todavía.</p>';
+        contenedor.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color:#888;">No hay cuentos publicados en esta categoría todavía.</p>';
         return;
       }
 
@@ -329,12 +484,15 @@
           </div>
           <div class="cuento-content">
             <div>
-              <span class="categoria-badge">${cuento.categoria || 'Mujeres con Historia'}</span>
+              <span class="categoria-badge">${cuento.categoria || 'Mujeres con historia'}</span>
               <p class="autor-text">Por: ${autores}</p>
               <h3>${cuento.titulo}</h3>
-              <p class="descripcion-corta">${cuento.descripcion || 'Una hermosa historia llena de valores y magia para compartir.'}</p>
+              <p class="descripcion-corta">${cuento.descripcion}</p>
             </div>
-            <button class="btn-leer" onclick="abrirLibro('${idSeguro}')">📖 Leer Libro Interactivo</button>
+            <div class="card-buttons">
+              <button class="btn-leer" onclick="abrirLibro('${idSeguro}')">📖 Leer</button>
+              <button class="btn-votar" onclick="abrirModalVoto('${cuento.titulo.replace(/'/g, "\\'")}')">💬 Opinión</button>
+            </div>
           </div>
         `;
         contenedor.appendChild(card);
@@ -365,19 +523,10 @@
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          plugins: {
-            legend: { display: false }
-          },
+          plugins: { legend: { display: false } },
           scales: {
-            x: {
-              ticks: { color: '#ffffff', font: { size: 10 } },
-              grid: { color: 'rgba(255,255,255,0.1)' }
-            },
-            y: {
-              beginAtZero: true,
-              ticks: { color: '#ffffff', stepSize: 1 },
-              grid: { color: 'rgba(255,255,255,0.1)' }
-            }
+            x: { ticks: { color: '#ffffff', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.1)' } },
+            y: { beginAtZero: true, ticks: { color: '#ffffff', stepSize: 1 }, grid: { color: 'rgba(255,255,255,0.1)' } }
           }
         }
       });
@@ -390,21 +539,55 @@
         return;
       }
       
-      // Registramos la estadística de clic en segundo plano
+      // Registrar estadística de clic en segundo plano
       fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST', mode: 'no-cors',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify({ accion: 'clic', idCuento: id, cuento: cuento.titulo })
       }).catch(err => console.log("Estadística no registrada", err));
 
-      // Abrimos el cuento directamente en una pestaña limpia del navegador para evitar el bloqueo de Google
+      // Abrir en pestaña nueva
       window.open(cuento.enlaceGemini, '_blank');
     }
 
-    function cerrarLibro() {
-      document.getElementById('theatreModal').classList.remove('active');
-      document.body.style.overflow = 'auto';
-      document.getElementById('bookFrame').src = '';
+    // Funciones del Modal de Votos y PQRS
+    function abrirModalVoto(nombreCuento) {
+      document.getElementById('modalVotoTitle').innerText = `Opinión: ${nombreCuento}`;
+      document.getElementById('cuentoVotoInput').value = nombreCuento;
+      document.getElementById('formVoto').reset();
+      document.getElementById('votoModal').classList.add('active');
+    }
+
+    function cerrarModalVoto() {
+      document.getElementById('votoModal').classList.remove('active');
+    }
+
+    async function enviarVoto(event) {
+      event.preventDefault();
+      
+      const payload = {
+        accion: 'voto',
+        cuento: document.getElementById('cuentoVotoInput').value,
+        voto: document.getElementById('votoSelect').value,
+        lector: document.getElementById('lectorInput').value,
+        comentario: document.getElementById('comentarioInput').value,
+        sugerencia: document.getElementById('sugerenciaInput').value,
+        idUsuario: 'web-visitor-' + Math.floor(Math.random() * 10000)
+      };
+
+      try {
+        await fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST', mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+        
+        alert("¡Mil gracias por compartir tu opinión! Ha sido guardada con éxito en nuestro club.");
+        cerrarModalVoto();
+      } catch (err) {
+        console.error("Error al enviar voto:", err);
+        alert("Hubo un error al enviar tu opinión. Inténtalo nuevamente.");
+      }
     }
 
     cargarDatos();
