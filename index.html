@@ -25,23 +25,20 @@
       position: relative;
     }
     
-    /* Logotipo en marca de agua de fondo */
+    /* Marca de Agua Múltiple (Patrón de Fondo) */
     body::before {
       content: "";
       position: fixed;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 500px; height: 500px;
+      top: 0; left: 0; width: 100%; height: 100%;
       background-image: url('assets/img/logo.jpeg');
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: contain;
-      opacity: 0.03;
+      background-repeat: repeat;
+      background-size: 120px 120px;
+      opacity: 0.025;
       pointer-events: none;
       z-index: 0;
     }
 
-    /* Header Azul Infantil Cálido (#1e3a8a) */
+    /* Header con Azul Infantil Cálido (#1e3a8a) */
     header {
       background: #1e3a8a;
       padding: 1rem 2rem;
@@ -63,13 +60,17 @@
     header img { height: 55px; width: 55px; object-fit: cover; border-radius: 50%; border: 2px solid var(--accent-yellow); }
     header h1 { font-family: 'Caveat', cursive; color: white; font-size: 2.6rem; margin: 0; letter-spacing: 0.5px; }
     
+    /* Subtítulo nítido, legible y con gran contraste */
     .header-subtitle {
-      color: var(--accent-yellow);
-      font-family: 'Caveat', cursive;
-      font-size: 1.35rem;
+      color: #ffffff;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
       margin-top: 6px;
-      font-weight: 700;
+      letter-spacing: 0.3px;
+      opacity: 0.95;
     }
+    .header-subtitle span { color: var(--accent-yellow); font-weight: 700; }
 
     /* Menú Desplegable Compacto */
     .user-profile-menu { position: relative; cursor: pointer; }
@@ -101,7 +102,19 @@
 
     .container { max-width: 1300px; margin: 0 auto; padding: 1.5rem 2rem; position: relative; z-index: 1; }
 
-    /* Barra Superior para Biblioteca y Combo Selector en dos líneas a la derecha */
+    /* Contenedor Opcional para el Video en Portada (Listo para cuando lo activemos) */
+    .video-portada-container {
+      background: white;
+      border: 2px dashed #fae1d2;
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+      display: none; /* Cambiar a block cuando subas el video */
+    }
+
+    /* Barra Superior para Biblioteca y Combo Selector */
     .library-header-bar {
       display: flex;
       align-items: flex-start;
@@ -262,7 +275,7 @@
 </head>
 <body>
 
-  <!-- Header con Azul Infantil (#1e3a8a) -->
+  <!-- Header con Azul Infantil (#1e3a8a) y Subtítulo Nítido -->
   <header>
     <div class="header-top">
       <div class="header-left">
@@ -280,12 +293,17 @@
       </div>
     </div>
     <div class="header-subtitle">
-      Transformamos la lectura en una fiesta viva - Relatos animados interactivos para inspirar a niños y familias en Colombia.
+      <span>Transformamos la lectura en una fiesta viva</span> - Relatos animados interactivos para inspirar a niños y familias en Colombia.
     </div>
   </header>
 
   <div class="container">
     
+    <!-- Espacio reservado para el video de portada (opcional) -->
+    <div id="videoContainer" class="video-portada-container">
+      <!-- Aquí puedes incrustar tu video en el futuro -->
+    </div>
+
     <!-- Biblioteca y Combo Selector con Descripción y Reseña a la derecha en dos líneas -->
     <div class="library-header-bar">
       <h2 class="section-heading">Nuestra Biblioteca de Historias</h2>
