@@ -1,0 +1,157 @@
+{
+  "paises": [
+    {
+      "codigo": "CO",
+      "nombre": "Colombia",
+      "ciudades": [
+        "Cali",
+        "Bogotá",
+        "Medellín",
+        "Palmira",
+        "El Cerrito",
+        "Barranquilla",
+        "Cartagena",
+        "Bucaramanga",
+        "Pereira",
+        "Manizales",
+        "Cúcuta",
+        "Ibagué",
+        "Villavicencio",
+        "Santa Marta",
+        "Pasto",
+        "Montería",
+        "Neiva",
+        "Armenia",
+        "Popayán",
+        "Sincelejo",
+        "Valledupar",
+        "Tunja",
+        "Florencia",
+        "Riohacha",
+        "Quibdó",
+        "Yopal",
+        "Arauca",
+        "Mocoa",
+        "San Andrés",
+        "Leticia",
+        "San José del Guaviare",
+        "Mitú",
+        "Puerto Carreño",
+        "Inírida"
+      ]
+    },
+    {
+      "codigo": "ES",
+      "nombre": "España",
+      "ciudades": [
+        "Madrid",
+        "Barcelona",
+        "Valencia",
+        "Sevilla",
+        "Málaga",
+        "Zaragoza",
+        "Bilbao",
+        "Alicante",
+        "Córdoba",
+        "Valladolid",
+        "Vigo",
+        "Gijón",
+        "Granada",
+        "Elche",
+        "Oviedo",
+        "Badajoz",
+        "Almería",
+        "Tenerife",
+        "Murcia",
+        "Palma de Mallorca",
+        "Marbella"
+      ]
+    },
+    {
+      "codigo": "US",
+      "nombre": "Estados Unidos / United States",
+      "ciudades": [
+        "Miami",
+        "New York",
+        "Los Angeles",
+        "Orlando",
+        "Houston",
+        "Chicago",
+        "San Francisco",
+        "Dallas",
+        "Atlanta",
+        "Boston",
+        "Seattle",
+        "Washington D.C.",
+        "Las Vegas",
+        "San Diego",
+        "Austin"
+      ]
+    },
+    {
+      "codigo": "MX",
+      "nombre": "México",
+      "ciudades": [
+        "Ciudad de México",
+        "Guadalajara",
+        "Monterrey",
+        "Puebla",
+        "Tijuana",
+        "Cancún",
+        "Mérida",
+        "León",
+        "Juárez",
+        "Zapopan",
+        "Querétaro",
+        "San Luis Potosí"
+      ]
+    },
+    {
+      "codigo": "AR",
+      "nombre": "Argentina",
+      "ciudades": [
+        "Buenos Aires",
+        "Córdoba",
+        "Rosario",
+        "Mendoza",
+        "La Plata",
+        "San Miguel de Tucumán",
+        "Mar del Plata",
+        "Salta",
+        "Santa Fe",
+        "San Juan"
+      ]
+    },
+    {
+      "codigo": "CL",
+      "nombre": "Chile",
+      "ciudades": [
+        "Santiago",
+        "Valparaíso",
+        "Concepción",
+        "La Serena",
+        "Antofagasta",
+        "Temuco",
+        "Rancagua",
+        "Talca",
+        "Arica",
+        "Puerto Montt"
+      ]
+    },
+    {
+      "codigo": "GB",
+      "nombre": "Reino Unido / United Kingdom",
+      "ciudades": [
+        "London",
+        "Manchester",
+        "Birmingham",
+        "Edinburgh",
+        "Glasgow",
+        "Liverpool",
+        "Bristol",
+        "Oxford",
+        "Cambridge"
+      ]
+    }
+  ]
+}
