@@ -644,6 +644,7 @@
     }
 
     // Inicializar Mapa con ubicaciones basadas en socios registrados por Pais - Departamento - Ciudad
+    // Inicializar Mapa con ubicaciones exactas basadas en los registros reales de la hoja
     function inicializarMapa(sociosUbicaciones = []) {
       const mapaEl = document.getElementById('mapaComunidades');
       if (!mapaEl) return;
@@ -655,6 +656,34 @@
           attribution: '© OpenStreetMap contributors'
         }).addTo(mapInstance);
       }
+
+      // Coordenadas geográficas exactas correspondientes a tus registros
+      const coordsFijas = {
+        "Cali, Valle del Cauca (Colombia)": [3.4516, -76.5320],
+        "El cerrito, Valle del Cauca (Colombia)": [3.5394, -76.3036],
+        "Bogotá, Bogotá (Colombia)": [4.7110, -74.0721],
+        "Pereira, Risaralda (Colombia)": [4.8133, -75.6961],
+        "Medellín, Antioquia (Colombia)": [6.2476, -75.5658],
+        "Barranquilla, Atlántico (Colombia)": [10.9685, -74.7813],
+        "Cartagena, Bolívar (Colombia)": [10.3910, -75.4794],
+        "Madrid, Comunidad de Madrid (España)": [40.4168, -3.7038],
+        "Barcelona, Cataluña (España)": [41.3851, 2.1734]
+      };
+
+      if (sociosUbicaciones && sociosUbicaciones.length > 0) {
+        sociosUbicaciones.forEach(item => {
+          // Buscamos coincidencia exacta o parcial de la ubicación registrada
+          let claveEncontrada = Object.keys(coordsFijas).find(k => k.toLowerCase().includes(item.ubicacion.toLowerCase().split(',')[0]));
+          let coords = claveEncontrada ? coordsFijas[claveEncontrada] : [4.5709, -74.2973]; 
+          
+          L.marker(coords).addTo(mapInstance)
+            .bindPopup(`<b>${item.ubicacion}</b><br>Socios activos: ${item.total}`);
+        });
+      } else {
+        L.marker([3.5394, -76.3036]).addTo(mapInstance)
+          .bindPopup('<b>¡Metidos en el Cuento!</b><br>Sede Principal & Red de Lectura.');
+      }
+    }
 
       // Coordenadas geográficas de referencia para las ciudades registradas
       const coordsFijas = {
