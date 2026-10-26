@@ -882,10 +882,12 @@
         } else {
           mostrarAlerta(emisor, `¡Registro Exitoso!<br><br>Tu Token de Socio exclusivo es tu correo:<br><b>${correoIngresado}</b><br><br>Guárdalo bien, te otorgará acceso prioritario a eventos y beneficios.`);
           document.getElementById('formSocio').reset();
+          cerrarModalSocio();
         }
       } catch (err) { 
         mostrarAlerta(emisor, `¡Registro Exitoso!<br><br>Tu Token de Socio exclusivo es tu correo:<br><b>${correoIngresado}</b>`);
         document.getElementById('formSocio').reset();
+        cerrarModalSocio();
       }
     }
 
