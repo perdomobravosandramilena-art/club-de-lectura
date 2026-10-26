@@ -389,7 +389,7 @@
       </div>
     </div>
 
-    <!-- Mapa OpenSource ubicado DESPUÉS de las Reseñas (Marcadores basados en Registro_Socios) -->
+    <!-- Mapa OpenSource ubicado DESPUÉS de las Reseñas de forma segura -->
     <div style="margin-top: 3rem; background: white; border: 2px solid #fae1d2; border-radius: 16px; padding: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
       <h3 style="font-family: 'Caveat', cursive; color: var(--primary); font-size: 1.8rem; margin-top: 0;" data-i18n="mapa_tit">🗺️ Comunidades y Escuelas Registradas</h3>
       <p style="font-size: 0.9rem; color: #666; margin-top: -5px;" data-i18n="mapa_sub">Ubicaciones de nuestros socios y redes de lectura en el mundo:</p>
@@ -470,7 +470,6 @@
     </div>
   </div>
 
-  <!-- Modal de Registro VIP con País -> Departamento -> Ciudad -->
   <div id="socioModal" class="modal-socio">
     <div class="modal-socio-content">
       <h3 data-i18n="reg_tit">✨ Regístrate - Círculo VIP</h3>
@@ -644,8 +643,11 @@
       });
     }
 
-    // Inicializar Mapa con ubicaciones basadas en socios registrados
+    // Inicializar Mapa con ubicaciones basadas en socios registrados por Pais - Departamento - Ciudad
     function inicializarMapa(sociosUbicaciones = []) {
+      const mapaEl = document.getElementById('mapaComunidades');
+      if (!mapaEl) return;
+
       if (!mapInstance) {
         mapInstance = L.map('mapaComunidades').setView([4.5709, -74.2973], 6); // Vista general Colombia
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -654,7 +656,7 @@
         }).addTo(mapInstance);
       }
 
-      // Coordenadas geográficas de referencia para ciudades registradas
+      // Coordenadas geográficas de referencia para las ciudades registradas
       const coordsFijas = {
         "Cali, Valle del Cauca (Colombia)": [3.4516, -76.5320],
         "El cerrito, Valle del Cauca (Colombia)": [3.5394, -76.3036],
@@ -685,6 +687,7 @@
         paisesDataGlobal = data.paises;
         
         const selectPais = document.getElementById('socioPais');
+        if (!selectPais) return;
         selectPais.innerHTML = '';
         
         paisesDataGlobal.forEach(p => {
@@ -704,6 +707,7 @@
     function actualizarDepartamentos() {
       const paisNombre = document.getElementById('socioPais').value;
       const selectDepto = document.getElementById('socioDepto');
+      if (!selectDepto) return;
       selectDepto.innerHTML = '';
 
       const paisObj = paisesDataGlobal.find(p => p.nombre === paisNombre);
@@ -723,6 +727,7 @@
       const paisNombre = document.getElementById('socioPais').value;
       const deptoNombre = document.getElementById('socioDepto').value;
       const selectCiudad = document.getElementById('socioCiudad');
+      if (!selectCiudad) return;
       selectCiudad.innerHTML = '';
 
       const paisObj = paisesDataGlobal.find(p => p.nombre === paisNombre);
@@ -798,6 +803,7 @@
           renderizarReseñas(data.reseñas);
         }
 
+        // Inicializar mapa de forma segura con ubicaciones de socios
         inicializarMapa(data.sociosUbicaciones || []);
 
       } catch (err) {
@@ -1108,11 +1114,12 @@
         }
       } catch (err) { 
         mostrarAlerta(emisor, `¡Registro Exitoso!<br><br>Tu Token de Socio exclusivo es tu correo:<br><b>${correoIngresado}</b>`);
-        document.getElementById('formSocio'].reset();
+        document.getElementById('formSocio').reset();
         cerrarModalSocio();
       }
     }
 
+    // Inicializaciones aseguradas
     cargarDatos();
     cargarPaisesYCiudades();
   </script>
