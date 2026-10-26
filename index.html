@@ -25,7 +25,6 @@
       position: relative;
     }
     
-    /* Marca de agua institucional geométrica */
     body::before {
       content: "";
       position: fixed;
@@ -70,7 +69,6 @@
     }
     .header-subtitle span { color: var(--accent-yellow); font-weight: 700; }
 
-    /* Menú Desplegable Estable por Clic (Solución al cierre rápido) */
     .user-profile-menu { position: relative; cursor: pointer; }
     .avatar-btn {
       width: 42px; height: 42px;
@@ -100,7 +98,7 @@
 
     .container { max-width: 1300px; margin: 0 auto; padding: 1.5rem 2rem; position: relative; z-index: 1; }
 
-    /* Reproductor de Video en Portada */
+    /* Reproductor de Video en Portada con tu ruta */
     .video-portada-container {
       background: white;
       border: 2px dashed #fae1d2;
@@ -110,8 +108,8 @@
       text-align: center;
       box-shadow: 0 4px 15px rgba(0,0,0,0.02);
     }
-    .video-portada-container iframe {
-      width: 100%; max-width: 700px; height: 380px; border-radius: 12px; border: none;
+    .video-portada-container video {
+      width: 100%; max-width: 750px; height: auto; border-radius: 12px; outline: none;
     }
 
     .library-header-bar {
@@ -220,37 +218,38 @@
     }
     .btn-votar:hover { background: #e0b028; }
 
-    /* Botón Flotante de WhatsApp */
+    /* Botón Flotante de WhatsApp Mejorado (Pastilla con texto) */
     .whatsapp-float {
       position: fixed; bottom: 25px; right: 25px; background: #25d366; color: white;
-      width: 60px; height: 60px; border-radius: 50%; text-align: center; font-size: 32px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.25); z-index: 1000; display: flex; align-items: center; justify-content: center;
+      padding: 10px 18px; border-radius: 30px; font-size: 14px; font-weight: bold;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25); z-index: 1000; display: flex; align-items: center; gap: 8px;
       text-decoration: none; transition: transform 0.3s;
     }
-    .whatsapp-float:hover { transform: scale(1.1); }
+    .whatsapp-float:hover { transform: scale(1.05); background: #20ba5a; }
+    .whatsapp-float span { font-size: 20px; }
 
-    /* Modales Generales (Votos y Socio VIP) */
+    /* Modales */
     .modal-voto, .modal-socio {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center;
     }
     .modal-voto.active, .modal-socio.active { display: flex; }
     .modal-voto-content, .modal-socio-content {
-      background: white; width: 90%; max-width: 450px; border-radius: 16px; padding: 2rem;
+      background: white; width: 90%; max-width: 480px; border-radius: 16px; padding: 2rem;
       box-shadow: 0 10px 30px rgba(0,0,0,0.2); position: relative; border: 2px solid var(--primary);
+      max-height: 90vh; overflow-y: auto;
     }
     .modal-voto-content h3, .modal-socio-content h3 { margin-top: 0; color: var(--primary); font-family: 'Caveat', cursive; font-size: 1.8rem; }
-    .form-group { margin-bottom: 1rem; text-align: left; }
-    .form-group label { display: block; font-size: 0.85rem; font-weight: bold; margin-bottom: 4px; color: var(--text-dark); }
+    .form-group { margin-bottom: 0.9rem; text-align: left; }
+    .form-group label { display: block; font-size: 0.82rem; font-weight: bold; margin-bottom: 3px; color: var(--text-dark); }
     .form-group select, .form-group input, .form-group textarea {
-      width: 100%; padding: 8px 12px; border: 1px solid #ccc; border-radius: 8px; font-family: 'Quicksand', sans-serif; font-size: 0.9rem;
+      width: 100%; padding: 7px 10px; border: 1px solid #ccc; border-radius: 8px; font-family: 'Quicksand', sans-serif; font-size: 0.88rem;
     }
-    .form-group textarea { resize: vertical; height: 70px; }
-    .modal-actions { display: flex; gap: 10px; margin-top: 1.5rem; }
+    .form-group textarea { resize: vertical; height: 60px; }
+    .modal-actions { display: flex; gap: 10px; margin-top: 1.2rem; }
     .btn-enviar-voto { background: var(--primary); color: white; border: none; padding: 10px; border-radius: 8px; font-weight: bold; flex: 1; cursor: pointer; }
     .btn-cancelar { background: #ddd; color: #333; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; }
 
-    /* Muro de Opiniones Inferior */
     .muro-opiniones {
       margin-top: 4rem; background: white; border: 2px solid #fae1d2;
       border-radius: 16px; padding: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.03);
@@ -275,9 +274,9 @@
 </head>
 <body>
 
-  <!-- Botón Flotante de WhatsApp -->
+  <!-- Botón Flotante de WhatsApp con Texto -->
   <a href="https://wa.me/573000000000?text=¡Hola!%20Quiero%20más%20información%20del%20Club%20de%20Lectura%20¡Metidos%20en%20el%20Cuento!" class="whatsapp-float" target="_blank" title="Escríbenos por WhatsApp">
-    💬
+    <span>💬</span> Charla con Nosotros
   </a>
 
   <!-- Header -->
@@ -287,7 +286,6 @@
         <img src="assets/img/logo.jpeg" alt="Logo Club de Lectura" onerror="this.style.display='none'">
         <h1>¡Metidos en el Cuento!</h1>
       </div>
-      <!-- Menú Desplegable Estable por Clic -->
       <div class="user-profile-menu">
         <div class="avatar-btn" onclick="toggleMenu(event)" title="Menú del Club">M</div>
         <div id="profileDropdown" class="profile-dropdown">
@@ -307,9 +305,12 @@
 
   <div class="container">
     
-    <!-- Contenedor del Video en Portada (Oculto por defecto hasta que pongas la URL) -->
-    <div id="videoContainer" class="video-portada-container" style="display: none;">
-      <iframe src="" title="Video de Portada" allowfullscreen></iframe>
+    <!-- Reproductor de Video con tu ruta assets/video/presentacion.mp4 -->
+    <div id="videoContainer" class="video-portada-container">
+      <video controls poster="assets/img/logo.jpeg">
+        <source src="assets/video/presentacion.mp4" type="video/mp4">
+        Tu navegador no soporta videos HTML5.
+      </video>
     </div>
 
     <!-- Biblioteca y Combo Selector de Categorías -->
@@ -398,20 +399,42 @@
     </div>
   </div>
 
-  <!-- Modal de Registro Socio VIP (Token) -->
+  <!-- Modal de Registro Socio VIP (Token Expandido con Dirección, País, Ciudad, Teléfono) -->
   <div id="socioModal" class="modal-socio">
     <div class="modal-socio-content">
       <h3>🌟 Únete al Círculo VIP</h3>
-      <p style="font-size: 0.85rem; color: #666; margin-top: -5px;">Regístrate gratis y obtén tu Token de Socio para beneficios exclusivos.</p>
+      <p style="font-size: 0.82rem; color: #666; margin-top: -5px;">Regístrate gratis y obtén tu Token de Socio para beneficios exclusivos.</p>
       
       <form id="formSocio" onsubmit="registrarSocio(event)">
         <div class="form-group">
-          <label>Nombre Completo:</label>
-          <input type="text" id="socioNombre" placeholder="Tu nombre o el de tu familia" required>
+          <label>Nombres:</label>
+          <input type="text" id="socioNombres" placeholder="Tus nombres" required>
+        </div>
+        <div class="form-group">
+          <label>Apellidos:</label>
+          <input type="text" id="socioApellidos" placeholder="Tus apellidos" required>
         </div>
         <div class="form-group">
           <label>Correo Electrónico:</label>
           <input type="email" id="socioCorreo" placeholder="correo@ejemplo.com" required>
+        </div>
+        <div class="form-group">
+          <label>Teléfono / Celular:</label>
+          <input type="tel" id="socioTelefono" placeholder="Ej: 3001234567" required>
+        </div>
+        <div class="form-group">
+          <label>Dirección:</label>
+          <input type="text" id="socioDireccion" placeholder="Dirección de residencia">
+        </div>
+        <div class="form-group" style="display: flex; gap: 10px;">
+          <div style="flex: 1;">
+            <label>País:</label>
+            <input type="text" id="socioPais" value="Colombia">
+          </div>
+          <div style="flex: 1;">
+            <label>Ciudad:</label>
+            <input type="text" id="socioCiudad" value="Cali">
+          </div>
         </div>
         <div class="form-group">
           <label>Colegio o Institución (Opcional):</label>
@@ -437,7 +460,6 @@
     let categoriaActiva = 'todas';
     let myChart = null;
 
-    // Control de Menú Desplegable Estable por Clic
     function toggleMenu(event) {
       event.stopPropagation();
       document.getElementById('profileDropdown').classList.toggle('active');
@@ -570,7 +592,7 @@
               <p class="descripcion-corta">${cuento.descripcion}</p>
             </div>
             <div class="card-buttons">
-              <button class="btn-leer" onclick="abrirLibro('${idSeguro}')">📖 Leer</button>
+              <button class="btn-leer" onclick="abrirLibro('${idSeguro}', '${cuento.titulo.replace(/'/g, "\\'")}')">📖 Leer</button>
               <button class="btn-votar" onclick="abrirModalVoto('${cuento.titulo.replace(/'/g, "\\'")}')">💬 Opinión</button>
             </div>
           </div>
@@ -629,7 +651,7 @@
       });
     }
 
-    function abrirLibro(id) {
+    function abrirLibro(id, tituloCuento) {
       const cuento = cuentosData.find(c => (c.id === id) || (c.titulo === id));
       if (!cuento || !cuento.enlaceGemini) {
         alert("El enlace interactivo de este cuento no está disponible todavía.");
@@ -643,6 +665,13 @@
       }).catch(err => console.log("Estadística no registrada", err));
 
       window.open(cuento.enlaceGemini, '_blank');
+
+      // Sugerencia amistosa para calificar tras leer
+      setTimeout(() => {
+        if(confirm(`¡Esperamos que hayas disfrutado de "${tituloCuento}"!\n\n¿Te gustaría dejarnos tu opinión y calificación en el club?`)) {
+          abrirModalVoto(tituloCuento);
+        }
+      }, 1500);
     }
 
     function abrirModalVoto(nombreCuento) {
@@ -684,8 +713,13 @@
       const tokenUnico = 'SOCIO-2026-' + Math.random().toString(36).substring(2, 8).toUpperCase();
       const payload = {
         accion: 'registro_socio',
-        nombre: document.getElementById('socioNombre').value,
+        nombres: document.getElementById('socioNombres').value,
+        apellidos: document.getElementById('socioApellidos').value,
         correo: document.getElementById('socioCorreo').value,
+        telefono: document.getElementById('socioTelefono').value,
+        direccion: document.getElementById('socioDireccion').value,
+        pais: document.getElementById('socioPais').value,
+        ciudad: document.getElementById('socioCiudad').value,
         institucion: document.getElementById('socioInstitucion').value || 'Independiente',
         token: tokenUnico
       };
@@ -695,7 +729,7 @@
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify(payload)
         });
-        alert(`¡Bienvenido al Círculo VIP! Tu Token de Socio exclusivo es:\n\n${tokenUnico}\n\nGuárdalo bien, te otorgará acceso prioritario a eventos y formularios exclusivos.`);
+        alert(`¡Bienvenido al Círculo VIP! Tu Token de Socio exclusivo es:\n\n${tokenUnico}\n\nGuárdalo bien, te otorgará acceso prioritario a eventos y beneficios.`);
         document.getElementById('formSocio').reset();
         cerrarModalSocio();
       } catch (err) { alert("Hubo un error al registrar tu membresía."); }
