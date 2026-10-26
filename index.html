@@ -227,7 +227,6 @@
     .video-float-btn { background: #1e3a8a; }
     .video-float-btn:hover { transform: scale(1.05); background: #162c69; }
 
-    /* Modales con Z-Index Muy Superior */
     .modal-voto, .modal-socio, .modal-video, .modal-login, .modal-custom-alert {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.6); z-index: 2500; align-items: center; justify-content: center;
@@ -377,7 +376,6 @@
 
   </div>
 
-  <!-- Modal Custom de Alertas Z-Index Elevado -->
   <div id="customAlertModal" class="modal-custom-alert">
     <div class="modal-alert-content">
       <h3 id="alertTitle">¡Aviso Institucional!</h3>
@@ -386,7 +384,6 @@
     </div>
   </div>
 
-  <!-- Modal Flotante de Video -->
   <div id="videoModal" class="modal-video">
     <div class="modal-video-content">
       <video id="modalVideoPlayer" controls>
@@ -398,7 +395,6 @@
     </div>
   </div>
 
-  <!-- Modal Login / Ingresar Socio -->
   <div id="loginModal" class="modal-login">
     <div class="modal-login-content">
       <h3>🔑 Acceso de Socios VIP</h3>
@@ -416,7 +412,6 @@
     </div>
   </div>
 
-  <!-- Modal de Calificación y PQRS -->
   <div id="votoModal" class="modal-voto">
     <div class="modal-voto-content">
       <h3 id="modalVotoTitle">¡Deja tu Opinión!</h3>
@@ -453,7 +448,6 @@
     </div>
   </div>
 
-  <!-- Modal de Registro VIP -->
   <div id="socioModal" class="modal-socio">
     <div class="modal-socio-content">
       <h3>✨ Regístrate - Círculo VIP</h3>
@@ -520,7 +514,6 @@
     </div>
   </div>
 
-  <!-- Footer Dinámico Condicional -->
   <footer id="footerContainer">
     <div class="footer-brand">© 2026 Club de Lectura · Metidos en el Cuento · Desarrollado por BlaCes Project</div>
   </footer>
@@ -602,7 +595,9 @@
         document.getElementById('headerTitle').innerText = cfg.colegio;
       }
       if (cfg.whatsapp) {
-        let numW = cfg.whatsapp.toString().trim().replace(/[^0-9]/g, '');
+        // Limpieza estricta asegurando que conserve el + o dígitos para wa.me
+        let numW = cfg.whatsapp.toString().trim().replace(/[^0-9+]/g, '');
+        if (numW.startsWith('+')) numW = numW.substring(1);
         const wBtn = document.getElementById('whatsappBtn');
         wBtn.href = `https://wa.me/${numW}?text=` + encodeURIComponent("¡Hola! Quiero más información del Club de Lectura.");
       }
@@ -664,7 +659,7 @@
       
       if (nombreCat === 'todas') {
         resenaTitulo.innerText = "Biblioteca General";
-        resenaTexto.innerText = "Explora nossa colección completa de relatos animados diseñados para inspirar a estudiantes, padres y educadores.";
+        resenaTexto.innerText = "Explora nuestra colección completa de relatos animados diseñados para inspirar a estudiantes, padres y educadores.";
       } else {
         const catInfo = categoriasData.find(c => c.nombre === nombreCat);
         if (catInfo) {
