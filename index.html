@@ -227,23 +227,24 @@
     .video-float-btn { background: #1e3a8a; }
     .video-float-btn:hover { transform: scale(1.05); background: #162c69; }
 
+    /* Modales con Z-Index Corregido */
     .modal-voto, .modal-socio, .modal-video, .modal-login, .modal-custom-alert {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center;
+      background: rgba(0,0,0,0.6); z-index: 1500; align-items: center; justify-content: center;
     }
     .modal-voto.active, .modal-socio.active, .modal-video.active, .modal-login.active, .modal-custom-alert.active { display: flex; }
     
     .modal-voto-content, .modal-socio-content, .modal-login-content, .modal-alert-content {
       background: #fbf9f5; width: 90%; max-width: 480px; border-radius: 16px; padding: 2rem;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15); position: relative; border: 2px solid #e2d9cd;
-      max-height: 90vh; overflow-y: auto; text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25); position: relative; border: 2px solid #e2d9cd;
+      max-height: 90vh; overflow-y: auto; text-align: center; z-index: 1600;
     }
     .modal-alert-content h3 { color: var(--primary); font-family: 'Caveat', cursive; font-size: 2rem; margin-top: 0; }
     .modal-alert-content p { font-size: 1rem; color: var(--text-dark); line-height: 1.5; margin: 1.5rem 0; }
     
     .modal-video-content {
       background: #1e1e1e; width: 90%; max-width: 750px; border-radius: 16px; padding: 1rem;
-      position: relative; border: 2px solid var(--accent-yellow); text-align: center;
+      position: relative; border: 2px solid var(--accent-yellow); text-align: center; z-index: 1600;
     }
     .modal-video-content video { width: 100%; max-height: 70vh; border-radius: 10px; outline: none; }
     .close-video-btn {
@@ -376,7 +377,7 @@
 
   </div>
 
-  <!-- Modal Custom de Alertas (Emisor Institucional) -->
+  <!-- Modal Custom de Alertas Z-Index Elevado -->
   <div id="customAlertModal" class="modal-custom-alert">
     <div class="modal-alert-content">
       <h3 id="alertTitle">¡Aviso Institucional!</h3>
@@ -452,7 +453,7 @@
     </div>
   </div>
 
-  <!-- Modal de Registro VIP (Orden correcto: Nombre, Apellido) -->
+  <!-- Modal de Registro VIP -->
   <div id="socioModal" class="modal-socio">
     <div class="modal-socio-content">
       <h3>✨ Regístrate - Círculo VIP</h3>
@@ -536,6 +537,10 @@
     function mostrarAlerta(titulo, mensaje) {
       document.getElementById('alertTitle').innerText = titulo || "Club de Lectura";
       document.getElementById('alertMessage').innerHTML = mensaje;
+      // Cerrar otros modales abiertos para que no queden detrás
+      document.getElementById('loginModal').classList.remove('active');
+      document.getElementById('socioModal').classList.remove('active');
+      document.getElementById('votoModal').classList.remove('active');
       document.getElementById('customAlertModal').classList.add('active');
     }
     function cerrarCustomAlert() {
@@ -600,7 +605,7 @@
       if (cfg.whatsapp) {
         let numW = cfg.whatsapp.toString().trim().replace(/[^0-9]/g, '');
         const wBtn = document.getElementById('whatsappBtn');
-        wBtn.href = `https://wa.me/${numW}?text=¡Hola!%20Quiero%20más%20información%20del%20Club%20de%20Lectura.`;
+        wBtn.href = `https://wa.me/${numW}?text=` + encodeURIComponent("¡Hola! Quiero más información del Club de Lectura.");
       }
     }
 
@@ -811,13 +816,11 @@
         const resp = await res.json();
         if(resp.status === 'success') {
           mostrarAlerta(emisor, `¡Bienvenido de nuevo, ${resp.nombre}!<br><br>Sesión iniciada correctamente como Socio VIP.`);
-          cerrarModalLogin();
         } else {
           mostrarAlerta(emisor, "Correo no encontrado en el Círculo VIP. Regístrate gratis para obtener tu membresía.");
         }
       } catch (err) {
         mostrarAlerta(emisor, `¡Bienvenido de nuevo!<br><br>Acceso verificado para: ${token}`);
-        cerrarModalLogin();
       }
     }
 
@@ -851,7 +854,6 @@
           body: JSON.stringify(payload)
         });
         mostrarAlerta(emisor, "¡Mil gracias por compartir tu opinión! Ha sido guardada con éxito.");
-        cerrarModalVoto();
         setTimeout(cargarDatos, 1000);
       } catch (err) { mostrarAlerta(emisor, "Hubo un error al enviar tu opinión."); }
     }
@@ -884,12 +886,10 @@
         } else {
           mostrarAlerta(emisor, `¡Registro Exitoso!<br><br>Tu Token de Socio exclusivo es tu correo:<br><b>${correoIngresado}</b><br><br>Guárdalo bien, te otorgará acceso prioritario a eventos y beneficios.`);
           document.getElementById('formSocio').reset();
-          cerrarModalSocio();
         }
       } catch (err) { 
         mostrarAlerta(emisor, `¡Registro Exitoso!<br><br>Tu Token de Socio exclusivo es tu correo:<br><b>${correoIngresado}</b>`);
         document.getElementById('formSocio').reset();
-        cerrarModalSocio();
       }
     }
 
