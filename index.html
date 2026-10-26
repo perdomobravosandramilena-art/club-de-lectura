@@ -494,7 +494,6 @@
           <input type="tel" id="socioTelefono" placeholder="Ej: +57 3001234567" pattern="[0-9+\s()-]{7,20}" autocomplete="tel">
         </div>
         
-        <!-- Selectores en Cascada: País -> Departamento -> Ciudad -->
         <div class="form-group">
           <label data-i18n="reg_pais">País:</label>
           <select id="socioPais" required onchange="actualizarDepartamentos()"></select>
@@ -648,34 +647,32 @@
     // Inicializar Mapa con ubicaciones basadas en socios registrados
     function inicializarMapa(sociosUbicaciones = []) {
       if (!mapInstance) {
-        mapInstance = L.map('mapaComunidades').setView([3.4516, -76.5320], 6); // Vista general Colombia / Valle
+        mapInstance = L.map('mapaComunidades').setView([4.5709, -74.2973], 6); // Vista general Colombia
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           maxZoom: 19,
           attribution: '© OpenStreetMap contributors'
         }).addTo(mapInstance);
       }
 
-      // Coordenadas aproximadas de referencia para ciudades clave
+      // Coordenadas geográficas de referencia para ciudades registradas
       const coordsFijas = {
-        "Cali (Colombia)": [3.4516, -76.5320],
-        "Palmira (Colombia)": [3.5394, -76.3036],
-        "Bogotá (Colombia)": [4.7110, -74.0721],
-        "Medellín (Colombia)": [6.2476, -75.5658],
-        "Barranquilla (Colombia)": [10.9685, -74.7813],
-        "Cartagena (Colombia)": [10.3910, -75.4794],
-        "Madrid (España)": [40.4168, -3.7038],
-        "Barcelona (España)": [41.3851, 2.1734]
+        "Cali, Valle del Cauca (Colombia)": [3.4516, -76.5320],
+        "El cerrito, Valle del Cauca (Colombia)": [3.5394, -76.3036],
+        "Bogotá, Bogotá D.C. (Colombia)": [4.7110, -74.0721],
+        "Medellín, Antioquia (Colombia)": [6.2476, -75.5658],
+        "Barranquilla, Atlántico (Colombia)": [10.9685, -74.7813],
+        "Cartagena, Bolívar (Colombia)": [10.3910, -75.4794],
+        "Madrid, Comunidad de Madrid (España)": [40.4168, -3.7038],
+        "Barcelona, Cataluña (España)": [41.3851, 2.1734]
       };
 
-      // Si hay socios registrados, colocar marcadores
       if (sociosUbicaciones && sociosUbicaciones.length > 0) {
         sociosUbicaciones.forEach(item => {
-          let coords = coordsFijas[item.ubicacion] || [3.4516, -76.5320]; // Default Cali si no está en la lista
+          let coords = coordsFijas[item.ubicacion] || [4.5709, -74.2973]; 
           L.marker(coords).addTo(mapInstance)
             .bindPopup(`<b>${item.ubicacion}</b><br>Socios activos: ${item.total}`);
         });
       } else {
-        // Marcador por defecto sede principal
         L.marker([3.5394, -76.3036]).addTo(mapInstance)
           .bindPopup('<b>¡Metidos en el Cuento!</b><br>Sede Principal & Red de Lectura.');
       }
@@ -801,7 +798,6 @@
           renderizarReseñas(data.reseñas);
         }
 
-        // Inicializar mapa con ubicaciones de socios
         inicializarMapa(data.sociosUbicaciones || []);
 
       } catch (err) {
@@ -1090,6 +1086,7 @@
         correo: correoIngresado,
         telefono: document.getElementById('socioTelefono').value.trim(),
         pais: document.getElementById('socioPais').value,
+        departamento: document.getElementById('socioDepto').value,
         ciudad: document.getElementById('socioCiudad').value,
         direccion: document.getElementById('socioDireccion').value.trim(),
         institucion: document.getElementById('socioInstitucion').value.trim() || 'Independiente'
@@ -1111,12 +1108,11 @@
         }
       } catch (err) { 
         mostrarAlerta(emisor, `¡Registro Exitoso!<br><br>Tu Token de Socio exclusivo es tu correo:<br><b>${correoIngresado}</b>`);
-        document.getElementById('formSocio').reset();
+        document.getElementById('formSocio'].reset();
         cerrarModalSocio();
       }
     }
 
-    // Inicializaciones
     cargarDatos();
     cargarPaisesYCiudades();
   </script>
