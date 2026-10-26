@@ -204,24 +204,25 @@
     }
     .btn-votar:hover { background: #e0b028; }
 
-    /* Botones Flotantes Inferiores Derecha (WhatsApp y Video) */
+    /* Botones Flotantes Alineados Correctamente (WhatsApp y Video) */
     .floating-actions {
       position: fixed; bottom: 25px; right: 25px; z-index: 1000;
-      display: flex; flex-direction: column; gap: 10px; align-items: flex-end;
+      display: flex; flex-direction: column; gap: 8px; align-items: flex-end;
     }
     .whatsapp-float {
-      background: #25d366; color: white; padding: 10px 18px; border-radius: 30px;
-      font-size: 14px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.25);
-      display: flex; align-items: center; gap: 8px; text-decoration: none; transition: transform 0.3s;
+      background: #25d366; color: white; padding: 9px 16px; border-radius: 30px;
+      font-size: 13px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      display: flex; align-items: center; gap: 6px; text-decoration: none; transition: transform 0.3s;
+      white-space: nowrap;
     }
     .whatsapp-float:hover { transform: scale(1.05); background: #20ba5a; }
-    .whatsapp-float span { font-size: 20px; }
+    .whatsapp-float span { font-size: 18px; }
 
     .video-float-btn {
-      background: #1e3a8a; color: white; padding: 10px 18px; border-radius: 30px;
-      font-size: 14px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.25);
-      display: flex; align-items: center; gap: 8px; text-decoration: none; cursor: pointer; border: none;
-      transition: transform 0.3s;
+      background: #1e3a8a; color: white; padding: 9px 16px; border-radius: 30px;
+      font-size: 13px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      display: flex; align-items: center; gap: 6px; text-decoration: none; cursor: pointer; border: none;
+      transition: transform 0.3s; white-space: nowrap;
     }
     .video-float-btn:hover { transform: scale(1.05); background: #162c69; }
 
@@ -269,7 +270,7 @@
     .opinion-card p { margin: 0 0 8px 0; color: #444; font-style: italic; }
     .opinion-author { font-size: 0.8rem; font-weight: bold; color: var(--primary); }
 
-    /* Footer con Créditos y Copyright BlaCes Project */
+    /* Footer Institucional con Créditos y Copyright BlaCes Project */
     footer {
       text-align: center; padding: 2rem; color: #777; font-size: 0.82rem; border-top: 1px solid #eae5de; margin-top: 3rem;
       display: flex; flex-direction: column; gap: 6px; align-items: center;
@@ -289,7 +290,7 @@
 </head>
 <body>
 
-  {/* Botones Flotantes Inferiores Derecha (WhatsApp y Ver Video) */}
+  <!-- Botones Flotantes Inferiores Derecha (WhatsApp y Ver Video) -->
   <div class="floating-actions">
     <button class="video-float-btn" onclick="abrirModalVideo()">
       <span>🎥</span> Ver Presentación
@@ -405,7 +406,7 @@
         </div>
         <div class="form-group">
           <label>¿Quién nos lee hoy?</label>
-          <input type="text" id="lectorInput" placeholder="Ej: Estudiante Primaria / Padre de Familia" required>
+          <input type="text" id="lectorInput" placeholder="Ej: Estudiante Primaria / Padre de Familia" required autocomplete="name">
         </div>
         <div class="form-group">
           <label>Comentario o Reseña:</label>
@@ -423,7 +424,7 @@
     </div>
   </div>
 
-  <!-- Modal de Registro VIP (Círculo VIP) -->
+  <!-- Modal de Registro VIP (Círculo VIP con Autocomplete y Orden: País, Ciudad, Dirección) -->
   <div id="socioModal" class="modal-socio">
     <div class="modal-socio-content">
       <h3>✨ Regístrate - Círculo VIP</h3>
@@ -431,48 +432,48 @@
       
       <form id="formSocio" onsubmit="registrarSocio(event)">
         <div class="form-group">
-          <label>Nombres:</label>
-          <input type="text" id="socioNombres" placeholder="Tus nombres" required>
+          <label>Nombre(s) - Obligatorio:</label>
+          <input type="text" id="socioNombres" placeholder="Tus nombres" required autocomplete="given-name">
         </div>
         <div class="form-group">
-          <label>Apellidos:</label>
-          <input type="text" id="socioApellidos" placeholder="Tus apellidos" required>
+          <label>Apellido(s) - Obligatorio:</label>
+          <input type="text" id="socioApellidos" placeholder="Tus apellidos" required autocomplete="family-name">
         </div>
         <div class="form-group">
-          <label>Correo Electrónico:</label>
-          <input type="email" id="socioCorreo" placeholder="correo@ejemplo.com" required>
+          <label>Correo Electrónico - Obligatorio:</label>
+          <input type="email" id="socioCorreo" placeholder="correo@ejemplo.com" required autocomplete="email">
         </div>
         <div class="form-group">
-          <label>Teléfono / Celular:</label>
-          <input type="tel" id="socioTelefono" placeholder="Ej: 3001234567" required>
-        </div>
-        <div class="form-group">
-          <label>Dirección:</label>
-          <input type="text" id="socioDireccion" placeholder="Dirección de residencia">
+          <label>Teléfono / Celular - Opcional:</label>
+          <input type="tel" id="socioTelefono" placeholder="Ej: 3001234567" autocomplete="tel">
         </div>
         <div class="form-group" style="display: flex; gap: 10px;">
           <div style="flex: 1;">
-            <label>País:</label>
-            <input type="text" id="socioPais" value="Colombia">
+            <label>País - Opcional:</label>
+            <input type="text" id="socioPais" value="Colombia" autocomplete="country-name">
           </div>
           <div style="flex: 1;">
-            <label>Ciudad:</label>
-            <input type="text" id="socioCiudad" value="Cali">
+            <label>Ciudad - Opcional:</label>
+            <input type="text" id="socioCiudad" value="Cali" autocomplete="address-level2">
           </div>
+        </div>
+        <div class="form-group">
+          <label>Dirección - Opcional:</label>
+          <input type="text" id="socioDireccion" placeholder="Dirección de residencia" autocomplete="street-address">
         </div>
         <div class="form-group">
           <label>Colegio o Institución (Opcional):</label>
           <input type="text" id="socioInstitucion" placeholder="Ej: Colegio San José">
         </div>
         <div class="modal-actions">
-          <button type="submit" class="btn-enviar-voto">Registrarse</button>
+          <button type="submit" class="btn-enviar-voto">Regístrate</button>
           <button type="button" class="btn-cancelar" onclick="cerrarModalSocio()">Cancelar</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- Footer Institucional con Créditos y Copyright -->
+  <!-- Footer Institucional con Créditos y Copyright BlaCes Project -->
   <footer>
     <div class="footer-brand">© 2026 Club de Lectura · Metidos en el Cuento · Desarrollado por BlaCes Project</div>
     <div class="footer-credits">
