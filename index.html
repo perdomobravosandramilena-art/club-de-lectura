@@ -6,7 +6,7 @@
   <title>¡Metidos en el Cuento! - Club de Lectura</title>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <!-- Leaflet CSS (Open Source Maps) -->
+  <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -274,7 +274,7 @@
     .btn-cancelar { background: #e2d9cd; color: #333; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; }
 
     .muro-opiniones {
-      margin-top: 4rem; background: white; border: 2px solid #fae1d2;
+      margin-top: 3rem; background: white; border: 2px solid #fae1d2;
       border-radius: 16px; padding: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.03);
     }
     .muro-opiniones h3 { font-family: 'Caveat', cursive; color: var(--primary); font-size: 1.8rem; margin-top: 0; }
@@ -380,19 +380,20 @@
       </div>
     </div>
 
-    <!-- Mapa OpenSource de Comunidades y Escuelas Rurales -->
-    <div style="margin-top: 3rem; background: white; border: 2px solid #fae1d2; border-radius: 16px; padding: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
-      <h3 style="font-family: 'Caveat', cursive; color: var(--primary); font-size: 1.8rem; margin-top: 0;" data-i18n="mapa_tit">🗺️ Nuestras Comunidades y Escuelas Conectadas</h3>
-      <p style="font-size: 0.9rem; color: #666; margin-top: -5px;" data-i18n="mapa_sub">Explora las sedes y zonas rurales donde transformamos la lectura en una fiesta viva:</p>
-      <div id="mapaComunidades" style="width: 100%; height: 380px; border-radius: 12px; border: 2px solid var(--primary); margin-top: 1rem;"></div>
-    </div>
-
+    <!-- Muro de Opiniones y Reseñas -->
     <div class="muro-opiniones">
       <h3 data-i18n="opiniones_tit">✨ Opiniones y Reseñas Recientes del Club</h3>
       <p style="font-size: 0.9rem; color: #666; margin-top: -5px;" data-i18n="opiniones_sub">Lo que dicen nuestros pequeños lectores y familias en Colombia:</p>
       <div id="opinionesContainer" class="opiniones-grid">
         <p style="color: #888; font-size: 0.9rem;" data-i18n="cargando_op">Cargando opiniones...</p>
       </div>
+    </div>
+
+    <!-- Mapa OpenSource ubicado DESPUÉS de las Reseñas (Marcadores basados en Registro_Socios) -->
+    <div style="margin-top: 3rem; background: white; border: 2px solid #fae1d2; border-radius: 16px; padding: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
+      <h3 style="font-family: 'Caveat', cursive; color: var(--primary); font-size: 1.8rem; margin-top: 0;" data-i18n="mapa_tit">🗺️ Comunidades y Escuelas Registradas</h3>
+      <p style="font-size: 0.9rem; color: #666; margin-top: -5px;" data-i18n="mapa_sub">Ubicaciones de nuestros socios y redes de lectura en el mundo:</p>
+      <div id="mapaComunidades" style="width: 100%; height: 380px; border-radius: 12px; border: 2px solid var(--primary); margin-top: 1rem;"></div>
     </div>
 
   </div>
@@ -469,6 +470,7 @@
     </div>
   </div>
 
+  <!-- Modal de Registro VIP con País -> Departamento -> Ciudad -->
   <div id="socioModal" class="modal-socio">
     <div class="modal-socio-content">
       <h3 data-i18n="reg_tit">✨ Regístrate - Círculo VIP</h3>
@@ -491,16 +493,21 @@
           <label data-i18n="reg_tel">Teléfono / Celular - Opcional:</label>
           <input type="tel" id="socioTelefono" placeholder="Ej: +57 3001234567" pattern="[0-9+\s()-]{7,20}" autocomplete="tel">
         </div>
-        <div class="form-group" style="display: flex; gap: 10px;">
-          <div style="flex: 1;">
-            <label data-i18n="reg_pais">País:</label>
-            <select id="socioPais" required onchange="actualizarCiudades()"></select>
-          </div>
-          <div style="flex: 1;">
-            <label data-i18n="reg_ciudad">Ciudad:</label>
-            <select id="socioCiudad" required></select>
-          </div>
+        
+        <!-- Selectores en Cascada: País -> Departamento -> Ciudad -->
+        <div class="form-group">
+          <label data-i18n="reg_pais">País:</label>
+          <select id="socioPais" required onchange="actualizarDepartamentos()"></select>
         </div>
+        <div class="form-group">
+          <label data-i18n="reg_depto">Departamento / Estado:</label>
+          <select id="socioDepto" required onchange="actualizarCiudades()"></select>
+        </div>
+        <div class="form-group">
+          <label data-i18n="reg_ciudad">Ciudad / Municipio:</label>
+          <select id="socioCiudad" required></select>
+        </div>
+
         <div class="form-group">
           <label data-i18n="reg_dir">Dirección - Opcional:</label>
           <input type="text" id="socioDireccion" placeholder="Dirección de residencia" autocomplete="street-address">
@@ -548,8 +555,8 @@
         biblio_desc: "Explora nuestra colección completa de relatos animados diseñados para inspirar a estudiantes, padres y educadores.",
         cargando: "Cargando cuentos mágicos...",
         ranking: "Ranking de Lectura",
-        mapa_tit: "🗺️ Nuestras Comunidades y Escuelas Conectadas",
-        mapa_sub: "Explora las sedes y zonas rurales donde transformamos la lectura en una fiesta viva:",
+        mapa_tit: "🗺️ Comunidades y Escuelas Registradas",
+        mapa_sub: "Ubicaciones de nuestros socios y redes de lectura en el mundo:",
         opiniones_tit: "✨ Opiniones y Reseñas Recientes del Club",
         opiniones_sub: "Lo que dicen nuestros pequeños lectores y familias en Colombia:",
         cargando_op: "Cargando opiniones...",
@@ -574,7 +581,8 @@
         reg_correo: "Correo Electrónico - Obligatorio:",
         reg_tel: "Teléfono / Celular - Opcional:",
         reg_pais: "País:",
-        reg_ciudad: "Ciudad:",
+        reg_depto: "Departamento / Estado:",
+        reg_ciudad: "Ciudad / Municipio:",
         reg_dir: "Dirección - Opcional:",
         reg_inst: "Colegio o Institución (Opcional):",
         btn_reg: "Regístrate"
@@ -593,8 +601,8 @@
         biblio_desc: "Explore our complete collection of animated stories designed to inspire students, parents, and educators.",
         cargando: "Loading magical stories...",
         ranking: "Reading Ranking",
-        mapa_tit: "🗺️ Our Connected Communities & Rural Schools",
-        mapa_sub: "Explore the venues and rural areas where we transform reading into a living celebration:",
+        mapa_tit: "🗺️ Registered Communities & Schools",
+        mapa_sub: "Locations of our members and reading networks around the world:",
         opiniones_tit: "✨ Recent Club Reviews & Opinions",
         opiniones_sub: "What our young readers and families say:",
         cargando_op: "Loading opinions...",
@@ -619,7 +627,8 @@
         reg_correo: "Email - Required:",
         reg_tel: "Phone / Cell - Optional:",
         reg_pais: "Country:",
-        reg_ciudad: "City:",
+        reg_depto: "Department / State:",
+        reg_ciudad: "City / Municipality:",
         reg_dir: "Address - Optional:",
         reg_inst: "School or Institution (Optional):",
         btn_reg: "Register"
@@ -636,18 +645,39 @@
       });
     }
 
-    // Inicializar Mapa OpenStreetMap con Leaflet
-    function inicializarMapa() {
+    // Inicializar Mapa con ubicaciones basadas en socios registrados
+    function inicializarMapa(sociosUbicaciones = []) {
       if (!mapInstance) {
-        mapInstance = L.map('mapaComunidades').setView([3.5394, -76.3036], 9); // Valle del Cauca / Colombia
+        mapInstance = L.map('mapaComunidades').setView([3.4516, -76.5320], 6); // Vista general Colombia / Valle
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           maxZoom: 19,
           attribution: '© OpenStreetMap contributors'
         }).addTo(mapInstance);
+      }
 
+      // Coordenadas aproximadas de referencia para ciudades clave
+      const coordsFijas = {
+        "Cali (Colombia)": [3.4516, -76.5320],
+        "Palmira (Colombia)": [3.5394, -76.3036],
+        "Bogotá (Colombia)": [4.7110, -74.0721],
+        "Medellín (Colombia)": [6.2476, -75.5658],
+        "Barranquilla (Colombia)": [10.9685, -74.7813],
+        "Cartagena (Colombia)": [10.3910, -75.4794],
+        "Madrid (España)": [40.4168, -3.7038],
+        "Barcelona (España)": [41.3851, 2.1734]
+      };
+
+      // Si hay socios registrados, colocar marcadores
+      if (sociosUbicaciones && sociosUbicaciones.length > 0) {
+        sociosUbicaciones.forEach(item => {
+          let coords = coordsFijas[item.ubicacion] || [3.4516, -76.5320]; // Default Cali si no está en la lista
+          L.marker(coords).addTo(mapInstance)
+            .bindPopup(`<b>${item.ubicacion}</b><br>Socios activos: ${item.total}`);
+        });
+      } else {
+        // Marcador por defecto sede principal
         L.marker([3.5394, -76.3036]).addTo(mapInstance)
-          .bindPopup('<b>¡Metidos en el Cuento!</b><br>Sede Principal & Red de Escuelas Rurales.')
-          .openPopup();
+          .bindPopup('<b>¡Metidos en el Cuento!</b><br>Sede Principal & Red de Lectura.');
       }
     }
 
@@ -668,26 +698,48 @@
           selectPais.appendChild(opt);
         });
 
-        actualizarCiudades();
+        actualizarDepartamentos();
       } catch (err) {
         console.error("Error al cargar JSON de países/ciudades:", err);
       }
     }
 
+    function actualizarDepartamentos() {
+      const paisNombre = document.getElementById('socioPais').value;
+      const selectDepto = document.getElementById('socioDepto');
+      selectDepto.innerHTML = '';
+
+      const paisObj = paisesDataGlobal.find(p => p.nombre === paisNombre);
+      if (paisObj && paisObj.departamentos) {
+        paisObj.departamentos.forEach(d => {
+          const optD = document.createElement('option');
+          optD.value = d.departamento;
+          optD.innerText = d.departamento;
+          if (paisNombre === "Colombia" && d.departamento === "Valle del Cauca") optD.selected = true;
+          selectDepto.appendChild(optD);
+        });
+      }
+      actualizarCiudades();
+    }
+
     function actualizarCiudades() {
       const paisNombre = document.getElementById('socioPais').value;
+      const deptoNombre = document.getElementById('socioDepto').value;
       const selectCiudad = document.getElementById('socioCiudad');
       selectCiudad.innerHTML = '';
 
       const paisObj = paisesDataGlobal.find(p => p.nombre === paisNombre);
-      if (paisObj && paisObj.ciudades) {
-        paisObj.ciudades.forEach(c => {
-          const optC = document.createElement('option');
-          optC.value = c;
-          optC.innerText = c;
-          if (paisNombre === "Colombia" && c === "Cali") optC.selected = true;
-          selectCiudad.appendChild(optC);
-        });
+      if (paisObj && paisObj.departamentos) {
+        const deptoObj = paisObj.departamentos.find(d => d.departamento === deptoNombre);
+        if (deptoObj && deptoObj.ciudades) {
+          deptoObj.ciudades.forEach(c => {
+            const optC = document.createElement('option');
+            optC.value = c;
+            optC.innerText = c;
+            if (paisNombre === "Colombia" && deptoNombre === "Valle del Cauca" && c === "Cali") optC.selected = true;
+            selectCiudad.appendChild(optC);
+          });
+        }
       }
     }
 
@@ -748,6 +800,10 @@
         if (data && Array.isArray(data.reseñas)) {
           renderizarReseñas(data.reseñas);
         }
+
+        // Inicializar mapa con ubicaciones de socios
+        inicializarMapa(data.sociosUbicaciones || []);
+
       } catch (err) {
         console.error("Error al cargar datos:", err);
         document.getElementById('contenedorCuentos').innerHTML = '<p style="text-align:center; color:red; grid-column: 1/-1;">Error al conectar con la base de datos.</p>';
@@ -975,7 +1031,6 @@
         const resp = await res.json();
         if(resp.status === 'success') {
           mostrarAlerta(emisor, `¡Bienvenido de nuevo, ${resp.nombre}!<br><br>Sesión iniciada correctamente como Socio VIP.`);
-          // Saludo personalizado en el header reconociendo al usuario
           document.getElementById('headerLoginBtn').innerHTML = `👤 Hola, ${resp.nombre.split(' ')[0]}`;
         } else {
           mostrarAlerta(emisor, "Correo no encontrado en el Círculo VIP. Regístrate gratis para obtener tu membresía.");
@@ -986,7 +1041,7 @@
     }
 
     function abrirModalVoto(nombreCuento) {
-      document.getElementById('modalVotoTitle`').innerText = `Opinión: ${nombreCuento}`;
+      document.getElementById('modalVotoTitle').innerText = `Opinión: ${nombreCuento}`;
       document.getElementById('cuentoVotoInput').value = nombreCuento;
       document.getElementById('formVoto').reset();
       document.getElementById('votoModal').classList.add('active');
@@ -1061,12 +1116,9 @@
       }
     }
 
-    // Inicializaciones al cargar la página
+    // Inicializaciones
     cargarDatos();
     cargarPaisesYCiudades();
-    window.addEventListener('DOMContentLoaded', () => {
-      inicializarMapa();
-    });
   </script>
 </body>
 </html>
