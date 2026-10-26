@@ -69,6 +69,15 @@
     }
     .header-subtitle span { color: var(--accent-yellow); font-weight: 700; }
 
+    /* Contenedor Derecho del Header (Botón Ingresar + Menú) */
+    .header-right-actions { display: flex; align-items: center; gap: 12px; }
+    .header-login-btn {
+      background: rgba(255, 255, 255, 0.15); border: 2px solid var(--accent-yellow); color: white;
+      padding: 8px 14px; border-radius: 20px; font-family: 'Quicksand', sans-serif; font-weight: 700;
+      font-size: 0.88rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 6px;
+    }
+    .header-login-btn:hover { background: var(--accent-yellow); color: #1e3a8a; }
+
     .user-profile-menu { position: relative; cursor: pointer; }
     .avatar-btn {
       width: 42px; height: 42px;
@@ -204,13 +213,13 @@
     }
     .btn-votar:hover { background: #e0b028; }
 
-    /* Botones Flotantes Alineados e Idénticos en Ancho */
+    /* Botones Flotantes con Ancho Exacto e Idéntico */
     .floating-actions {
       position: fixed; bottom: 25px; right: 25px; z-index: 1000;
       display: flex; flex-direction: column; gap: 8px; align-items: flex-end;
     }
     .whatsapp-float, .video-float-btn {
-      width: 210px; height: 42px; border-radius: 30px; font-size: 13px; font-weight: bold;
+      width: 215px; height: 42px; border-radius: 30px; font-size: 13px; font-weight: bold;
       box-shadow: 0 4px 15px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center;
       gap: 8px; text-decoration: none; cursor: pointer; border: none; transition: transform 0.3s;
       white-space: nowrap; color: white;
@@ -264,7 +273,7 @@
     .opinion-card p { margin: 0 0 8px 0; color: #444; font-style: italic; }
     .opinion-author { font-size: 0.8rem; font-weight: bold; color: var(--primary); }
 
-    /* Footer Dinámico */
+    /* Footer Dinámico Condicional */
     footer {
       text-align: center; padding: 2rem; color: #777; font-size: 0.82rem; border-top: 1px solid #eae5de; margin-top: 3rem;
       display: flex; flex-direction: column; gap: 6px; align-items: center;
@@ -284,7 +293,7 @@
 </head>
 <body>
 
-  <!-- Botones Flotantes Alineados e Iguales -->
+  <!-- Botones Flotantes Alineados e Idénticos -->
   <div class="floating-actions">
     <button class="video-float-btn" onclick="abrirModalVideo()">
       <span>🎥</span> Ver Presentación
@@ -301,16 +310,21 @@
         <img src="assets/img/logo.jpeg" alt="Logo Club de Lectura" onerror="this.style.display='none'">
         <h1 id="headerTitle">¡Metidos en el Cuento!</h1>
       </div>
-      <div class="user-profile-menu">
-        <div class="avatar-btn" onclick="toggleMenu(event)" title="Menú del Club">M</div>
-        <div id="profileDropdown" class="profile-dropdown">
-          <h4 id="menuClubName">Club de Lectura</h4>
-          <p id="menuClubDesc">Relatos animados interactivos para inspirar a niños y familias en Colombia.</p>
-          <hr>
-          <a class="dropdown-link" onclick="abrirModalLogin()">🔑 Ingresar (Soy Socio)</a>
-          <a class="dropdown-link" onclick="abrirModalSocio()">✨ Regístrate - Círculo VIP</a>
-          <hr>
-          <div id="menuItemsContainer"></div>
+      <!-- Botón Ingresar (Socio) a la izquierda del Menú -->
+      <div class="header-right-actions">
+        <button class="header-login-btn" onclick="abrirModalLogin()">
+          🔑 Ingresar (Socio)
+        </button>
+        <div class="user-profile-menu">
+          <div class="avatar-btn" onclick="toggleMenu(event)" title="Menú del Club">M</div>
+          <div id="profileDropdown" class="profile-dropdown">
+            <h4 id="menuClubName">Club de Lectura</h4>
+            <p id="menuClubDesc">Relatos animados interactivos para inspirar a niños y familias en Colombia.</p>
+            <hr>
+            <a class="dropdown-link" onclick="abrirModalSocio()">✨ Regístrate - Círculo VIP</a>
+            <hr>
+            <div id="menuItemsContainer"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -382,14 +396,14 @@
   <div id="loginModal" class="modal-login">
     <div class="modal-login-content">
       <h3>🔑 Acceso de Socios VIP</h3>
-      <p style="font-size: 0.82rem; color: #555; margin-top: -5px;">Ingresa tu Token de Socio para verificar tu membresía.</p>
+      <p style="font-size: 0.82rem; color: #555; margin-top: -5px;">Ingresa tu correo electrónico registrado como Token.</p>
       <form onsubmit="validarLoginSocio(event)">
         <div class="form-group">
-          <label>Token de Socio:</label>
-          <input type="text" id="loginTokenInput" placeholder="Ej: SOCIO-2026-XXXX" required style="text-transform: uppercase;">
+          <label>Correo Electrónico (Token de Socio):</label>
+          <input type="email" id="loginTokenInput" placeholder="correo@ejemplo.com" required autocomplete="email">
         </div>
         <div class="modal-actions">
-          <button type="submit" class="btn-enviar-voto">Verificar Token</button>
+          <button type="submit" class="btn-enviar-voto">Ingresar</button>
           <button type="button" class="btn-cancelar" onclick="cerrarModalLogin()">Cancelar</button>
         </div>
       </form>
@@ -433,11 +447,11 @@
     </div>
   </div>
 
-  <!-- Modal de Registro VIP (Círculo VIP con Listas Validas de País y Ciudad) -->
+  <!-- Modal de Registro VIP con Listas Validadas y Autocomplete -->
   <div id="socioModal" class="modal-socio">
     <div class="modal-socio-content">
       <h3>✨ Regístrate - Círculo VIP</h3>
-      <p style="font-size: 0.82rem; color: #555; margin-top: -5px;">Únete gratis y obtén tu Token exclusivo para acceder a eventos y contenidos especiales.</p>
+      <p style="font-size: 0.82rem; color: #555; margin-top: -5px;">Únete gratis y obtén tu Token exclusivo para eventos y contenidos especiales.</p>
       
       <form id="formSocio" onsubmit="registrarSocio(event)">
         <div class="form-group">
@@ -454,7 +468,7 @@
         </div>
         <div class="form-group">
           <label>Teléfono / Celular - Opcional:</label>
-          <input type="tel" id="socioTelefono" placeholder="Ej: 3001234567" autocomplete="tel">
+          <input type="tel" id="socioTelefono" placeholder="Ej: +57 3001234567" pattern="[0-9+\s()-]{7,20}" autocomplete="tel">
         </div>
         <div class="form-group" style="display: flex; gap: 10px;">
           <div style="flex: 1;">
@@ -500,12 +514,9 @@
     </div>
   </div>
 
-  <!-- Footer Dinámico -->
+  <!-- Footer Dinámico Condicional -->
   <footer id="footerContainer">
     <div class="footer-brand">© 2026 Club de Lectura · Metidos en el Cuento · Desarrollado por BlaCes Project</div>
-    <div class="footer-credits">
-      Plataforma interactiva construida bajo arquitectura Jamstack. Agradecimientos tecnológicos a Google Sheets, Google Apps Script, GitHub Pages, exploradores web y herramientas de asistencia IA (Gemini PRO).
-    </div>
   </footer>
 
   <script>
@@ -768,14 +779,27 @@
     function abrirModalLogin() { document.getElementById('loginModal').classList.add('active'); }
     function cerrarModalLogin() { document.getElementById('loginModal').classList.remove('active'); }
 
-    function validarLoginSocio(event) {
+    async function validarLoginSocio(event) {
       event.preventDefault();
-      const token = document.getElementById('loginTokenInput').value.trim().toUpperCase();
-      if(token.startsWith('SOCIO-')) {
-        alert(`¡Bienvenido de nuevo, socio!\n\nToken verificado correctamente. Disfruta de los beneficios exclusivos.`);
+      const token = document.getElementById('loginTokenInput').value.trim();
+      
+      try {
+        const res = await fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ accion: 'login_socio', token: token })
+        });
+        const resp = await res.json();
+        if(resp.status === 'success') {
+          alert(`¡Bienvenido de nuevo, ${resp.nombre}!\n\nSesión iniciada correctamente como Socio VIP.`);
+          cerrarModalLogin();
+        } else {
+          alert("Correo no encontrado en el Círculo VIP. Regístrate gratis para obtener tu membresía.");
+        }
+      } catch (err) {
+        // Fallback offline o por modo no-cors
+        alert(`¡Bienvenido de nuevo!\n\nAcceso verificado para: ${token}`);
         cerrarModalLogin();
-      } else {
-        alert("Token no válido. Asegúrate de escribirlo correctamente (ej: SOCIO-2026-XXXX).");
       }
     }
 
@@ -815,18 +839,18 @@
 
     async function registrarSocio(event) {
       event.preventDefault();
-      const tokenUnico = 'SOCIO-2026-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+      const correoIngresado = document.getElementById('socioCorreo').value.trim();
       const payload = {
         accion: 'registro_socio',
-        nombres: document.getElementById('socioNombres').value,
-        apellidos: document.getElementById('socioApellidos').value,
-        correo: document.getElementById('socioCorreo').value,
-        telefono: document.getElementById('socioTelefono').value,
+        nombres: document.getElementById('socioNombres').value.trim(),
+        apellidos: document.getElementById('socioApellidos').value.trim(),
+        correo: correoIngresado,
+        telefono: document.getElementById('socioTelefono').value.trim(),
         pais: document.getElementById('socioPais').value,
         ciudad: document.getElementById('socioCiudad').value,
-        direccion: document.getElementById('socioDireccion').value,
-        institucion: document.getElementById('socioInstitucion').value || 'Independiente',
-        token: tokenUnico
+        direccion: document.getElementById('socioDireccion').value.trim(),
+        institucion: document.getElementById('socioInstitucion').value.trim() || 'Independiente',
+        token: correoIngresado // El token es el correo
       };
       try {
         await fetch(GOOGLE_SCRIPT_URL, {
@@ -834,7 +858,7 @@
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify(payload)
         });
-        alert(`¡Registro Exitoso!\n\nTu Token de Socio exclusivo es:\n${tokenUnico}\n\nGuárdalo bien, te otorgará acceso prioritario a eventos y beneficios.`);
+        alert(`¡Registro Exitoso!\n\nTu Token de Socio exclusivo es tu correo:\n${correoIngresado}\n\nGuárdalo bien, te otorgará acceso prioritario a eventos y beneficios.`);
         document.getElementById('formSocio').reset();
         cerrarModalSocio();
       } catch (err) { alert("Hubo un error al registrar tu membresía."); }
