@@ -85,7 +85,7 @@
     .profile-dropdown {
       display: none;
       position: absolute; right: 0; top: 50px;
-      background: white; width: 300px;
+      background: white; width: 310px;
       border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.25);
       border: 2px solid var(--primary); padding: 1.2rem; z-index: 200; text-align: left;
     }
@@ -97,20 +97,6 @@
     .dropdown-link:hover { color: var(--primary); }
 
     .container { max-width: 1300px; margin: 0 auto; padding: 1.5rem 2rem; position: relative; z-index: 1; }
-
-    /* Reproductor de Video en Portada con tu ruta */
-    .video-portada-container {
-      background: white;
-      border: 2px dashed #fae1d2;
-      border-radius: 16px;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-      text-align: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.02);
-    }
-    .video-portada-container video {
-      width: 100%; max-width: 750px; height: auto; border-radius: 12px; outline: none;
-    }
 
     .library-header-bar {
       display: flex;
@@ -218,37 +204,60 @@
     }
     .btn-votar:hover { background: #e0b028; }
 
-    /* Botón Flotante de WhatsApp Mejorado (Pastilla con texto) */
+    /* Botones Flotantes Inferiores Derecha (WhatsApp y Video) */
+    .floating-actions {
+      position: fixed; bottom: 25px; right: 25px; z-index: 1000;
+      display: flex; flex-direction: column; gap: 10px; align-items: flex-end;
+    }
     .whatsapp-float {
-      position: fixed; bottom: 25px; right: 25px; background: #25d366; color: white;
-      padding: 10px 18px; border-radius: 30px; font-size: 14px; font-weight: bold;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.25); z-index: 1000; display: flex; align-items: center; gap: 8px;
-      text-decoration: none; transition: transform 0.3s;
+      background: #25d366; color: white; padding: 10px 18px; border-radius: 30px;
+      font-size: 14px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+      display: flex; align-items: center; gap: 8px; text-decoration: none; transition: transform 0.3s;
     }
     .whatsapp-float:hover { transform: scale(1.05); background: #20ba5a; }
     .whatsapp-float span { font-size: 20px; }
 
-    /* Modales */
-    .modal-voto, .modal-socio {
-      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center;
+    .video-float-btn {
+      background: #1e3a8a; color: white; padding: 10px 18px; border-radius: 30px;
+      font-size: 14px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+      display: flex; align-items: center; gap: 8px; text-decoration: none; cursor: pointer; border: none;
+      transition: transform 0.3s;
     }
-    .modal-voto.active, .modal-socio.active { display: flex; }
+    .video-float-btn:hover { transform: scale(1.05); background: #162c69; }
+
+    /* Modales con Colores Suaves de Paz y Descanso Visual */
+    .modal-voto, .modal-socio, .modal-video {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center;
+    }
+    .modal-voto.active, .modal-socio.active, .modal-video.active { display: flex; }
+    
     .modal-voto-content, .modal-socio-content {
-      background: white; width: 90%; max-width: 480px; border-radius: 16px; padding: 2rem;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2); position: relative; border: 2px solid var(--primary);
+      background: #fbf9f5; width: 90%; max-width: 480px; border-radius: 16px; padding: 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15); position: relative; border: 2px solid #e2d9cd;
       max-height: 90vh; overflow-y: auto;
     }
+    .modal-video-content {
+      background: #1e1e1e; width: 90%; max-width: 750px; border-radius: 16px; padding: 1rem;
+      position: relative; border: 2px solid var(--accent-yellow); text-align: center;
+    }
+    .modal-video-content video { width: 100%; max-height: 70vh; border-radius: 10px; outline: none; }
+    .close-video-btn {
+      background: var(--primary); color: white; border: none; padding: 6px 14px; border-radius: 8px;
+      font-weight: bold; cursor: pointer; margin-top: 10px;
+    }
+
     .modal-voto-content h3, .modal-socio-content h3 { margin-top: 0; color: var(--primary); font-family: 'Caveat', cursive; font-size: 1.8rem; }
     .form-group { margin-bottom: 0.9rem; text-align: left; }
     .form-group label { display: block; font-size: 0.82rem; font-weight: bold; margin-bottom: 3px; color: var(--text-dark); }
     .form-group select, .form-group input, .form-group textarea {
-      width: 100%; padding: 7px 10px; border: 1px solid #ccc; border-radius: 8px; font-family: 'Quicksand', sans-serif; font-size: 0.88rem;
+      width: 100%; padding: 8px 12px; border: 1px solid #d4cbbd; border-radius: 8px; 
+      font-family: 'Quicksand', sans-serif; font-size: 0.88rem; background: #ffffff; color: var(--text-dark);
     }
     .form-group textarea { resize: vertical; height: 60px; }
     .modal-actions { display: flex; gap: 10px; margin-top: 1.2rem; }
     .btn-enviar-voto { background: var(--primary); color: white; border: none; padding: 10px; border-radius: 8px; font-weight: bold; flex: 1; cursor: pointer; }
-    .btn-cancelar { background: #ddd; color: #333; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+    .btn-cancelar { background: #e2d9cd; color: #333; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; }
 
     .muro-opiniones {
       margin-top: 4rem; background: white; border: 2px solid #fae1d2;
@@ -260,7 +269,13 @@
     .opinion-card p { margin: 0 0 8px 0; color: #444; font-style: italic; }
     .opinion-author { font-size: 0.8rem; font-weight: bold; color: var(--primary); }
 
-    footer { text-align: center; padding: 1.5rem; color: #777; font-size: 0.85rem; border-top: 1px solid #eee; margin-top: 3rem; }
+    /* Footer con Créditos y Copyright BlaCes Project */
+    footer {
+      text-align: center; padding: 2rem; color: #777; font-size: 0.82rem; border-top: 1px solid #eae5de; margin-top: 3rem;
+      display: flex; flex-direction: column; gap: 6px; align-items: center;
+    }
+    .footer-brand { font-weight: bold; color: var(--primary); }
+    .footer-credits { font-size: 0.76rem; color: #999; max-width: 800px; line-height: 1.4; }
 
     @media (max-width: 768px) {
       .library-header-bar { flex-direction: column; align-items: flex-start; }
@@ -274,10 +289,15 @@
 </head>
 <body>
 
-  <!-- Botón Flotante de WhatsApp con Texto -->
-  <a href="https://wa.me/573000000000?text=¡Hola!%20Quiero%20más%20información%20del%20Club%20de%20Lectura%20¡Metidos%20en%20el%20Cuento!" class="whatsapp-float" target="_blank" title="Escríbenos por WhatsApp">
-    <span>💬</span> Charla con Nosotros
-  </a>
+  {/* Botones Flotantes Inferiores Derecha (WhatsApp y Ver Video) */}
+  <div class="floating-actions">
+    <button class="video-float-btn" onclick="abrirModalVideo()">
+      <span>🎥</span> Ver Presentación
+    </button>
+    <a href="https://wa.me/573000000000?text=¡Hola!%20Quiero%20más%20información%20del%20Club%20de%20Lectura%20¡Metidos%20en%20el%20Cuento!" class="whatsapp-float" target="_blank" title="Escríbenos por WhatsApp">
+      <span>💬</span> Charla con Nosotros
+    </a>
+  </div>
 
   <!-- Header -->
   <header>
@@ -292,7 +312,7 @@
           <h4>Club de Lectura</h4>
           <p>Relatos animados interactivos para inspirar a niños y familias en Colombia.</p>
           <hr>
-          <a class="dropdown-link" onclick="abrirModalSocio()">⭐ Unirse al Círculo VIP (Socio)</a>
+          <a class="dropdown-link" onclick="abrirModalSocio()">✨ Regístrate - Círculo VIP</a>
           <hr>
           <div id="menuItemsContainer"></div>
         </div>
@@ -305,14 +325,6 @@
 
   <div class="container">
     
-    <!-- Reproductor de Video con tu ruta assets/video/presentacion.mp4 -->
-    <div id="videoContainer" class="video-portada-container">
-      <video controls poster="assets/img/logo.jpeg">
-        <source src="assets/video/presentacion.mp4" type="video/mp4">
-        Tu navegador no soporta videos HTML5.
-      </video>
-    </div>
-
     <!-- Biblioteca y Combo Selector de Categorías -->
     <div class="library-header-bar">
       <h2 class="section-heading">Nuestra Biblioteca de Historias</h2>
@@ -362,6 +374,18 @@
 
   </div>
 
+  <!-- Modal Flotante de Video -->
+  <div id="videoModal" class="modal-video">
+    <div class="modal-video-content">
+      <video id="modalVideoPlayer" controls>
+        <source src="assets/video/presentacion.mp4" type="video/mp4">
+        Tu navegador no soporta videos HTML5.
+      </video>
+      <br>
+      <button class="close-video-btn" onclick="cerrarModalVideo()">Cerrar Presentación</button>
+    </div>
+  </div>
+
   <!-- Modal de Calificación y PQRS -->
   <div id="votoModal" class="modal-voto">
     <div class="modal-voto-content">
@@ -399,11 +423,11 @@
     </div>
   </div>
 
-  <!-- Modal de Registro Socio VIP (Token Expandido con Dirección, País, Ciudad, Teléfono) -->
+  <!-- Modal de Registro VIP (Círculo VIP) -->
   <div id="socioModal" class="modal-socio">
     <div class="modal-socio-content">
-      <h3>🌟 Únete al Círculo VIP</h3>
-      <p style="font-size: 0.82rem; color: #666; margin-top: -5px;">Regístrate gratis y obtén tu Token de Socio para beneficios exclusivos.</p>
+      <h3>✨ Regístrate - Círculo VIP</h3>
+      <p style="font-size: 0.82rem; color: #555; margin-top: -5px;">Únete gratis y obtén tu Token exclusivo para acceder a eventos y contenidos especiales.</p>
       
       <form id="formSocio" onsubmit="registrarSocio(event)">
         <div class="form-group">
@@ -441,15 +465,19 @@
           <input type="text" id="socioInstitucion" placeholder="Ej: Colegio San José">
         </div>
         <div class="modal-actions">
-          <button type="submit" class="btn-enviar-voto">Obtener Token</button>
+          <button type="submit" class="btn-enviar-voto">Registrarse</button>
           <button type="button" class="btn-cancelar" onclick="cerrarModalSocio()">Cancelar</button>
         </div>
       </form>
     </div>
   </div>
 
+  <!-- Footer Institucional con Créditos y Copyright -->
   <footer>
-    <p>© 2026 Club de Lectura · Metidos en el Cuento · Creado con amor para la niñez</p>
+    <div class="footer-brand">© 2026 Club de Lectura · Metidos en el Cuento · Desarrollado por BlaCes Project</div>
+    <div class="footer-credits">
+      Plataforma interactiva construida bajo arquitectura Jamstack. Agradecimientos tecnológicos a Google Sheets, Google Apps Script, GitHub Pages, exploradores web y herramientas de asistencia IA (Gemini PRO).
+    </div>
   </footer>
 
   <script>
@@ -666,12 +694,18 @@
 
       window.open(cuento.enlaceGemini, '_blank');
 
-      // Sugerencia amistosa para calificar tras leer
       setTimeout(() => {
         if(confirm(`¡Esperamos que hayas disfrutado de "${tituloCuento}"!\n\n¿Te gustaría dejarnos tu opinión y calificación en el club?`)) {
           abrirModalVoto(tituloCuento);
         }
       }, 1500);
+    }
+
+    function abrirModalVideo() { document.getElementById('videoModal').classList.add('active'); }
+    function cerrarModalVideo() {
+      document.getElementById('videoModal').classList.remove('active');
+      const v = document.getElementById('modalVideoPlayer');
+      v.pause();
     }
 
     function abrirModalVoto(nombreCuento) {
@@ -729,7 +763,7 @@
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify(payload)
         });
-        alert(`¡Bienvenido al Círculo VIP! Tu Token de Socio exclusivo es:\n\n${tokenUnico}\n\nGuárdalo bien, te otorgará acceso prioritario a eventos y beneficios.`);
+        alert(`¡Registro Exitoso!\n\nTu Token de Socio exclusivo es:\n${tokenUnico}\n\nGuárdalo bien, te otorgará acceso prioritario a eventos y beneficios.`);
         document.getElementById('formSocio').reset();
         cerrarModalSocio();
       } catch (err) { alert("Hubo un error al registrar tu membresía."); }
