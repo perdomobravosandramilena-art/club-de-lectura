@@ -227,24 +227,24 @@
     .video-float-btn { background: #1e3a8a; }
     .video-float-btn:hover { transform: scale(1.05); background: #162c69; }
 
-    /* Modales con Z-Index Corregido */
+    /* Modales con Z-Index Muy Superior */
     .modal-voto, .modal-socio, .modal-video, .modal-login, .modal-custom-alert {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6); z-index: 1500; align-items: center; justify-content: center;
+      background: rgba(0,0,0,0.6); z-index: 2500; align-items: center; justify-content: center;
     }
     .modal-voto.active, .modal-socio.active, .modal-video.active, .modal-login.active, .modal-custom-alert.active { display: flex; }
     
     .modal-voto-content, .modal-socio-content, .modal-login-content, .modal-alert-content {
       background: #fbf9f5; width: 90%; max-width: 480px; border-radius: 16px; padding: 2rem;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25); position: relative; border: 2px solid #e2d9cd;
-      max-height: 90vh; overflow-y: auto; text-align: center; z-index: 1600;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; border: 2px solid #e2d9cd;
+      max-height: 90vh; overflow-y: auto; text-align: center; z-index: 2600;
     }
     .modal-alert-content h3 { color: var(--primary); font-family: 'Caveat', cursive; font-size: 2rem; margin-top: 0; }
     .modal-alert-content p { font-size: 1rem; color: var(--text-dark); line-height: 1.5; margin: 1.5rem 0; }
     
     .modal-video-content {
       background: #1e1e1e; width: 90%; max-width: 750px; border-radius: 16px; padding: 1rem;
-      position: relative; border: 2px solid var(--accent-yellow); text-align: center; z-index: 1600;
+      position: relative; border: 2px solid var(--accent-yellow); text-align: center; z-index: 2600;
     }
     .modal-video-content video { width: 100%; max-height: 70vh; border-radius: 10px; outline: none; }
     .close-video-btn {
@@ -537,7 +537,6 @@
     function mostrarAlerta(titulo, mensaje) {
       document.getElementById('alertTitle').innerText = titulo || "Club de Lectura";
       document.getElementById('alertMessage').innerHTML = mensaje;
-      // Cerrar otros modales abiertos para que no queden detrás
       document.getElementById('loginModal').classList.remove('active');
       document.getElementById('socioModal').classList.remove('active');
       document.getElementById('votoModal').classList.remove('active');
@@ -665,7 +664,7 @@
       
       if (nombreCat === 'todas') {
         resenaTitulo.innerText = "Biblioteca General";
-        resenaTexto.innerText = "Explora nuestra colección completa de relatos animados diseñados para inspirar a estudiantes, padres y educadores.";
+        resenaTexto.innerText = "Explora nossa colección completa de relatos animados diseñados para inspirar a estudiantes, padres y educadores.";
       } else {
         const catInfo = categoriasData.find(c => c.nombre === nombreCat);
         if (catInfo) {
