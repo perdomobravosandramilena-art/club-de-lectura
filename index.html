@@ -283,6 +283,39 @@
     .opinion-card p { margin: 0 0 8px 0; color: #444; font-style: italic; }
     .opinion-author { font-size: 0.8rem; font-weight: bold; color: var(--primary); }
 
+    /* Estilos para los Filtros del Mapa */
+    .map-filters-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .map-filter-select {
+      flex: 1;
+      min-width: 140px;
+      padding: 8px 12px;
+      border: 2px solid var(--primary);
+      border-radius: 8px;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      background: white;
+      color: var(--text-dark);
+      cursor: pointer;
+      font-size: 0.88rem;
+    }
+    .btn-reset-map {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      font-family: 'Quicksand', sans-serif;
+      transition: background 0.2s;
+    }
+    .btn-reset-map:hover { background: var(--primary-hover); }
+
     footer {
       text-align: center; padding: 2rem; color: #777; font-size: 0.82rem; border-top: 1px solid #eae5de; margin-top: 3rem;
       display: flex; flex-direction: column; gap: 6px; align-items: center;
@@ -297,6 +330,7 @@
       .stats-widget:hover { width: 100%; }
       .chart-container { width: 100%; opacity: 1; pointer-events: auto; }
       .stats-title-text { opacity: 1; }
+      .map-filters-bar { flex-direction: column; }
     }
   </style>
 </head>
@@ -389,11 +423,26 @@
       </div>
     </div>
 
-    <!-- Mapa OpenSource ubicado DESPUÉS de las Reseñas de forma segura -->
+    <!-- Mapa con Filtros Interactivos (País -> Departamento -> Ciudad) -->
     <div style="margin-top: 3rem; background: white; border: 2px solid #fae1d2; border-radius: 16px; padding: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
       <h3 style="font-family: 'Caveat', cursive; color: var(--primary); font-size: 1.8rem; margin-top: 0;" data-i18n="mapa_tit">🗺️ Comunidades y Escuelas Registradas</h3>
-      <p style="font-size: 0.9rem; color: #666; margin-top: -5px;" data-i18n="mapa_sub">Ubicaciones de nuestros socios y redes de lectura en el mundo:</p>
-      <div id="mapaComunidades" style="width: 100%; height: 380px; border-radius: 12px; border: 2px solid var(--primary); margin-top: 1rem;"></div>
+      <p style="font-size: 0.9rem; color: #666; margin-top: 0; margin-bottom: 1rem;" data-i18n="mapa_sub">Filtra por país, departamento y ciudad para explorar las sedes de lectura:</p>
+      
+      <!-- Barra de Filtros del Mapa -->
+      <div class="map-filters-bar">
+        <select id="filtroPais" class="map-filter-select" onchange="filtrarMapaPorSeleccion()">
+          <option value="">🌍 Todos los Países</option>
+        </select>
+        <select id="filtroDepto" class="map-filter-select" onchange="filtrarMapaPorSeleccion()">
+          <option value="">🏛️ Todos los Departamentos</option>
+        </select>
+        <select id="filtroCiudad" class="map-filter-select" onchange="filtrarMapaPorSeleccion()">
+          <option value="">🏙️ Todas las Ciudades</option>
+        </select>
+        <button class="btn-reset-map" onclick="restablecerFiltrosMapa()">🔄 Ver Todos</button>
+      </div>
+
+      <div id="mapaComunidades" style="width: 100%; height: 380px; border-radius: 12px; border: 2px solid var(--primary);"></div>
     </div>
 
   </div>
@@ -537,6 +586,8 @@
     let paisesDataGlobal = [];
     let idiomaActual = 'es';
     let mapInstance = null;
+    let marcadoresLayer = null;
+    let sociosGlobalData = [];
 
     const diccionarios = {
       es: {
@@ -554,7 +605,7 @@
         cargando: "Cargando cuentos mágicos...",
         ranking: "Ranking de Lectura",
         mapa_tit: "🗺️ Comunidades y Escuelas Registradas",
-        mapa_sub: "Ubicaciones de nuestros socios y redes de lectura en el mundo:",
+        mapa_sub: "Filtra por país, departamento y ciudad para explorar las sedes de lectura:",
         opiniones_tit: "✨ Opiniones y Reseñas Recientes del Club",
         opiniones_sub: "Lo que dicen nuestros pequeños lectores y familias en Colombia:",
         cargando_op: "Cargando opiniones...",
@@ -600,7 +651,7 @@
         cargando: "Loading magical stories...",
         ranking: "Reading Ranking",
         mapa_tit: "🗺️ Registered Communities & Schools",
-        mapa_sub: "Locations of our members and reading networks around the world:",
+        mapa_sub: "Filter by country, state/department, and city to explore reading venues:",
         opiniones_tit: "✨ Recent Club Reviews & Opinions",
         opiniones_sub: "What our young readers and families say:",
         cargando_op: "Loading opinions...",
@@ -643,46 +694,121 @@
       });
     }
 
-    // Inicializar Mapa con ubicaciones basadas en socios registrados por Pais - Departamento - Ciudad
-    // Inicializar Mapa con ubicaciones exactas basadas en los registros reales de la hoja
+    // Inicializar Mapa y Capa de Marcadores Filtrables
     function inicializarMapa(sociosUbicaciones = []) {
+      sociosGlobalData = sociosUbicaciones;
       const mapaEl = document.getElementById('mapaComunidades');
       if (!mapaEl) return;
 
       if (!mapInstance) {
-        mapInstance = L.map('mapaComunidades').setView([4.5709, -74.2973], 6); // Vista general Colombia
+        mapInstance = L.map('mapaComunidades').setView([4.5709, -74.2973], 6);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           maxZoom: 19,
           attribution: '© OpenStreetMap contributors'
         }).addTo(mapInstance);
+        marcadoresLayer = L.layerGroup().addTo(mapInstance);
       }
 
-      // Coordenadas geográficas exactas correspondientes a tus registros
-      const coordsFijas = {
-        "Cali, Valle del Cauca (Colombia)": [3.4516, -76.5320],
-        "El cerrito, Valle del Cauca (Colombia)": [3.5394, -76.3036],
-        "Bogotá, Bogotá (Colombia)": [4.7110, -74.0721],
-        "Pereira, Risaralda (Colombia)": [4.8133, -75.6961],
-        "Medellín, Antioquia (Colombia)": [6.2476, -75.5658],
-        "Barranquilla, Atlántico (Colombia)": [10.9685, -74.7813],
-        "Cartagena, Bolívar (Colombia)": [10.3910, -75.4794],
-        "Madrid, Comunidad de Madrid (España)": [40.4168, -3.7038],
-        "Barcelona, Cataluña (España)": [41.3851, 2.1734]
-      };
+      poblarFiltrosMapa(sociosUbicaciones);
+      dibujarMarcadoresEnMapa(sociosUbicaciones);
+    }
 
-      if (sociosUbicaciones && sociosUbicaciones.length > 0) {
-        sociosUbicaciones.forEach(item => {
-          // Buscamos coincidencia exacta o parcial de la ubicación registrada
-          let claveEncontrada = Object.keys(coordsFijas).find(k => k.toLowerCase().includes(item.ubicacion.toLowerCase().split(',')[0]));
-          let coords = claveEncontrada ? coordsFijas[claveEncontrada] : [4.5709, -74.2973]; 
-          
-          L.marker(coords).addTo(mapInstance)
-            .bindPopup(`<b>${item.ubicacion}</b><br>Socios activos: ${item.total}`);
+    function dibujarMarcadoresEnMapa(listaSocios) {
+      if (!marcadoresLayer) return;
+      marcadoresLayer.clearLayers();
+
+      if (listaSocios && listaSocios.length > 0) {
+        listaSocios.forEach(item => {
+          let marker = L.marker([item.lat, item.lon]).bindPopup(
+            `<b>📍 ${item.ciudad}, ${item.departamento} (${item.pais})</b><br>🏫 Institución: ${item.institucion}`
+          );
+          marcadoresLayer.addLayer(marker);
         });
-      } else {
-        L.marker([3.5394, -76.3036]).addTo(mapInstance)
-          .bindPopup('<b>¡Metidos en el Cuento!</b><br>Sede Principal & Red de Lectura.');
+
+        // Ajustar zoom si hay marcadores
+        if (listaSocios.length === 1) {
+          mapInstance.setView([listaSocios[0].lat, listaSocios[0].lon], 12);
+        } else {
+          mapInstance.setView([4.5709, -74.2973], 6);
+        }
       }
+    }
+
+    function poblarFiltrosMapa(listaSocios) {
+      const selectPais = document.getElementById('filtroPais');
+      const paisesUnicos = [...new Set(listaSocios.map(s => s.pais))];
+      selectPais.innerHTML = '<option value="">🌍 Todos los Países</option>';
+      paisesUnicos.forEach(p => {
+        let opt = document.createElement('option');
+        opt.value = p;
+        opt.innerText = p;
+        selectPais.appendChild(opt);
+      });
+      actualizarFiltroDepartamentos();
+    }
+
+    function actualizarFiltroDepartamentos() {
+      const paisSel = document.getElementById('filtroPais').value;
+      const selectDepto = document.getElementById('filtroDepto');
+      const selectCiudad = document.getElementById('filtroCiudad');
+      
+      selectDepto.innerHTML = '<option value="">🏛️ Todos los Departamentos</option>';
+      selectCiudad.innerHTML = '<option value="">🏙️ Todas las Ciudades</option>';
+
+      let filtrados = sociosGlobalData;
+      if (paisSel) filtrados = filtrados.filter(s => s.pais === paisSel);
+
+      const deptosUnicos = [...new Set(filtrados.map(s => s.departamento))];
+      deptosUnicos.forEach(d => {
+        let opt = document.createElement('option');
+        opt.value = d;
+        opt.innerText = d;
+        selectDepto.appendChild(opt);
+      });
+    }
+
+    function actualizarFiltroCiudades() {
+      const paisSel = document.getElementById('filtroPais').value;
+      const deptoSel = document.getElementById('filtroDepto').value;
+      const selectCiudad = document.getElementById('filtroCiudad');
+      
+      selectCiudad.innerHTML = '<option value="">🏙️ Todas las Ciudades</option>';
+
+      let filtrados = sociosGlobalData;
+      if (paisSel) filtrados = filtrados.filter(s => s.pais === paisSel);
+      if (deptoSel) filtrados = filtrados.filter(s => s.departamento === deptoSel);
+
+      const ciudUnicas = [...new Set(filtrados.map(s => s.ciudad))];
+      ciudUnicas.forEach(c => {
+        let opt = document.createElement('option');
+        opt.value = c;
+        opt.innerText = c;
+        selectCiudad.appendChild(opt);
+      });
+    }
+
+    function filtrarMapaPorSeleccion() {
+      const paisSel = document.getElementById('filtroPais').value;
+      const deptoSel = document.getElementById('filtroDepto').value;
+      const ciudadSel = document.getElementById('filtroCiudad').value;
+
+      if (event && event.target.id === 'filtroPais') actualizarFiltroDepartamentos();
+      if (event && (event.target.id === 'filtroPais' || event.target.id === 'filtroDepto')) actualizarFiltroCiudades();
+
+      let filtrados = sociosGlobalData;
+      if (paisSel) filtrados = filtrados.filter(s => s.pais === paisSel);
+      if (deptoSel) filtrados = filtrados.filter(s => s.departamento === deptoSel);
+      if (ciudadSel) filtrados = filtrados.filter(s => s.ciudad === ciudadSel);
+
+      dibujarMarcadoresEnMapa(filtrados);
+    }
+
+    function restablecerFiltrosMapa() {
+      document.getElementById('filtroPais').value = "";
+      actualizarFiltroDepartamentos();
+      actualizarFiltroCiudades();
+      dibujarMarcadoresEnMapa(sociosGlobalData);
+      mapInstance.setView([4.5709, -74.2973], 6);
     }
 
     async function cargarPaisesYCiudades() {
@@ -808,7 +934,6 @@
           renderizarReseñas(data.reseñas);
         }
 
-        // Inicializar mapa de forma segura con ubicaciones de socios
         inicializarMapa(data.sociosUbicaciones || []);
 
       } catch (err) {
@@ -1124,7 +1249,6 @@
       }
     }
 
-    // Inicializaciones aseguradas
     cargarDatos();
     cargarPaisesYCiudades();
   </script>
