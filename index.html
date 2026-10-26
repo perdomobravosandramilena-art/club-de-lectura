@@ -25,6 +25,7 @@
       position: relative;
     }
     
+    /* Marca de agua institucional geométrica */
     body::before {
       content: "";
       position: fixed;
@@ -32,7 +33,7 @@
       background-image: radial-gradient(#c85a32 0.75px, transparent 0.75px), radial-gradient(#1e3a8a 0.75px, var(--bg-cream) 0.75px);
       background-size: 30px 30px;
       background-position: 0 0, 15px 15px;
-      opacity: 0.15;
+      opacity: 0.12;
       pointer-events: none;
       z-index: 0;
     }
@@ -69,6 +70,7 @@
     }
     .header-subtitle span { color: var(--accent-yellow); font-weight: 700; }
 
+    /* Menú Desplegable Estable por Clic (Solución al cierre rápido) */
     .user-profile-menu { position: relative; cursor: pointer; }
     .avatar-btn {
       width: 42px; height: 42px;
@@ -85,18 +87,32 @@
     .profile-dropdown {
       display: none;
       position: absolute; right: 0; top: 50px;
-      background: white; width: 280px;
-      border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      border: 2px solid var(--primary); padding: 1rem; z-index: 200; text-align: left;
+      background: white; width: 300px;
+      border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      border: 2px solid var(--primary); padding: 1.2rem; z-index: 200; text-align: left;
     }
-    .user-profile-menu:hover .profile-dropdown, .profile-dropdown.active { display: block; }
+    .profile-dropdown.active { display: block; }
     .profile-dropdown h4 { margin: 0 0 5px 0; color: var(--primary); font-size: 1.1rem; }
     .profile-dropdown p { font-size: 0.82rem; color: #666; margin: 0 0 10px 0; line-height: 1.3; }
     .profile-dropdown hr { border: none; border-top: 1px solid #eee; margin: 8px 0; }
-    .dropdown-link { display: block; padding: 6px 0; color: var(--text-dark); text-decoration: none; font-size: 0.88rem; font-weight: 600; }
+    .dropdown-link { display: block; padding: 6px 0; color: var(--text-dark); text-decoration: none; font-size: 0.88rem; font-weight: 600; cursor: pointer; }
     .dropdown-link:hover { color: var(--primary); }
 
     .container { max-width: 1300px; margin: 0 auto; padding: 1.5rem 2rem; position: relative; z-index: 1; }
+
+    /* Reproductor de Video en Portada */
+    .video-portada-container {
+      background: white;
+      border: 2px dashed #fae1d2;
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+    }
+    .video-portada-container iframe {
+      width: 100%; max-width: 700px; height: 380px; border-radius: 12px; border: none;
+    }
 
     .library-header-bar {
       display: flex;
@@ -204,16 +220,26 @@
     }
     .btn-votar:hover { background: #e0b028; }
 
-    .modal-voto {
+    /* Botón Flotante de WhatsApp */
+    .whatsapp-float {
+      position: fixed; bottom: 25px; right: 25px; background: #25d366; color: white;
+      width: 60px; height: 60px; border-radius: 50%; text-align: center; font-size: 32px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25); z-index: 1000; display: flex; align-items: center; justify-content: center;
+      text-decoration: none; transition: transform 0.3s;
+    }
+    .whatsapp-float:hover { transform: scale(1.1); }
+
+    /* Modales Generales (Votos y Socio VIP) */
+    .modal-voto, .modal-socio {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center;
     }
-    .modal-voto.active { display: flex; }
-    .modal-voto-content {
+    .modal-voto.active, .modal-socio.active { display: flex; }
+    .modal-voto-content, .modal-socio-content {
       background: white; width: 90%; max-width: 450px; border-radius: 16px; padding: 2rem;
       box-shadow: 0 10px 30px rgba(0,0,0,0.2); position: relative; border: 2px solid var(--primary);
     }
-    .modal-voto-content h3 { margin-top: 0; color: var(--primary); font-family: 'Caveat', cursive; font-size: 1.8rem; }
+    .modal-voto-content h3, .modal-socio-content h3 { margin-top: 0; color: var(--primary); font-family: 'Caveat', cursive; font-size: 1.8rem; }
     .form-group { margin-bottom: 1rem; text-align: left; }
     .form-group label { display: block; font-size: 0.85rem; font-weight: bold; margin-bottom: 4px; color: var(--text-dark); }
     .form-group select, .form-group input, .form-group textarea {
@@ -224,6 +250,7 @@
     .btn-enviar-voto { background: var(--primary); color: white; border: none; padding: 10px; border-radius: 8px; font-weight: bold; flex: 1; cursor: pointer; }
     .btn-cancelar { background: #ddd; color: #333; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; }
 
+    /* Muro de Opiniones Inferior */
     .muro-opiniones {
       margin-top: 4rem; background: white; border: 2px solid #fae1d2;
       border-radius: 16px; padding: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.03);
@@ -248,17 +275,26 @@
 </head>
 <body>
 
+  <!-- Botón Flotante de WhatsApp -->
+  <a href="https://wa.me/573000000000?text=¡Hola!%20Quiero%20más%20información%20del%20Club%20de%20Lectura%20¡Metidos%20en%20el%20Cuento!" class="whatsapp-float" target="_blank" title="Escríbenos por WhatsApp">
+    💬
+  </a>
+
+  <!-- Header -->
   <header>
     <div class="header-top">
       <div class="header-left">
         <img src="assets/img/logo.jpeg" alt="Logo Club de Lectura" onerror="this.style.display='none'">
         <h1>¡Metidos en el Cuento!</h1>
       </div>
+      <!-- Menú Desplegable Estable por Clic -->
       <div class="user-profile-menu">
-        <div class="avatar-btn" title="Menú del Club">M</div>
+        <div class="avatar-btn" onclick="toggleMenu(event)" title="Menú del Club">M</div>
         <div id="profileDropdown" class="profile-dropdown">
           <h4>Club de Lectura</h4>
           <p>Relatos animados interactivos para inspirar a niños y familias en Colombia.</p>
+          <hr>
+          <a class="dropdown-link" onclick="abrirModalSocio()">⭐ Unirse al Círculo VIP (Socio)</a>
           <hr>
           <div id="menuItemsContainer"></div>
         </div>
@@ -271,6 +307,12 @@
 
   <div class="container">
     
+    <!-- Contenedor del Video en Portada (Oculto por defecto hasta que pongas la URL) -->
+    <div id="videoContainer" class="video-portada-container" style="display: none;">
+      <iframe src="" title="Video de Portada" allowfullscreen></iframe>
+    </div>
+
+    <!-- Biblioteca y Combo Selector de Categorías -->
     <div class="library-header-bar">
       <h2 class="section-heading">Nuestra Biblioteca de Historias</h2>
       <div class="categoria-select-container">
@@ -281,6 +323,7 @@
       </div>
     </div>
 
+    <!-- Caja de Reseña Pedagógica en Banda Elegante Azul -->
     <div class="resena-box-dark">
       <div class="resena-left">
         <h4 id="resenaTitulo">Biblioteca General</h4>
@@ -295,6 +338,7 @@
         </div>
       </div>
 
+      <!-- Widget de Ranking Lateral -->
       <div class="stats-widget" title="Pasa el cursor para ver el ranking">
         <div class="stats-header">
           <div class="stats-icon">📊</div>
@@ -306,6 +350,7 @@
       </div>
     </div>
 
+    <!-- Muro de Opiniones Inferior -->
     <div class="muro-opiniones">
       <h3>✨ Opiniones y Reseñas Recientes del Club</h3>
       <p style="font-size: 0.9rem; color: #666; margin-top: -5px;">Lo que dicen nuestros pequeños lectores y familias en Colombia:</p>
@@ -316,6 +361,7 @@
 
   </div>
 
+  <!-- Modal de Calificación y PQRS -->
   <div id="votoModal" class="modal-voto">
     <div class="modal-voto-content">
       <h3 id="modalVotoTitle">¡Deja tu Opinión!</h3>
@@ -323,7 +369,6 @@
       
       <form id="formVoto" onsubmit="enviarVoto(event)">
         <input type="hidden" id="cuentoVotoInput">
-        
         <div class="form-group">
           <label>¿Qué te pareció el cuento?</label>
           <select id="votoSelect" required>
@@ -333,25 +378,48 @@
             <option value="Para reflexionar 🌿">Para reflexionar 🌿</option>
           </select>
         </div>
-
         <div class="form-group">
           <label>¿Quién nos lee hoy?</label>
           <input type="text" id="lectorInput" placeholder="Ej: Estudiante Primaria / Padre de Familia" required>
         </div>
-
         <div class="form-group">
           <label>Comentario o Reseña:</label>
           <textarea id="comentarioInput" placeholder="Cuéntanos qué fue lo que más te gustó..." required></textarea>
         </div>
-
         <div class="form-group">
           <label>Sugerencia o PQRS (Opcional):</label>
           <input type="text" id="sugerenciaInput" placeholder="Ideas para futuros cuentos...">
         </div>
-
         <div class="modal-actions">
           <button type="submit" class="btn-enviar-voto">Enviar Opinión</button>
           <button type="button" class="btn-cancelar" onclick="cerrarModalVoto()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal de Registro Socio VIP (Token) -->
+  <div id="socioModal" class="modal-socio">
+    <div class="modal-socio-content">
+      <h3>🌟 Únete al Círculo VIP</h3>
+      <p style="font-size: 0.85rem; color: #666; margin-top: -5px;">Regístrate gratis y obtén tu Token de Socio para beneficios exclusivos.</p>
+      
+      <form id="formSocio" onsubmit="registrarSocio(event)">
+        <div class="form-group">
+          <label>Nombre Completo:</label>
+          <input type="text" id="socioNombre" placeholder="Tu nombre o el de tu familia" required>
+        </div>
+        <div class="form-group">
+          <label>Correo Electrónico:</label>
+          <input type="email" id="socioCorreo" placeholder="correo@ejemplo.com" required>
+        </div>
+        <div class="form-group">
+          <label>Colegio o Institución (Opcional):</label>
+          <input type="text" id="socioInstitucion" placeholder="Ej: Colegio San José">
+        </div>
+        <div class="modal-actions">
+          <button type="submit" class="btn-enviar-voto">Obtener Token</button>
+          <button type="button" class="btn-cancelar" onclick="cerrarModalSocio()">Cancelar</button>
         </div>
       </form>
     </div>
@@ -368,6 +436,15 @@
     let categoriasData = [];
     let categoriaActiva = 'todas';
     let myChart = null;
+
+    // Control de Menú Desplegable Estable por Clic
+    function toggleMenu(event) {
+      event.stopPropagation();
+      document.getElementById('profileDropdown').classList.toggle('active');
+    }
+    window.onclick = function() {
+      document.getElementById('profileDropdown').classList.remove('active');
+    }
 
     async function cargarDatos() {
       try {
@@ -399,7 +476,7 @@
         }
       } catch (err) {
         console.error("Error al cargar datos:", err);
-        document.getElementById('contenedorCuentos').innerHTML = '<p style="text-align:center; color:red; grid-column: 1/-1;">Error al conectar con la base de datos o carga en progreso.</p>';
+        document.getElementById('contenedorCuentos').innerHTML = '<p style="text-align:center; color:red; grid-column: 1/-1;">Error al conectar con la base de datos.</p>';
       }
     }
 
@@ -467,7 +544,6 @@
     function renderizarCuentos(cuentos) {
       const contenedor = document.getElementById('contenedorCuentos');
       contenedor.innerHTML = '';
-      
       const emojis = ['📖', '✨', '🌟', '🎨', '🚀', '💖'];
 
       if (cuentos.length === 0) {
@@ -575,14 +651,13 @@
       document.getElementById('formVoto').reset();
       document.getElementById('votoModal').classList.add('active');
     }
+    function cerrarModalVoto() { document.getElementById('votoModal').classList.remove('active'); }
 
-    function cerrarModalVoto() {
-      document.getElementById('votoModal').classList.remove('active');
-    }
+    function abrirModalSocio() { document.getElementById('socioModal').classList.add('active'); }
+    function cerrarModalSocio() { document.getElementById('socioModal').classList.remove('active'); }
 
     async function enviarVoto(event) {
       event.preventDefault();
-      
       const payload = {
         accion: 'voto',
         cuento: document.getElementById('cuentoVotoInput').value,
@@ -592,21 +667,38 @@
         sugerencia: document.getElementById('sugerenciaInput').value,
         idUsuario: 'web-visitor-' + Math.floor(Math.random() * 10000)
       };
-
       try {
         await fetch(GOOGLE_SCRIPT_URL, {
           method: 'POST', mode: 'no-cors',
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify(payload)
         });
-        
-        alert("¡Mil gracias por compartir tu opinión! Ha sido guardada con éxito en nuestro club.");
+        alert("¡Mil gracias por compartir tu opinión! Ha sido guardada con éxito.");
         cerrarModalVoto();
         setTimeout(cargarDatos, 1000);
-      } catch (err) {
-        console.error("Error al enviar voto:", err);
-        alert("Hubo un error al enviar tu opinión. Inténtalo nuevamente.");
-      }
+      } catch (err) { alert("Hubo un error al enviar tu opinión."); }
+    }
+
+    async function registrarSocio(event) {
+      event.preventDefault();
+      const tokenUnico = 'SOCIO-2026-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+      const payload = {
+        accion: 'registro_socio',
+        nombre: document.getElementById('socioNombre').value,
+        correo: document.getElementById('socioCorreo').value,
+        institucion: document.getElementById('socioInstitucion').value || 'Independiente',
+        token: tokenUnico
+      };
+      try {
+        await fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST', mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+        alert(`¡Bienvenido al Círculo VIP! Tu Token de Socio exclusivo es:\n\n${tokenUnico}\n\nGuárdalo bien, te otorgará acceso prioritario a eventos y formularios exclusivos.`);
+        document.getElementById('formSocio').reset();
+        cerrarModalSocio();
+      } catch (err) { alert("Hubo un error al registrar tu membresía."); }
     }
 
     cargarDatos();
