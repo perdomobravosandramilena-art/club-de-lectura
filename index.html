@@ -69,13 +69,20 @@
     }
     .header-subtitle span { color: var(--accent-yellow); font-weight: 700; }
 
-    .header-right-actions { display: flex; align-items: center; gap: 12px; }
+    .header-right-actions { display: flex; align-items: center; gap: 10px; }
     .header-login-btn {
       background: rgba(255, 255, 255, 0.15); border: 2px solid var(--accent-yellow); color: white;
       padding: 8px 14px; border-radius: 20px; font-family: 'Quicksand', sans-serif; font-weight: 700;
       font-size: 0.88rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 6px;
     }
     .header-login-btn:hover { background: var(--accent-yellow); color: #1e3a8a; }
+
+    /* Selector de Idioma Bilingüe */
+    .lang-select {
+      background: rgba(255, 255, 255, 0.15); border: 2px solid var(--accent-yellow); color: white;
+      padding: 7px 10px; border-radius: 20px; font-weight: bold; cursor: pointer; font-family: 'Quicksand', sans-serif;
+    }
+    .lang-select option { background: #1e3a8a; color: white; }
 
     .user-profile-menu { position: relative; cursor: pointer; }
     .avatar-btn {
@@ -294,11 +301,10 @@
 
   <div class="floating-actions">
     <button class="video-float-btn" onclick="abrirModalVideo()">
-      <span>🎥</span> Ver Presentación
+      <span>🎥</span> <span data-i18n="ver_pres">Ver Presentación</span>
     </button>
-    <!-- WhatsApp con número predeterminado infalible -->
-    <a id="whatsappBtn" href="https://wa.me/573176661372?text=¡Hola!%20Quiero%20más%20información%20del%20Club%20de%20Lectura." class="whatsapp-float" target="_blank" title="Escríbenos por WhatsApp">
-      <span>💬</span> Charla con Nosotros
+    <a id="whatsappBtn" href="#" class="whatsapp-float" target="_blank" title="Escríbenos por WhatsApp">
+      <span>💬</span> <span data-i18n="charla">Charla con Nosotros</span>
     </a>
   </div>
 
@@ -309,16 +315,21 @@
         <h1 id="headerTitle">¡Metidos en el Cuento!</h1>
       </div>
       <div class="header-right-actions">
+        <!-- Selector de Idioma Bilingüe -->
+        <select class="lang-select" onchange="cambiarIdioma(this.value)">
+          <option value="es" selected>🇪🇸 ES</option>
+          <option value="en">🇬🇧 EN</option>
+        </select>
         <button class="header-login-btn" onclick="abrirModalLogin()">
-          🔑 Ingresar (Socio)
+          🔑 <span data-i18n="ingresar">Ingresar (Socio)</span>
         </button>
         <div class="user-profile-menu">
           <div class="avatar-btn" onclick="toggleMenu(event)" title="Menú del Club">M</div>
           <div id="profileDropdown" class="profile-dropdown">
             <h4 id="menuClubName">Club de Lectura</h4>
-            <p id="menuClubDesc">Relatos animados interactivos para inspirar a niños y familias en Colombia.</p>
+            <p id="menuClubDesc" data-i18n="desc_menu">Relatos animados interactivos para inspirar a niños y familias en Colombia.</p>
             <hr>
-            <a class="dropdown-link" onclick="abrirModalSocio()">✨ Regístrate - Círculo VIP</a>
+            <a class="dropdown-link" onclick="abrirModalSocio()">✨ <span data-i18n="registro_vip">Regístrate - Círculo VIP</span></a>
             <hr>
             <div id="menuItemsContainer"></div>
           </div>
@@ -326,18 +337,18 @@
       </div>
     </div>
     <div class="header-subtitle" id="headerSubtitleContainer">
-      <span>Transformamos la lectura en una fiesta viva</span> - Relatos animados interactivos para inspirar a niños y familias en Colombia.
+      <span data-i18n="sub_destacado">Transformamos la lectura en una fiesta viva</span> - <span data-i18n="sub_texto">Relatos animados interactivos para inspirar a niños y familias en Colombia.</span>
     </div>
   </header>
 
   <div class="container">
     
     <div class="library-header-bar">
-      <h2 class="section-heading">Nuestra Biblioteca de Historias</h2>
+      <h2 class="section-heading" data-i18n="biblio_titulo">Nuestra Biblioteca de Historias</h2>
       <div class="categoria-select-container">
-        <label for="categoriaSelect">📂 Filtrar Categoría:</label>
+        <label for="categoriaSelect" data-i18n="filtrar">📂 Filtrar Categoría:</label>
         <select id="categoriaSelect" class="categoria-select" onchange="cambiarCategoria(this.value)">
-          <option value="todas">📖 Todas las historias</option>
+          <option value="todas" data-i18n="todas_hist">📖 Todas las historias</option>
         </select>
       </div>
     </div>
@@ -345,21 +356,21 @@
     <div class="resena-box-dark">
       <div class="resena-left">
         <h4 id="resenaTitulo">Biblioteca General</h4>
-        <p id="resenaTexto">Explora nuestra colección completa de relatos animados diseñados para inspirar a estudiantes, padres y educadores.</p>
+        <p id="resenaTexto" data-i18n="biblio_desc">Explora nuestra colección completa de relatos animados diseñados para inspirar a estudiantes, padres y educadores.</p>
       </div>
     </div>
 
     <div class="main-layout">
       <div class="biblioteca-section">
         <div id="contenedorCuentos" class="cuentos-container">
-          <p style="text-align: center; width: 100%; grid-column: 1/-1; color: #888;">Cargando cuentos mágicos...</p>
+          <p style="text-align: center; width: 100%; grid-column: 1/-1; color: #888;" data-i18n="cargando">Cargando cuentos mágicos...</p>
         </div>
       </div>
 
       <div class="stats-widget" title="Pasa el cursor para ver el ranking">
         <div class="stats-header">
           <div class="stats-icon">📊</div>
-          <div class="stats-title-text">Ranking de Lectura</div>
+          <div class="stats-title-text" data-i18n="ranking">Ranking de Lectura</div>
         </div>
         <div class="chart-container">
           <canvas id="statsChart"></canvas>
@@ -368,10 +379,10 @@
     </div>
 
     <div class="muro-opiniones">
-      <h3>✨ Opiniones y Reseñas Recientes del Club</h3>
-      <p style="font-size: 0.9rem; color: #666; margin-top: -5px;">Lo que dicen nuestros pequeños lectores y familias en Colombia:</p>
+      <h3 data-i18n="opiniones_tit">✨ Opiniones y Reseñas Recientes del Club</h3>
+      <p style="font-size: 0.9rem; color: #666; margin-top: -5px;" data-i18n="opiniones_sub">Lo que dicen nuestros pequeños lectores y familias en Colombia:</p>
       <div id="opinionesContainer" class="opiniones-grid">
-        <p style="color: #888; font-size: 0.9rem;">Cargando opiniones...</p>
+        <p style="color: #888; font-size: 0.9rem;" data-i18n="cargando_op">Cargando opiniones...</p>
       </div>
     </div>
 
@@ -381,7 +392,7 @@
     <div class="modal-alert-content">
       <h3 id="alertTitle">¡Aviso Institucional!</h3>
       <p id="alertMessage">Mensaje del sistema.</p>
-      <button class="btn-enviar-voto" onclick="cerrarCustomAlert()" style="max-width: 150px; margin: 0 auto;">Aceptar</button>
+      <button class="btn-enviar-voto" onclick="cerrarCustomAlert()" style="max-width: 150px; margin: 0 auto;" data-i18n="aceptar">Aceptar</button>
     </div>
   </div>
 
@@ -392,22 +403,22 @@
         Tu navegador no soporta videos HTML5.
       </video>
       <br>
-      <button class="close-video-btn" onclick="cerrarModalVideo()">Cerrar Presentación</button>
+      <button class="close-video-btn" onclick="cerrarModalVideo()" data-i18n="cerrar_pres">Cerrar Presentación</button>
     </div>
   </div>
 
   <div id="loginModal" class="modal-login">
     <div class="modal-login-content">
-      <h3>🔑 Acceso de Socios VIP</h3>
-      <p style="font-size: 0.82rem; color: #555; margin-top: -5px;">Ingresa tu correo electrónico registrado como Token.</p>
+      <h3 data-i18n="login_tit">🔑 Acceso de Socios VIP</h3>
+      <p style="font-size: 0.82rem; color: #555; margin-top: -5px;" data-i18n="login_sub">Ingresa tu correo electrónico registrado como Token.</p>
       <form onsubmit="validarLoginSocio(event)">
         <div class="form-group">
-          <label>Correo Electrónico (Token de Socio):</label>
+          <label data-i18n="login_lbl">Correo Electrónico (Token de Socio):</label>
           <input type="email" id="loginTokenInput" placeholder="correo@ejemplo.com" required autocomplete="email">
         </div>
         <div class="modal-actions">
-          <button type="submit" class="btn-enviar-voto">Ingresar</button>
-          <button type="button" class="btn-cancelar" onclick="cerrarModalLogin()">Cancelar</button>
+          <button type="submit" class="btn-enviar-voto" data-i18n="btn_ingresar">Ingresar</button>
+          <button type="button" class="btn-cancelar" onclick="cerrarModalLogin()" data-i18n="cancelar">Cancelar</button>
         </div>
       </form>
     </div>
@@ -415,13 +426,13 @@
 
   <div id="votoModal" class="modal-voto">
     <div class="modal-voto-content">
-      <h3 id="modalVotoTitle">¡Deja tu Opinión!</h3>
-      <p style="font-size: 0.85rem; color: #666; margin-top: -5px;">Tu retroalimentación es vital para nuestro club de lectura.</p>
+      <h3 id="modalVotoTitle" data-i18n="voto_tit">¡Deja tu Opinión!</h3>
+      <p style="font-size: 0.85rem; color: #666; margin-top: -5px;" data-i18n="voto_sub">Tu retroalimentación es vital para nuestro club de lectura.</p>
       
       <form id="formVoto" onsubmit="enviarVoto(event)">
         <input type="hidden" id="cuentoVotoInput">
         <div class="form-group">
-          <label>¿Qué te pareció el cuento?</label>
+          <label data-i18n="voto_pregunta">¿Qué te pareció el cuento?</label>
           <select id="votoSelect" required>
             <option value="Me encantó ❤️">Me encantó ❤️</option>
             <option value="Aprendí algo nuevo 💡">Aprendí algo nuevo 💡</option>
@@ -430,86 +441,69 @@
           </select>
         </div>
         <div class="form-group">
-          <label>¿Quién nos lee hoy?</label>
+          <label data-i18n="voto_lector">¿Quién nos lee hoy?</label>
           <input type="text" id="lectorInput" placeholder="Ej: Estudiante Primaria / Padre de Familia" required autocomplete="name">
         </div>
         <div class="form-group">
-          <label>Comentario o Reseña:</label>
+          <label data-i18n="voto_com">Comentario o Reseña:</label>
           <textarea id="comentarioInput" placeholder="Cuéntanos qué fue lo que más te gustó..." required></textarea>
         </div>
         <div class="form-group">
-          <label>Sugerencia o PQRS (Opcional):</label>
+          <label data-i18n="voto_sug">Sugerencia o PQRS (Opcional):</label>
           <input type="text" id="sugerenciaInput" placeholder="Ideas para futuros cuentos...">
         </div>
         <div class="modal-actions">
-          <button type="submit" class="btn-enviar-voto">Enviar Opinión</button>
-          <button type="button" class="btn-cancelar" onclick="cerrarModalVoto()">Cancelar</button>
+          <button type="submit" class="btn-enviar-voto" data-i18n="btn_enviar">Enviar Opinión</button>
+          <button type="button" class="btn-cancelar" onclick="cerrarModalVoto()" data-i18n="cancelar">Cancelar</button>
         </div>
       </form>
     </div>
   </div>
 
+  <!-- Modal de Registro VIP con Carga Dinámica de Países/Ciudades (Colombia y Cali por defecto) -->
   <div id="socioModal" class="modal-socio">
     <div class="modal-socio-content">
-      <h3>✨ Regístrate - Círculo VIP</h3>
-      <p style="font-size: 0.82rem; color: #555; margin-top: -5px;">Únete gratis y obtén tu Token exclusivo para acceder a eventos y contenidos especiales.</p>
+      <h3 data-i18n="reg_tit">✨ Regístrate - Círculo VIP</h3>
+      <p style="font-size: 0.82rem; color: #555; margin-top: -5px;" data-i18n="reg_sub">Únete gratis y obtén tu Token exclusivo para acceder a eventos y contenidos especiales.</p>
       
       <form id="formSocio" onsubmit="registrarSocio(event)">
         <div class="form-group">
-          <label>Nombre(s) - Obligatorio:</label>
+          <label data-i18n="reg_nom">Nombre(s) - Obligatorio:</label>
           <input type="text" id="socioNombres" placeholder="Tus nombres" required autocomplete="given-name">
         </div>
         <div class="form-group">
-          <label>Apellido(s) - Obligatorio:</label>
+          <label data-i18n="reg_ape">Apellido(s) - Obligatorio:</label>
           <input type="text" id="socioApellidos" placeholder="Tus apellidos" required autocomplete="family-name">
         </div>
         <div class="form-group">
-          <label>Correo Electrónico - Obligatorio:</label>
+          <label data-i18n="reg_correo">Correo Electrónico - Obligatorio:</label>
           <input type="email" id="socioCorreo" placeholder="correo@ejemplo.com" required autocomplete="email">
         </div>
         <div class="form-group">
-          <label>Teléfono / Celular - Opcional:</label>
+          <label data-i18n="reg_tel">Teléfono / Celular - Opcional:</label>
           <input type="tel" id="socioTelefono" placeholder="Ej: +57 3001234567" pattern="[0-9+\s()-]{7,20}" autocomplete="tel">
         </div>
         <div class="form-group" style="display: flex; gap: 10px;">
           <div style="flex: 1;">
-            <label>País:</label>
-            <select id="socioPais" required>
-              <option value="Colombia">Colombia</option>
-              <option value="España">España</option>
-              <option value="México">México</option>
-              <option value="Estados Unidos">Estados Unidos</option>
-              <option value="Argentina">Argentina</option>
-              <option value="Chile">Chile</option>
-              <option value="Otro">Otro</option>
-            </select>
+            <label data-i18n="reg_pais">País:</label>
+            <select id="socioPais" required onchange="actualizarCiudades()"></select>
           </div>
           <div style="flex: 1;">
-            <label>Ciudad:</label>
-            <select id="socioCiudad" required>
-              <option value="Cali">Cali</option>
-              <option value="Bogotá">Bogotá</option>
-              <option value="Medellín">Medellín</option>
-              <option value="Palmira">Palmira</option>
-              <option value="El Cerrito">El Cerrito</option>
-              <option value="Madrid">Madrid</option>
-              <option value="Barcelona">Barcelona</option>
-              <option value="Marrakech">Marrakech</option>
-              <option value="Otra">Otra</option>
-            </select>
+            <label data-i18n="reg_ciudad">Ciudad:</label>
+            <select id="socioCiudad" required></select>
           </div>
         </div>
         <div class="form-group">
-          <label>Dirección - Opcional:</label>
+          <label data-i18n="reg_dir">Dirección - Opcional:</label>
           <input type="text" id="socioDireccion" placeholder="Dirección de residencia" autocomplete="street-address">
         </div>
         <div class="form-group">
-          <label>Colegio o Institución (Opcional):</label>
+          <label data-i18n="reg_inst">Colegio o Institución (Opcional):</label>
           <input type="text" id="socioInstitucion" placeholder="Ej: Colegio San José">
         </div>
         <div class="modal-actions">
-          <button type="submit" class="btn-enviar-voto">Regístrate</button>
-          <button type="button" class="btn-cancelar" onclick="cerrarModalSocio()">Cancelar</button>
+          <button type="submit" class="btn-enviar-voto" data-i18n="btn_reg">Regístrate</button>
+          <button type="button" class="btn-cancelar" onclick="cerrarModalSocio()" data-i18n="cancelar">Cancelar</button>
         </div>
       </form>
     </div>
@@ -527,6 +521,148 @@
     let categoriaActiva = 'todas';
     let myChart = null;
     let configGlobal = {};
+    let paisesDataGlobal = [];
+    let idiomaActual = 'es';
+
+    const diccionarios = {
+      es: {
+        ver_pres: "Ver Presentación",
+        charla: "Charla con Nosotros",
+        ingresar: "Ingresar (Socio)",
+        desc_menu: "Relatos animados interactivos para inspirar a niños y familias en Colombia.",
+        registro_vip: "Regístrate - Círculo VIP",
+        sub_destacado: "Transformamos la lectura en una fiesta viva",
+        sub_texto: "Relatos animados interactivos para inspirar a niños y familias en Colombia.",
+        biblio_titulo: "Nuestra Biblioteca de Historias",
+        filtrar: "📂 Filtrar Categoría:",
+        todas_hist: "📖 Todas las historias",
+        biblio_desc: "Explora nuestra colección completa de relatos animados diseñados para inspirar a estudiantes, padres y educadores.",
+        cargando: "Cargando cuentos mágicos...",
+        ranking: "Ranking de Lectura",
+        opiniones_tit: "✨ Opiniones y Reseñas Recientes del Club",
+        opiniones_sub: "Lo que dicen nuestros pequeños lectores y familias en Colombia:",
+        cargando_op: "Cargando opiniones...",
+        aceptar: "Aceptar",
+        cerrar_pres: "Cerrar Presentación",
+        login_tit: "🔑 Acceso de Socios VIP",
+        login_sub: "Ingresa tu correo electrónico registrado como Token.",
+        login_lbl: "Correo Electrónico (Token de Socio):",
+        btn_ingresar: "Ingresar",
+        cancelar: "Cancelar",
+        voto_tit: "¡Deja tu Opinión!",
+        voto_sub: "Tu retroalimentación es vital para nuestro club de lectura.",
+        voto_pregunta: "¿Qué te pareció el cuento?",
+        voto_lector: "¿Quién nos lee hoy?",
+        voto_com: "Comentario o Reseña:",
+        voto_sug: "Sugerencia o PQRS (Opcional):",
+        btn_enviar: "Enviar Opinión",
+        reg_tit: "✨ Regístrate - Círculo VIP",
+        reg_sub: "Únete gratis y obtén tu Token exclusivo para acceder a eventos y contenidos especiales.",
+        reg_nom: "Nombre(s) - Obligatorio:",
+        reg_ape: "Apellido(s) - Obligatorio:",
+        reg_correo: "Correo Electrónico - Obligatorio:",
+        reg_tel: "Teléfono / Celular - Opcional:",
+        reg_pais: "País:",
+        reg_ciudad: "Ciudad:",
+        reg_dir: "Dirección - Opcional:",
+        reg_inst: "Colegio o Institución (Opcional):",
+        btn_reg: "Regístrate"
+      },
+      en: {
+        ver_pres: "View Presentation",
+        charla: "Chat with Us",
+        ingresar: "Member Login",
+        desc_menu: "Interactive animated stories to inspire children and families.",
+        registro_vip: "Register - VIP Circle",
+        sub_destacado: "Transforming reading into a living celebration",
+        sub_texto: "Interactive animated stories to inspire children and families.",
+        biblio_titulo: "Our Story Library",
+        filtrar: "📂 Filter Category:",
+        todas_hist: "📖 All Stories",
+        biblio_desc: "Explore our complete collection of animated stories designed to inspire students, parents, and educators.",
+        cargando: "Loading magical stories...",
+        ranking: "Reading Ranking",
+        opiniones_tit: "✨ Recent Club Reviews & Opinions",
+        opiniones_sub: "What our young readers and families say:",
+        cargando_op: "Loading opinions...",
+        aceptar: "Accept",
+        cerrar_pres: "Close Presentation",
+        login_tit: "🔑 VIP Member Access",
+        login_sub: "Enter your registered email as your Token.",
+        login_lbl: "Email (Member Token):",
+        btn_ingresar: "Login",
+        cancelar: "Cancel",
+        voto_tit: "Leave Your Review!",
+        voto_sub: "Your feedback is vital to our reading club.",
+        voto_pregunta: "How did you like the story?",
+        voto_lector: "Who is reading with us today?",
+        voto_com: "Comment or Review:",
+        voto_sug: "Suggestion or Feedback (Optional):",
+        btn_enviar: "Send Review",
+        reg_tit: "✨ Register - VIP Circle",
+        reg_sub: "Join for free and get your exclusive Token to access special events and content.",
+        reg_nom: "First Name(s) - Required:",
+        reg_ape: "Last Name(s) - Required:",
+        reg_correo: "Email - Required:",
+        reg_tel: "Phone / Cell - Optional:",
+        reg_pais: "Country:",
+        reg_ciudad: "City:",
+        reg_dir: "Address - Optional:",
+        reg_inst: "School or Institution (Optional):",
+        btn_reg: "Register"
+      }
+    };
+
+    function cambiarIdioma(lang) {
+      idiomaActual = lang;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (diccionarios[lang] && diccionarios[lang][key]) {
+          el.innerText = diccionarios[lang][key];
+        }
+      });
+    }
+
+    // Cargar Catálogo de Países y Ciudades desde el JSON local con Colombia/Cali por defecto
+    async function cargarPaisesYCiudades() {
+      try {
+        const res = await fetch('data/paises-ciudades.json');
+        const data = await res.json();
+        paisesDataGlobal = data.paises;
+        
+        const selectPais = document.getElementById('socioPais');
+        selectPais.innerHTML = '';
+        
+        paisesDataGlobal.forEach(p => {
+          const opt = document.createElement('option');
+          opt.value = p.nombre;
+          opt.innerText = p.nombre;
+          if (p.nombre === "Colombia") opt.selected = true;
+          selectPais.appendChild(opt);
+        });
+
+        actualizarCiudades();
+      } catch (err) {
+        console.error("Error al cargar JSON de países/ciudades:", err);
+      }
+    }
+
+    function actualizarCiudades() {
+      const paisNombre = document.getElementById('socioPais').value;
+      const selectCiudad = document.getElementById('socioCiudad');
+      selectCiudad.innerHTML = '';
+
+      const paisObj = paisesDataGlobal.find(p => p.nombre === paisNombre);
+      if (paisObj && paisObj.ciudades) {
+        paisObj.ciudades.forEach(c => {
+          const optC = document.createElement('option');
+          optC.value = c;
+          optC.innerText = c;
+          if (paisNombre === "Colombia" && c === "Cali") optC.selected = true;
+          selectCiudad.appendChild(optC);
+        });
+      }
+    }
 
     function mostrarAlerta(titulo, mensaje) {
       document.getElementById('alertTitle').innerText = titulo || "Club de Lectura";
@@ -828,7 +964,12 @@
     }
     function cerrarModalVoto() { document.getElementById('votoModal').classList.remove('active'); }
 
-    function abrirModalSocio() { document.getElementById('socioModal').classList.add('active'); }
+    function abrirModalSocio() { 
+      document.getElementById('socioModal').classList.add('active'); 
+      if (paisesDataGlobal.length === 0) {
+        cargarPaisesYCiudades();
+      }
+    }
     function cerrarModalSocio() { document.getElementById('socioModal').classList.remove('active'); }
 
     async function enviarVoto(event) {
@@ -892,6 +1033,7 @@
     }
 
     cargarDatos();
+    cargarPaisesYCiudades(); // Precargar países y ciudades al iniciar
   </script>
 </body>
 </html>
