@@ -3,154 +3,289 @@
     {
       "codigo": "CO",
       "nombre": "Colombia",
-      "ciudades": [
-        "Cali",
-        "Bogotá",
-        "Medellín",
-        "Palmira",
-        "El Cerrito",
-        "Barranquilla",
-        "Cartagena",
-        "Bucaramanga",
-        "Pereira",
-        "Manizales",
-        "Cúcuta",
-        "Ibagué",
-        "Villavicencio",
-        "Santa Marta",
-        "Pasto",
-        "Montería",
-        "Neiva",
-        "Armenia",
-        "Popayán",
-        "Sincelejo",
-        "Valledupar",
-        "Tunja",
-        "Florencia",
-        "Riohacha",
-        "Quibdó",
-        "Yopal",
-        "Arauca",
-        "Mocoa",
-        "San Andrés",
-        "Leticia",
-        "San José del Guaviare",
-        "Mitú",
-        "Puerto Carreño",
-        "Inírida"
+      "departamentos": [
+        {
+          "departamento": "Valle del Cauca",
+          "ciudades": [
+            "Cali",
+            "Palmira",
+            "El Cerrito",
+            "Buga",
+            "Tuluá",
+            "Buenaventura",
+            "Cartago"
+          ]
+        },
+        {
+          "departamento": "Bogotá D.C.",
+          "ciudades": [
+            "Bogotá"
+          ]
+        },
+        {
+          "departamento": "Antioquia",
+          "ciudades": [
+            "Medellín",
+            "Envigado",
+            "Bello",
+            "Itagüí",
+            "Rionegro",
+            "Apartadó"
+          ]
+        },
+        {
+          "departamento": "Cundinamarca",
+          "ciudades": [
+            "Chía",
+            "Zipaquirá",
+            "Facatativá",
+            "Soacha",
+            "Girardot",
+            "Fusagasugá"
+          ]
+        },
+        {
+          "departamento": "Atlántico",
+          "ciudades": [
+            "Barranquilla",
+            "Soledad",
+            "Malambo",
+            "Puerto Colombia"
+          ]
+        },
+        {
+          "departamento": "Bolívar",
+          "ciudades": [
+            "Cartagena",
+            "Magangué",
+            "Turbaco"
+          ]
+        },
+        {
+          "departamento": "Santander",
+          "ciudades": [
+            "Bucaramanga",
+            "Floridablanca",
+            "Girón",
+            "Piedecuesta",
+            "Barrancabermeja"
+          ]
+        },
+        {
+          "departamento": "Risaralda",
+          "ciudades": [
+            "Pereira",
+            "Dosquebradas",
+            "Santa Rosa de Cabal"
+          ]
+        },
+        {
+          "departamento": "Quindío",
+          "ciudades": [
+            "Armenia",
+            "Calarcá",
+            "Circasia"
+          ]
+        },
+        {
+          "departamento": "Caldas",
+          "ciudades": [
+            "Manizales",
+            "Villamaría",
+            "Chinchiná"
+          ]
+        },
+        {
+          "departamento": "Tolima",
+          "ciudades": [
+            "Ibagué",
+            "Espinal",
+            "Melgar",
+            "Honda"
+          ]
+        },
+        {
+          "departamento": "Meta",
+          "ciudades": [
+            "Villavicencio",
+            "Acacías",
+            "Granada"
+          ]
+        },
+        {
+          "departamento": "Nariño",
+          "ciudades": [
+            "Pasto",
+            "Ipiales",
+            "Tumaco"
+          ]
+        },
+        {
+          "departamento": "Cauca",
+          "ciudades": [
+            "Popayán",
+            "Santander de Quilichao"
+          ]
+        },
+        {
+          "departamento": "Huila",
+          "ciudades": [
+            "Neiva",
+            "Pitalito",
+            "Garzón"
+          ]
+        },
+        {
+          "departamento": "Córdoba",
+          "ciudades": [
+            "Montería",
+            "Cereté",
+            "Sahagún"
+          ]
+        },
+        {
+          "departamento": "Sucre",
+          "ciudades": [
+            "Sincelejo",
+            "Corozal"
+          ]
+        },
+        {
+          "departamento": "Cesar",
+          "ciudades": [
+            "Valledupar",
+            "Aguachica"
+          ]
+        },
+        {
+          "departamento": "Magdalena",
+          "ciudades": [
+            "Santa Marta",
+            "Ciénaga",
+            "Fundación"
+          ]
+        },
+        {
+          "departamento": "Boyacá",
+          "ciudades": [
+            "Tunja",
+            "Duitama",
+            "Sogamoso",
+            "Chiquinquirá"
+          ]
+        },
+        {
+          "departamento": "Norte de Santander",
+          "ciudades": [
+            "Cúcuta",
+            "Ocaña",
+            "Villa del Rosario",
+            "Los Patios"
+          ]
+        }
       ]
     },
     {
       "codigo": "ES",
       "nombre": "España",
-      "ciudades": [
-        "Madrid",
-        "Barcelona",
-        "Valencia",
-        "Sevilla",
-        "Málaga",
-        "Zaragoza",
-        "Bilbao",
-        "Alicante",
-        "Córdoba",
-        "Valladolid",
-        "Vigo",
-        "Gijón",
-        "Granada",
-        "Elche",
-        "Oviedo",
-        "Badajoz",
-        "Almería",
-        "Tenerife",
-        "Murcia",
-        "Palma de Mallorca",
-        "Marbella"
-      ]
-    },
-    {
-      "codigo": "US",
-      "nombre": "Estados Unidos / United States",
-      "ciudades": [
-        "Miami",
-        "New York",
-        "Los Angeles",
-        "Orlando",
-        "Houston",
-        "Chicago",
-        "San Francisco",
-        "Dallas",
-        "Atlanta",
-        "Boston",
-        "Seattle",
-        "Washington D.C.",
-        "Las Vegas",
-        "San Diego",
-        "Austin"
+      "departamentos": [
+        {
+          "departamento": "Comunidad de Madrid",
+          "ciudades": [
+            "Madrid",
+            "Alcalá de Henares",
+            "Móstoles",
+            "Fuenlabrada"
+          ]
+        },
+        {
+          "departamento": "Cataluña",
+          "ciudades": [
+            "Barcelona",
+            "L'Hospitalet de Llobregat",
+            "Badalona",
+            "Girona"
+          ]
+        },
+        {
+          "departamento": "Comunidad Valenciana",
+          "ciudades": [
+            "Valencia",
+            "Alicante",
+            "Elche",
+            "Castellón de la Plana"
+          ]
+        },
+        {
+          "departamento": "Andalucía",
+          "ciudades": [
+            "Sevilla",
+            "Málaga",
+            "Córdoba",
+            "Granada",
+            "Almería"
+          ]
+        }
       ]
     },
     {
       "codigo": "MX",
       "nombre": "México",
-      "ciudades": [
-        "Ciudad de México",
-        "Guadalajara",
-        "Monterrey",
-        "Puebla",
-        "Tijuana",
-        "Cancún",
-        "Mérida",
-        "León",
-        "Juárez",
-        "Zapopan",
-        "Querétaro",
-        "San Luis Potosí"
+      "departamentos": [
+        {
+          "departamento": "Ciudad de México",
+          "ciudades": [
+            "Ciudad de México"
+          ]
+        },
+        {
+          "departamento": "Jalisco",
+          "ciudades": [
+            "Guadalajara",
+            "Zapopan",
+            "Tlaquepaque"
+          ]
+        },
+        {
+          "departamento": "Nuevo León",
+          "ciudades": [
+            "Monterrey",
+            "San Pedro Garza García",
+            "Apodaca"
+          ]
+        }
       ]
     },
     {
-      "codigo": "AR",
-      "nombre": "Argentina",
-      "ciudades": [
-        "Buenos Aires",
-        "Córdoba",
-        "Rosario",
-        "Mendoza",
-        "La Plata",
-        "San Miguel de Tucumán",
-        "Mar del Plata",
-        "Salta",
-        "Santa Fe",
-        "San Juan"
-      ]
-    },
-    {
-      "codigo": "CL",
-      "nombre": "Chile",
-      "ciudades": [
-        "Santiago",
-        "Valparaíso",
-        "Concepción",
-        "La Serena",
-        "Antofagasta",
-        "Temuco",
-        "Rancagua",
-        "Talca",
-        "Arica",
-        "Puerto Montt"
-      ]
-    },
-    {
-      "codigo": "GB",
-      "nombre": "Reino Unido / United Kingdom",
-      "ciudades": [
-        "London",
-        "Manchester",
-        "Birmingham",
-        "Edinburgh",
-        "Glasgow",
-        "Liverpool",
-        "Bristol",
-        "Oxford",
-        "Cambridge"
+      "codigo": "US",
+      "nombre": "Estados Unidos / United States",
+      "departamentos": [
+        {
+          "departamento": "Florida",
+          "ciudades": [
+            "Miami",
+            "Orlando",
+            "Tampa",
+            "Jacksonville"
+          ]
+        },
+        {
+          "departamento": "New York",
+          "ciudades": [
+            "New York",
+            "Buffalo",
+            "Rochester"
+          ]
+        },
+        {
+          "departamento": "California",
+          "ciudades": [
+            "Los Angeles",
+            "San Francisco",
+            "San Diego",
+            "San Jose"
+          ]
+        }
       ]
     }
   ]
