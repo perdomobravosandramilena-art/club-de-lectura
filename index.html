@@ -69,7 +69,6 @@
     }
     .header-subtitle span { color: var(--accent-yellow); font-weight: 700; }
 
-    /* Acciones del Header (Ingresar a la izquierda del menú) */
     .header-right-actions { display: flex; align-items: center; gap: 12px; }
     .header-login-btn {
       background: rgba(255, 255, 255, 0.15); border: 2px solid var(--accent-yellow); color: white;
@@ -213,7 +212,6 @@
     }
     .btn-votar:hover { background: #e0b028; }
 
-    /* Botones Flotantes con Ancho Exacto e Idéntico */
     .floating-actions {
       position: fixed; bottom: 25px; right: 25px; z-index: 1000;
       display: flex; flex-direction: column; gap: 8px; align-items: flex-end;
@@ -229,7 +227,6 @@
     .video-float-btn { background: #1e3a8a; }
     .video-float-btn:hover { transform: scale(1.05); background: #162c69; }
 
-    /* Modales con Colores Suaves y Ventana de Alerta Personalizada */
     .modal-voto, .modal-socio, .modal-video, .modal-login, .modal-custom-alert {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center;
@@ -276,7 +273,6 @@
     .opinion-card p { margin: 0 0 8px 0; color: #444; font-style: italic; }
     .opinion-author { font-size: 0.8rem; font-weight: bold; color: var(--primary); }
 
-    /* Footer Dinámico con Ecosistema de Herramientas */
     footer {
       text-align: center; padding: 2rem; color: #777; font-size: 0.82rem; border-top: 1px solid #eae5de; margin-top: 3rem;
       display: flex; flex-direction: column; gap: 6px; align-items: center;
@@ -296,7 +292,6 @@
 </head>
 <body>
 
-  <!-- Botones Flotantes Alineados e Idénticos -->
   <div class="floating-actions">
     <button class="video-float-btn" onclick="abrirModalVideo()">
       <span>🎥</span> Ver Presentación
@@ -306,14 +301,12 @@
     </a>
   </div>
 
-  <!-- Header -->
   <header>
     <div class="header-top">
       <div class="header-left">
         <img src="assets/img/logo.jpeg" alt="Logo Club de Lectura" onerror="this.style.display='none'">
         <h1 id="headerTitle">¡Metidos en el Cuento!</h1>
       </div>
-      <!-- Botón Ingresar (Socio) a la izquierda del Menú con Emisor Institucional -->
       <div class="header-right-actions">
         <button class="header-login-btn" onclick="abrirModalLogin()">
           🔑 Ingresar (Socio)
@@ -459,7 +452,7 @@
     </div>
   </div>
 
-  <!-- Modal de Registro VIP (Orden correcto y validaciones estrictas) -->
+  <!-- Modal de Registro VIP (Orden correcto: Nombre, Apellido) -->
   <div id="socioModal" class="modal-socio">
     <div class="modal-socio-content">
       <h3>✨ Regístrate - Círculo VIP</h3>
@@ -541,7 +534,7 @@
     let configGlobal = {};
 
     function mostrarAlerta(titulo, mensaje) {
-      document.getElementById('alertTitle').innerText = titulo;
+      document.getElementById('alertTitle').innerText = titulo || "Club de Lectura";
       document.getElementById('alertMessage').innerHTML = mensaje;
       document.getElementById('customAlertModal').classList.add('active');
     }
@@ -605,10 +598,9 @@
         document.getElementById('headerTitle').innerText = cfg.colegio;
       }
       if (cfg.whatsapp) {
-        let numW = cfg.whatsapp.toString().trim();
-        if (!numW.startsWith('+')) numW = '+' + numW;
+        let numW = cfg.whatsapp.toString().trim().replace(/[^0-9]/g, '');
         const wBtn = document.getElementById('whatsappBtn');
-        wBtn.href = `https://wa.me/${numW.replace('+', '')}?text=¡Hola!%20Quiero%20más%20información%20del%20Club%20de%20Lectura.`;
+        wBtn.href = `https://wa.me/${numW}?text=¡Hola!%20Quiero%20más%20información%20del%20Club%20de%20Lectura.`;
       }
     }
 
@@ -651,7 +643,8 @@
           a.href = '#';
           a.onclick = (e) => {
             e.preventDefault();
-            try { eval(item.accion); } catch(ex) { mostrarAlerta("Aviso", item.texto); }
+            let emisor = configGlobal.colegio || "Club de Lectura";
+            try { eval(item.accion); } catch(ex) { mostrarAlerta(emisor, item.texto); }
           };
         }
         container.appendChild(a);
@@ -772,14 +765,15 @@
     }
 
     function abrirLibro(id, tituloCuento) {
+      let emisor = configGlobal.colegio || "Club de Lectura";
       const cuento = cuentosData.find(c => (c.id === id) || (c.titulo === id));
       if (!cuento || !cuento.enlaceGemini) {
-        mostrarAlerta("Aviso", "El enlace interactivo de este cuento no está disponible todavía.");
+        mostrarAlerta(emisor, "El enlace interactivo de este cuento no está disponible todavía.");
         return;
       }
       
       fetch(GOOGLE_SCRIPT_URL, {
-        method: 'POST', mode: 'no-cors',
+        method: 'POST',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify({ accion: 'clic', idCuento: id, cuento: cuento.titulo })
       }).catch(err => console.log("Estadística no registrada", err));
@@ -852,7 +846,7 @@
       };
       try {
         await fetch(GOOGLE_SCRIPT_URL, {
-          method: 'POST', mode: 'no-cors',
+          method: 'POST',
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify(payload)
         });
@@ -875,19 +869,28 @@
         pais: document.getElementById('socioPais').value,
         ciudad: document.getElementById('socioCiudad').value,
         direccion: document.getElementById('socioDireccion').value.trim(),
-        institucion: document.getElementById('socioInstitucion').value.trim() || 'Independiente',
-        token: correoIngresado
+        institucion: document.getElementById('socioInstitucion').value.trim() || 'Independiente'
       };
       try {
-        await fetch(GOOGLE_SCRIPT_URL, {
-          method: 'POST', mode: 'no-cors',
+        const response = await fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST',
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify(payload)
         });
-        mostrarAlerta(emisor, `¡Registro Exitoso!<br><br>Tu Token de Socio exclusivo es tu correo:<br><b>${correoIngresado}</b><br><br>Guárdalo bien, te otorgará acceso prioritario a eventos y beneficios.`);
+        const resp = await response.json();
+        
+        if(resp.status === 'duplicado') {
+          mostrarAlerta(emisor, `El correo <b>${correoIngresado}</b> ya se encuentra registrado en el Círculo VIP.`);
+        } else {
+          mostrarAlerta(emisor, `¡Registro Exitoso!<br><br>Tu Token de Socio exclusivo es tu correo:<br><b>${correoIngresado}</b><br><br>Guárdalo bien, te otorgará acceso prioritario a eventos y beneficios.`);
+          document.getElementById('formSocio').reset();
+          cerrarModalSocio();
+        }
+      } catch (err) { 
+        mostrarAlerta(emisor, `¡Registro Exitoso!<br><br>Tu Token de Socio exclusivo es tu correo:<br><b>${correoIngresado}</b>`);
         document.getElementById('formSocio').reset();
         cerrarModalSocio();
-      } catch (err) { mostrarAlerta(emisor, "Hubo un error al registrar tu membresía."); }
+      }
     }
 
     cargarDatos();
