@@ -296,7 +296,8 @@
     <button class="video-float-btn" onclick="abrirModalVideo()">
       <span>🎥</span> Ver Presentación
     </button>
-    <a id="whatsappBtn" href="#" class="whatsapp-float" target="_blank" title="Escríbenos por WhatsApp">
+    <!-- WhatsApp con número predeterminado infalible -->
+    <a id="whatsappBtn" href="https://wa.me/573176661372?text=¡Hola!%20Quiero%20más%20información%20del%20Club%20de%20Lectura." class="whatsapp-float" target="_blank" title="Escríbenos por WhatsApp">
       <span>💬</span> Charla con Nosotros
     </a>
   </div>
@@ -595,7 +596,6 @@
         document.getElementById('headerTitle').innerText = cfg.colegio;
       }
       if (cfg.whatsapp) {
-        // Limpieza estricta asegurando que conserve el + o dígitos para wa.me
         let numW = cfg.whatsapp.toString().trim().replace(/[^0-9+]/g, '');
         if (numW.startsWith('+')) numW = numW.substring(1);
         const wBtn = document.getElementById('whatsappBtn');
@@ -607,9 +607,11 @@
       const footer = document.getElementById('footerContainer');
       let emisorFooter = configGlobal.colegio || "Club de Lectura";
       let html = `<div class="footer-brand">© 2026 ${emisorFooter} · Desarrollado por BlaCes Project</div>`;
-      html += `<div class="footer-credits">Ecosistema Tecnológico: `;
-      let arrText = herramientas.map(h => `${h.nombre} (${h.descripcion})`).join(' · ');
-      html += arrText + `</div>`;
+      if (herramientas && herramientas.length > 0) {
+        html += `<div class="footer-credits">Ecosistema Tecnológico: `;
+        let arrText = herramientas.map(h => `${h.nombre} (${h.descripcion})`).join(' · ');
+        html += arrText + `</div>`;
+      }
       footer.innerHTML = html;
     }
 
