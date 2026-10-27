@@ -283,38 +283,31 @@
     .opinion-card p { margin: 0 0 8px 0; color: #444; font-style: italic; }
     .opinion-author { font-size: 0.8rem; font-weight: bold; color: var(--primary); }
 
-    /* Barra de Filtros del Mapa */
-    .map-filters-bar {
+    /* Botón de Geolocalización On/Off */
+    .map-controls-bar {
       display: flex;
-      gap: 10px;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 1rem;
       flex-wrap: wrap;
+      gap: 10px;
     }
-    .map-filter-select {
-      flex: 1;
-      min-width: 140px;
-      padding: 8px 12px;
-      border: 2px solid var(--primary);
-      border-radius: 8px;
-      font-family: 'Quicksand', sans-serif;
-      font-weight: 600;
-      background: white;
-      color: var(--text-dark);
-      cursor: pointer;
-      font-size: 0.88rem;
-    }
-    .btn-reset-map {
+    .btn-geo-toggle {
       background: var(--primary);
       color: white;
       border: none;
       padding: 8px 16px;
-      border-radius: 8px;
+      border-radius: 10px;
       font-weight: bold;
       cursor: pointer;
       font-family: 'Quicksand', sans-serif;
       transition: background 0.2s;
+      box-shadow: 0 2px 8px rgba(200,90,50,0.2);
     }
-    .btn-reset-map:hover { background: var(--primary-hover); }
+    .btn-geo-toggle.off {
+      background: #777;
+    }
+    .btn-geo-toggle:hover { opacity: 0.9; }
 
     footer {
       text-align: center; padding: 2rem; color: #777; font-size: 0.82rem; border-top: 1px solid #eae5de; margin-top: 3rem;
@@ -330,7 +323,7 @@
       .stats-widget:hover { width: 100%; }
       .chart-container { width: 100%; opacity: 1; pointer-events: auto; }
       .stats-title-text { opacity: 1; }
-      .map-filters-bar { flex-direction: column; }
+      .map-controls-bar { flex-direction: column; align-items: stretch; }
     }
   </style>
 </head>
@@ -423,25 +416,13 @@
       </div>
     </div>
 
-    <!-- Mapa con Filtros en Cascada Conectados al JSON Maestro -->
+    <!-- Mapa Optimizado (Puntos Únicos por Defecto y Botón de Geolocalización Sheet ON/OFF) -->
     <div style="margin-top: 3rem; background: white; border: 2px solid #fae1d2; border-radius: 16px; padding: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
       <h3 style="font-family: 'Caveat', cursive; color: var(--primary); font-size: 1.8rem; margin-top: 0;" data-i18n="mapa_tit">🗺️ Comunidades y Escuelas Registradas</h3>
-      <p style="font-size: 0.9rem; color: #666; margin-top: 0; margin-bottom: 1rem;" data-i18n="mapa_sub">Filtra por país, departamento y ciudad para explorar las sedes de lectura:</p>
-      
-      <!-- Barra de Filtros del Mapa -->
-      <div class="map-filters-bar">
-        <select id="filtroPais" class="map-filter-select" onchange="mapaFiltrarPais()">
-          <option value="">🌍 Todos los Países</option>
-        </select>
-        <select id="filtroDepto" class="map-filter-select" onchange="mapaFiltrarDepto()">
-          <option value="">🏛️ Todos los Departamentos</option>
-        </select>
-        <select id="filtroCiudad" class="map-filter-select" onchange="aplicarFiltrosMapaVisuales()">
-          <option value="">🏙️ Todas las Ciudades</option>
-        </select>
-        <button class="btn-reset-map" onclick="restablecerFiltrosMapa()">🔄 Ver Todos</button>
+      <div class="map-controls-bar">
+        <p style="font-size: 0.9rem; color: #666; margin: 0;" data-i18n="mapa_sub">Ubicaciones consolidadas por País, Departamento y Ciudad desde nuestra base de datos:</p>
+        <button id="btnGeoToggle" class="btn-geo-toggle" onclick="alternarGeolocalizacionSheet()">📍 Geolocalización Sheet: ACTIVADA</button>
       </div>
-
       <div id="mapaComunidades" style="width: 100%; height: 380px; border-radius: 12px; border: 2px solid var(--primary);"></div>
     </div>
 
@@ -588,6 +569,7 @@
     let mapInstance = null;
     let marcadoresLayer = null;
     let sociosGlobalData = [];
+    let geolocalizacionSheetActiva = true; // Por defecto lee lat/lon de la Sheet
 
     const diccionarios = {
       es: {
@@ -605,7 +587,7 @@
         cargando: "Cargando cuentos mágicos...",
         ranking: "Ranking de Lectura",
         mapa_tit: "🗺️ Comunidades y Escuelas Registradas",
-        mapa_sub: "Filtra por país, departamento y ciudad para explorar las sedes de lectura:",
+        mapa_sub: "Ubicaciones consolidadas por País, Departamento y Ciudad desde nuestra base de datos:",
         opiniones_tit: "✨ Opiniones y Reseñas Recientes del Club",
         opiniones_sub: "Lo que dicen nuestros pequeños lectores y familias en Colombia:",
         cargando_op: "Cargando opiniones...",
@@ -651,7 +633,7 @@
         cargando: "Loading magical stories...",
         ranking: "Reading Ranking",
         mapa_tit: "🗺️ Registered Communities & Schools",
-        mapa_sub: "Filter by country, state/department, and city to explore reading venues:",
+        mapa_sub: "Consolidated locations by Country, Department, and City from our database:",
         opiniones_tit: "✨ Recent Club Reviews & Opinions",
         opiniones_sub: "What our young readers and families say:",
         cargando_op: "Loading opinions...",
@@ -694,10 +676,31 @@
       });
     }
 
-    // Inicializar Mapa con Puntos Únicos Consolidados por País - Departamento - Ciudad
+    // Inicializar Mapa con Puntos Únicos por Defecto (País - Departamento - Ciudad) desde la Sheet
     function inicializarMapa(sociosUbicaciones = []) {
+      sociosGlobalData = sociosUbicaciones;
+      const mapaEl = document.getElementById('mapaComunidades');
+      if (!mapaEl) return;
+
+      if (!mapInstance) {
+        mapInstance = L.map('mapaComunidades').setView([4.5709, -74.2973], 6);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 19,
+          attribution: '© OpenStreetMap contributors'
+        }).addTo(mapInstance);
+        marcadoresLayer = L.layerGroup().addTo(mapInstance);
+      }
+
+      dibujarPuntosUnicosDefault();
+    }
+
+    function dibujarPuntosUnicosDefault() {
+      if (!marcadoresLayer) return;
+      marcadoresLayer.clearLayers();
+
+      // Consolidar puntos únicos por País, Departamento y Ciudad
       let mapaUnicos = {};
-      sociosUbicaciones.forEach(s => {
+      sociosGlobalData.forEach(s => {
         let clave = `${s.pais}|${s.departamento}|${s.ciudad}`;
         if (!mapaUnicos[clave]) {
           mapaUnicos[clave] = {
@@ -716,129 +719,37 @@
         }
       });
 
-      sociosGlobalData = Object.values(mapaUnicos);
+      let unicosArray = Object.values(mapaUnicos);
 
-      const mapaEl = document.getElementById('mapaComunidades');
-      if (!mapaEl) return;
+      if (unicosArray.length > 0) {
+        unicosArray.forEach(item => {
+          let latFinal = geolocalizacionSheetActiva ? item.lat : 4.5709;
+          let lonFinal = geolocalizacionSheetActiva ? item.lon : -74.2973;
+          let instText = item.instituciones.length > 0 ? item.instituciones.join(', ') : 'Comunidad General';
 
-      if (!mapInstance) {
-        mapInstance = L.map('mapaComunidades').setView([4.5709, -74.2973], 6);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          maxZoom: 19,
-          attribution: '© OpenStreetMap contributors'
-        }).addTo(mapInstance);
-        marcadoresLayer = L.layerGroup().addTo(mapInstance);
-      }
-
-      poblarCombosFiltrosMapa();
-      dibujarMarcadoresEnMapa(sociosGlobalData);
-    }
-
-    function dibujarMarcadoresEnMapa(listaSocios) {
-      if (!marcadoresLayer) return;
-      marcadoresLayer.clearLayers();
-
-      if (listaSocios && listaSocios.length > 0) {
-        listaSocios.forEach(item => {
-          let instText = item.instituciones && item.instituciones.length > 0 ? item.instituciones.join(', ') : 'Comunidad General';
-          let marker = L.marker([item.lat, item.lon]).bindPopup(
+          let marker = L.marker([latFinal, lonFinal]).bindPopup(
             `<b>📍 ${item.ciudad}, ${item.departamento} (${item.pais})</b><br>👥 Socios en zona: ${item.totalSocios}<br>🏫 Sedes/Inst: ${instText}`
           );
           marcadoresLayer.addLayer(marker);
         });
-
-        if (listaSocios.length === 1) {
-          mapInstance.setView([listaSocios[0].lat, listaSocios[0].lon], 11);
-        } else {
-          mapInstance.setView([4.5709, -74.2973], 6);
-        }
+        mapInstance.setView([4.5709, -74.2973], 6);
+      } else {
+        L.marker([3.5394, -76.3036]).addTo(marcadoresLayer)
+          .bindPopup('<b>¡Metidos en el Cuento!</b><br>Sede Principal & Red de Lectura.');
       }
     }
 
-    // Poblar Combos del Mapa usando el JSON Maestro ordenados alfabéticamente con Colombia por defecto
-    function poblarCombosFiltrosMapa() {
-      const selectPais = document.getElementById('filtroPais');
-      if (!selectPais || paisesDataGlobal.length === 0) return;
-
-      let paisesOrdenados = [...paisesDataGlobal].sort((a, b) => a.nombre.localeCompare(b.nombre));
-
-      selectPais.innerHTML = '<option value="">🌍 Todos los Países</option>';
-      paisesOrdenados.forEach(p => {
-        let opt = document.createElement('option');
-        opt.value = p.nombre;
-        opt.innerText = p.nombre;
-        if (p.nombre === "Colombia") opt.selected = true; // Colombia por defecto
-        selectPais.appendChild(opt);
-      });
-      mapaFiltrarPais();
-    }
-
-    function mapaFiltrarPais() {
-      const paisSel = document.getElementById('filtroPais').value;
-      const selectDepto = document.getElementById('filtroDepto');
-      const selectCiudad = document.getElementById('filtroCiudad');
-
-      selectDepto.innerHTML = '<option value="">🏛️ Todos los Departamentos</option>';
-      selectCiudad.innerHTML = '<option value="">🏙️ Todas las Ciudades</option>';
-
-      if (paisSel) {
-        const paisObj = paisesDataGlobal.find(p => p.nombre === paisSel);
-        if (paisObj && paisObj.departamentos) {
-          let deptosOrdenados = [...paisObj.departamentos].sort((a, b) => a.departamento.localeCompare(b.departamento));
-          deptosOrdenados.forEach(d => {
-            let opt = document.createElement('option');
-            opt.value = d.departamento;
-            opt.innerText = d.departamento;
-            selectDepto.appendChild(opt);
-          });
-        }
+    function alternarGeolocalizacionSheet() {
+      geolocalizacionSheetActiva = !geolocalizacionSheetActiva;
+      const btn = document.getElementById('btnGeoToggle');
+      if (geolocalizacionSheetActiva) {
+        btn.innerText = "📍 Geolocalización Sheet: ACTIVADA";
+        btn.classList.remove('off');
+      } else {
+        btn.innerText = "📍 Geolocalización Sheet: DESACTIVADA";
+        btn.classList.add('off');
       }
-      aplicarFiltrosMapaVisuales();
-    }
-
-    function mapaFiltrarDepto() {
-      const paisSel = document.getElementById('filtroPais').value;
-      const deptoSel = document.getElementById('filtroDepto').value;
-      const selectCiudad = document.getElementById('filtroCiudad');
-
-      selectCiudad.innerHTML = '<option value="">🏙️ Todas las Ciudades</option>';
-
-      if (paisSel && deptoSel) {
-        let paisObj = paisesDataGlobal.find(p => p.nombre === paisSel);
-        if (paisObj && paisObj.departamentos) {
-          let deptoObj = paisObj.departamentos.find(d => d.departamento === deptoSel);
-          if (deptoObj && deptoObj.ciudades) {
-            let ciudadesOrdenadas = [...deptoObj.ciudades].sort((a, b) => a.localeCompare(b));
-            ciudadesOrdenadas.forEach(c => {
-              let opt = document.createElement('option');
-              opt.value = c;
-              opt.innerText = c;
-              selectCiudad.appendChild(opt);
-            });
-          }
-        }
-      }
-      aplicarFiltrosMapaVisuales();
-    }
-
-    function aplicarFiltrosMapaVisuales() {
-      const paisSel = document.getElementById('filtroPais').value;
-      const deptoSel = document.getElementById('filtroDepto').value;
-      const ciudadSel = document.getElementById('filtroCiudad').value;
-
-      let filtrados = sociosGlobalData;
-      if (paisSel) filtrados = filtrados.filter(s => s.pais === paisSel);
-      if (deptoSel) filtrados = filtrados.filter(s => s.departamento === deptoSel);
-      if (ciudadSel) filtrados = filtrados.filter(s => s.ciudad === ciudadSel);
-
-      dibujarMarcadoresEnMapa(filtrados);
-    }
-
-    function restablecerFiltrosMapa() {
-      document.getElementById('filtroPais').value = "Colombia";
-      mapaFiltrarPais();
-      dibujarMarcadoresEnMapa(sociosGlobalData);
-      mapInstance.setView([4.5709, -74.2973], 6);
+      dibujarPuntosUnicosDefault();
     }
 
     async function cargarPaisesYCiudades() {
@@ -931,7 +842,7 @@
 
     async function cargarDatos() {
       try {
-        await cargarPaisesYCiudades(); // Cargar JSON primero
+        await cargarPaisesYCiudades();
 
         const response = await fetch(GOOGLE_SCRIPT_URL);
         if (!response.ok) throw new Error("Error en la red");
