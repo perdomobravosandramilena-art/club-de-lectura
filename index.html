@@ -436,7 +436,7 @@
         <select id="filtroDepto" class="map-filter-select" onchange="mapaFiltrarDepto()">
           <option value="">🏛️ Todos los Departamentos</option>
         </select>
-        <select id="filtroCiudad" class="map-filter-select" onchange="mapaFiltrarCiudad()">
+        <select id="filtroCiudad" class="map-filter-select" onchange="aplicarFiltrosMapaVisuales()">
           <option value="">🏙️ Todas las Ciudades</option>
         </select>
         <button class="btn-reset-map" onclick="restablecerFiltrosMapa()">🔄 Ver Todos</button>
@@ -694,22 +694,8 @@
       });
     }
 
-    // Inicializar Mapa y poblar filtros conectados al JSON Maestro
+    // Inicializar Mapa con Puntos Únicos Consolidados por País - Departamento - Ciudad
     function inicializarMapa(sociosUbicaciones = []) {
-      sociosGlobalData = sociosUbicaciones;
-      const mapaEl = document.getElementById('mapaComunidades');
-      if (!mapaEl) return;
-
-      if (!mapInstance) {
-        mapInstance = L.map('mapaComunidades').setView([4.5709, -74.2973], 6);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          maxZoom: 19,
-          attribution: '© OpenStreetMap contributors'
-        }).addTo(mapInstance);
-        marcadoresLayer = L.layerGroup().addTo(mapInstance);
-      }
-
-      // Por defecto mostramos los puntos únicos consolidados por País-Departamento-Ciudad
       let mapaUnicos = {};
       sociosUbicaciones.forEach(s => {
         let clave = `${s.pais}|${s.departamento}|${s.ciudad}`;
@@ -731,6 +717,19 @@
       });
 
       sociosGlobalData = Object.values(mapaUnicos);
+
+      const mapaEl = document.getElementById('mapaComunidades');
+      if (!mapaEl) return;
+
+      if (!mapInstance) {
+        mapInstance = L.map('mapaComunidades').setView([4.5709, -74.2973], 6);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 19,
+          attribution: '© OpenStreetMap contributors'
+        }).addTo(mapInstance);
+        marcadoresLayer = L.layerGroup().addTo(mapInstance);
+      }
+
       poblarCombosFiltrosMapa();
       dibujarMarcadoresEnMapa(sociosGlobalData);
     }
@@ -749,22 +748,26 @@
         });
 
         if (listaSocios.length === 1) {
-          mapInstance.setView([listaSocios[0].lat, listaSocios[0].lon], 12);
+          mapInstance.setView([listaSocios[0].lat, listaSocios[0].lon], 11);
         } else {
           mapInstance.setView([4.5709, -74.2973], 6);
         }
       }
     }
 
+    // Poblar Combos del Mapa usando el JSON Maestro ordenados alfabéticamente con Colombia por defecto
     function poblarCombosFiltrosMapa() {
       const selectPais = document.getElementById('filtroPais');
-      if (!selectPais) return;
+      if (!selectPais || paisesDataGlobal.length === 0) return;
+
+      let paisesOrdenados = [...paisesDataGlobal].sort((a, b) => a.nombre.localeCompare(b.nombre));
 
       selectPais.innerHTML = '<option value="">🌍 Todos los Países</option>';
-      paisesDataGlobal.forEach(p => {
+      paisesOrdenados.forEach(p => {
         let opt = document.createElement('option');
         opt.value = p.nombre;
         opt.innerText = p.nombre;
+        if (p.nombre === "Colombia") opt.selected = true; // Colombia por defecto
         selectPais.appendChild(opt);
       });
       mapaFiltrarPais();
@@ -781,22 +784,14 @@
       if (paisSel) {
         const paisObj = paisesDataGlobal.find(p => p.nombre === paisSel);
         if (paisObj && paisObj.departamentos) {
-          paisObj.departamentos.forEach(d => {
+          let deptosOrdenados = [...paisObj.departamentos].sort((a, b) => a.departamento.localeCompare(b.departamento));
+          deptosOrdenados.forEach(d => {
             let opt = document.createElement('option');
             opt.value = d.departamento;
             opt.innerText = d.departamento;
             selectDepto.appendChild(opt);
           });
         }
-      } else {
-        // Si no hay país seleccionado, cargamos todos los departamentos disponibles en los registros
-        let deptosUnicos = [...new Set(sociosGlobalData.map(s => s.departamento))];
-        deptosUnicos.forEach(d => {
-          let opt = document.createElement('option');
-          opt.value = d;
-          opt.innerText = d;
-          selectDepto.appendChild(opt);
-        });
       }
       aplicarFiltrosMapaVisuales();
     }
@@ -808,14 +803,13 @@
 
       selectCiudad.innerHTML = '<option value="">🏙️ Todas las Ciudades</option>';
 
-      if (deptoSel) {
+      if (paisSel && deptoSel) {
         let paisObj = paisesDataGlobal.find(p => p.nombre === paisSel);
-        if (!paisObj && paisesDataGlobal.length > 0) paisObj = paisesDataGlobal[0]; // Fallback
-        
         if (paisObj && paisObj.departamentos) {
           let deptoObj = paisObj.departamentos.find(d => d.departamento === deptoSel);
           if (deptoObj && deptoObj.ciudades) {
-            deptoObj.ciudades.forEach(c => {
+            let ciudadesOrdenadas = [...deptoObj.ciudades].sort((a, b) => a.localeCompare(b));
+            ciudadesOrdenadas.forEach(c => {
               let opt = document.createElement('option');
               opt.value = c;
               opt.innerText = c;
@@ -824,10 +818,6 @@
           }
         }
       }
-      aplicarFiltrosMapaVisuales();
-    }
-
-    function mapaFiltrarCiudad() {
       aplicarFiltrosMapaVisuales();
     }
 
@@ -845,7 +835,7 @@
     }
 
     function restablecerFiltrosMapa() {
-      document.getElementById('filtroPais').value = "";
+      document.getElementById('filtroPais').value = "Colombia";
       mapaFiltrarPais();
       dibujarMarcadoresEnMapa(sociosGlobalData);
       mapInstance.setView([4.5709, -74.2973], 6);
@@ -861,7 +851,8 @@
         if (!selectPais) return;
         selectPais.innerHTML = '';
         
-        paisesDataGlobal.forEach(p => {
+        let paisesReg = [...paisesDataGlobal].sort((a, b) => a.nombre.localeCompare(b.nombre));
+        paisesReg.forEach(p => {
           const opt = document.createElement('option');
           opt.value = p.nombre;
           opt.innerText = p.nombre;
@@ -883,7 +874,8 @@
 
       const paisObj = paisesDataGlobal.find(p => p.nombre === paisNombre);
       if (paisObj && paisObj.departamentos) {
-        paisObj.departamentos.forEach(d => {
+        let deptosReg = [...paisObj.departamentos].sort((a, b) => a.departamento.localeCompare(b.departamento));
+        deptosReg.forEach(d => {
           const optD = document.createElement('option');
           optD.value = d.departamento;
           optD.innerText = d.departamento;
@@ -905,7 +897,8 @@
       if (paisObj && paisObj.departamentos) {
         const deptoObj = paisObj.departamentos.find(d => d.departamento === deptoNombre);
         if (deptoObj && deptoObj.ciudades) {
-          deptoObj.ciudades.forEach(c => {
+          let ciudsReg = [...deptoObj.ciudades].sort((a, b) => a.localeCompare(b));
+          ciudsReg.forEach(c => {
             const optC = document.createElement('option');
             optC.value = c;
             optC.innerText = c;
@@ -938,6 +931,8 @@
 
     async function cargarDatos() {
       try {
+        await cargarPaisesYCiudades(); // Cargar JSON primero
+
         const response = await fetch(GOOGLE_SCRIPT_URL);
         if (!response.ok) throw new Error("Error en la red");
         const data = await response.json();
@@ -1290,7 +1285,6 @@
     }
 
     cargarDatos();
-    cargarPaisesYCiudades();
   </script>
 </body>
 </html>
