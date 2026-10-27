@@ -283,7 +283,7 @@
     .opinion-card p { margin: 0 0 8px 0; color: #444; font-style: italic; }
     .opinion-author { font-size: 0.8rem; font-weight: bold; color: var(--primary); }
 
-    /* Botón de Geolocalización On/Off */
+    /* Barra de Controles del Mapa limpia */
     .map-controls-bar {
       display: flex;
       justify-content: space-between;
@@ -293,7 +293,7 @@
       gap: 10px;
     }
     .btn-geo-toggle {
-      background: var(--primary);
+      background: #777; /* Por defecto desactivado */
       color: white;
       border: none;
       padding: 8px 16px;
@@ -302,10 +302,10 @@
       cursor: pointer;
       font-family: 'Quicksand', sans-serif;
       transition: background 0.2s;
-      box-shadow: 0 2px 8px rgba(200,90,50,0.2);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
-    .btn-geo-toggle.off {
-      background: #777;
+    .btn-geo-toggle.active {
+      background: var(--primary);
     }
     .btn-geo-toggle:hover { opacity: 0.9; }
 
@@ -416,12 +416,12 @@
       </div>
     </div>
 
-    <!-- Mapa Optimizado (Puntos Únicos por Defecto y Botón de Geolocalización Sheet ON/OFF) -->
+    <!-- Mapa Ultra Ágil y Optimizado (Vista x Ciudad por defecto / Vista por Lugar opcional) -->
     <div style="margin-top: 3rem; background: white; border: 2px solid #fae1d2; border-radius: 16px; padding: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
       <h3 style="font-family: 'Caveat', cursive; color: var(--primary); font-size: 1.8rem; margin-top: 0;" data-i18n="mapa_tit">🗺️ Comunidades y Escuelas Registradas</h3>
       <div class="map-controls-bar">
         <p style="font-size: 0.9rem; color: #666; margin: 0;" data-i18n="mapa_sub">Ubicaciones consolidadas por País, Departamento y Ciudad desde nuestra base de datos:</p>
-        <button id="btnGeoToggle" class="btn-geo-toggle" onclick="alternarGeolocalizacionSheet()">📍 Geolocalización Sheet: ACTIVADA</button>
+        <button id="btnGeoToggle" class="btn-geo-toggle" onclick="alternarVistaMapa()">🏙️ Vista x Ciudad</button>
       </div>
       <div id="mapaComunidades" style="width: 100%; height: 380px; border-radius: 12px; border: 2px solid var(--primary);"></div>
     </div>
@@ -569,7 +569,20 @@
     let mapInstance = null;
     let marcadoresLayer = null;
     let sociosGlobalData = [];
-    let geolocalizacionSheetActiva = true; // Por defecto lee lat/lon de la Sheet
+    let modoVistaPorLugar = false; // Por defecto FALSE ("Vista x Ciudad")
+
+    // Diccionario de centroides fijos por ciudad (utilizado en Vista x Ciudad)
+    const coordsCiudadesFijas = {
+      "Cali, Valle del Cauca (Colombia)": [3.4516, -76.5320],
+      "El cerrito, Valle del Cauca (Colombia)": [3.5394, -76.3036],
+      "Bogotá, Bogotá D.C. (Colombia)": [4.7110, -74.0721],
+      "Medellín, Antioquia (Colombia)": [6.2476, -75.5658],
+      "Barranquilla, Atlántico (Colombia)": [10.9685, -74.7813],
+      "Cartagena, Bolívar (Colombia)": [10.3910, -75.4794],
+      "Pereira, Risaralda (Colombia)": [4.8133, -75.6961],
+      "Madrid, Comunidad de Madrid (España)": [40.4168, -3.7038],
+      "Barcelona, Cataluña (España)": [41.3851, 2.1734]
+    };
 
     const diccionarios = {
       es: {
@@ -676,7 +689,21 @@
       });
     }
 
-    // Inicializar Mapa con Puntos Únicos por Defecto (País - Departamento - Ciudad) desde la Sheet
+    // Normalizador de coordenadas corruptas por formato de miles en Google Sheets
+    function limpiarCoordenada(val, isLat = true) {
+      if (!val) return isLat ? 3.4516 : -76.5320;
+      let s = val.toString().trim();
+      let isNeg = s.startsWith('-');
+      let digits = s.replace(/\D/g, '');
+      if (!digits) return isLat ? 3.4516 : -76.5320;
+
+      let cleaned = isLat ? (digits[0] + '.' + digits.slice(1)) : (digits.slice(0, 2) + '.' + digits.slice(2));
+      let num = parseFloat(cleaned);
+      if (isNeg) num = -num;
+      return isNaN(num) ? (isLat ? 3.4516 : -76.5320) : num;
+    }
+
+    // Inicializar Mapa con Vista x Ciudad por Defecto
     function inicializarMapa(sociosUbicaciones = []) {
       sociosGlobalData = sociosUbicaciones;
       const mapaEl = document.getElementById('mapaComunidades');
@@ -691,65 +718,75 @@
         marcadoresLayer = L.layerGroup().addTo(mapInstance);
       }
 
-      dibujarPuntosUnicosDefault();
+      dibujarPuntosMapa();
     }
 
-    function dibujarPuntosUnicosDefault() {
+    function dibujarPuntosMapa() {
       if (!marcadoresLayer) return;
       marcadoresLayer.clearLayers();
 
-      // Consolidar puntos únicos por País, Departamento y Ciudad
-      let mapaUnicos = {};
-      sociosGlobalData.forEach(s => {
-        let clave = `${s.pais}|${s.departamento}|${s.ciudad}`;
-        if (!mapaUnicos[clave]) {
-          mapaUnicos[clave] = {
-            pais: s.pais,
-            departamento: s.departamento,
-            ciudad: s.ciudad,
-            lat: s.lat,
-            lon: s.lon,
-            totalSocios: 0,
-            instituciones: []
-          };
-        }
-        mapaUnicos[clave].totalSocios += 1;
-        if (s.institucion && !mapaUnicos[clave].instituciones.includes(s.institucion)) {
-          mapaUnicos[clave].instituciones.push(s.institucion);
-        }
-      });
+      if (!modoVistaPorLugar) {
+        // MODO 1: VISTA X CIUDAD (Agrupado por País - Departamento - Ciudad con centroides fijos)
+        let mapaUnicos = {};
+        sociosGlobalData.forEach(s => {
+          let clave = `${s.pais}|${s.departamento}|${s.ciudad}`;
+          if (!mapaUnicos[clave]) {
+            mapaUnicos[clave] = {
+              pais: s.pais,
+              departamento: s.departamento,
+              ciudad: s.ciudad,
+              totalSocios: 0,
+              instituciones: []
+            };
+          }
+          mapaUnicos[clave].totalSocios += 1;
+          if (s.institucion && !mapaUnicos[clave].instituciones.includes(s.institucion)) {
+            mapaUnicos[clave].instituciones.push(s.institucion);
+          }
+        });
 
-      let unicosArray = Object.values(mapaUnicos);
-
-      if (unicosArray.length > 0) {
-        unicosArray.forEach(item => {
-          let latFinal = geolocalizacionSheetActiva ? item.lat : 4.5709;
-          let lonFinal = geolocalizacionSheetActiva ? item.lon : -74.2973;
+        Object.values(mapaUnicos).forEach(item => {
+          let claveCiudad = `${item.ciudad}, ${item.departamento} (${item.pais})`;
+          let coords = coordsCiudadesFijas[claveCiudad] || [4.5709, -74.2973];
           let instText = item.instituciones.length > 0 ? item.instituciones.join(', ') : 'Comunidad General';
 
-          let marker = L.marker([latFinal, lonFinal]).bindPopup(
+          let marker = L.marker(coords).bindPopup(
             `<b>📍 ${item.ciudad}, ${item.departamento} (${item.pais})</b><br>👥 Socios en zona: ${item.totalSocios}<br>🏫 Sedes/Inst: ${instText}`
           );
           marcadoresLayer.addLayer(marker);
         });
-        mapInstance.setView([4.5709, -74.2973], 6);
+
       } else {
-        L.marker([3.5394, -76.3036]).addTo(marcadoresLayer)
-          .bindPopup('<b>¡Metidos en el Cuento!</b><br>Sede Principal & Red de Lectura.');
+        // MODO 2: VISTA POR LUGAR (Coordenadas exactas de la Sheet validadas con Estado OK)
+        if (sociosGlobalData && sociosGlobalData.length > 0) {
+          sociosGlobalData.forEach(item => {
+            if (item.estadoGeo && item.estadoGeo.toUpperCase().startsWith("OK")) {
+              let latLimpia = limpiarCoordenada(item.lat, true);
+              let lonLimpia = limpiarCoordenada(item.lon, false);
+
+              let marker = L.marker([latLimpia, lonLimpia]).bindPopup(
+                `<b>📍 ${item.ciudad}, ${item.departamento} (${item.pais})</b><br>🏫 Inst: ${item.institucion}<br>👤 Socio: ${item.nombres || 'Registrado'}`
+              );
+              marcadoresLayer.addLayer(marker);
+            }
+          });
+        }
       }
+
+      mapInstance.setView([4.5709, -74.2973], 6);
     }
 
-    function alternarGeolocalizacionSheet() {
-      geolocalizacionSheetActiva = !geolocalizacionSheetActiva;
+    function alternarVistaMapa() {
+      modoVistaPorLugar = !modoVistaPorLugar;
       const btn = document.getElementById('btnGeoToggle');
-      if (geolocalizacionSheetActiva) {
-        btn.innerText = "📍 Geolocalización Sheet: ACTIVADA";
-        btn.classList.remove('off');
+      if (modoVistaPorLugar) {
+        btn.innerText = "📍 Vista por Lugar";
+        btn.classList.add('active');
       } else {
-        btn.innerText = "📍 Geolocalización Sheet: DESACTIVADA";
-        btn.classList.add('off');
+        btn.innerText = "🏙️ Vista x Ciudad";
+        btn.classList.remove('active');
       }
-      dibujarPuntosUnicosDefault();
+      dibujarPuntosMapa();
     }
 
     async function cargarPaisesYCiudades() {
