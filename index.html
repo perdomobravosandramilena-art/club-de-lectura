@@ -283,31 +283,30 @@
     .opinion-card p { margin: 0 0 8px 0; color: #444; font-style: italic; }
     .opinion-author { font-size: 0.8rem; font-weight: bold; color: var(--primary); }
 
-    /* Barra de Controles del Mapa limpia */
+    /* Controles del Mapa Claros y Amigables para la Audiencia */
     .map-controls-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 1rem;
       flex-wrap: wrap;
-      gap: 10px;
-    }
-    .btn-geo-toggle {
-      background: #777; /* Por defecto desactivado */
-      color: white;
-      border: none;
-      padding: 8px 16px;
+      gap: 12px;
+      background: #f7f3eb;
+      padding: 10px 15px;
       border-radius: 10px;
-      font-weight: bold;
-      cursor: pointer;
+      border: 1px solid #e2d9cd;
+    }
+    .map-mode-select {
+      padding: 8px 14px;
+      border: 2px solid var(--primary);
+      border-radius: 8px;
       font-family: 'Quicksand', sans-serif;
-      transition: background 0.2s;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      font-weight: 700;
+      background: white;
+      color: var(--primary);
+      cursor: pointer;
+      font-size: 0.9rem;
     }
-    .btn-geo-toggle.active {
-      background: var(--primary);
-    }
-    .btn-geo-toggle:hover { opacity: 0.9; }
 
     footer {
       text-align: center; padding: 2rem; color: #777; font-size: 0.82rem; border-top: 1px solid #eae5de; margin-top: 3rem;
@@ -416,13 +415,18 @@
       </div>
     </div>
 
-    <!-- Mapa Ultra Ágil y Optimizado (Vista x Ciudad por defecto / Vista por Lugar opcional) -->
+    <!-- Mapa Optimizado con Selector de Vista Intuitivo (Por Ciudad vs Por Sede/Lugar Exacto) -->
     <div style="margin-top: 3rem; background: white; border: 2px solid #fae1d2; border-radius: 16px; padding: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
       <h3 style="font-family: 'Caveat', cursive; color: var(--primary); font-size: 1.8rem; margin-top: 0;" data-i18n="mapa_tit">🗺️ Comunidades y Escuelas Registradas</h3>
+      
       <div class="map-controls-bar">
-        <p style="font-size: 0.9rem; color: #666; margin: 0;" data-i18n="mapa_sub">Ubicaciones consolidadas por País, Departamento y Ciudad desde nuestra base de datos:</p>
-        <button id="btnGeoToggle" class="btn-geo-toggle" onclick="alternarVistaMapa()">🏙️ Vista x Ciudad</button>
+        <p style="font-size: 0.9rem; color: #555; margin: 0;">Selecciona el modo de visualización del mapa:</p>
+        <select id="selectVistaMapa" class="map-mode-select" onchange="cambiarModoVisualizacionMapa(this.value)">
+          <option value="ciudad" selected>🏙️ Ver por Ciudad (Consolidado)</option>
+          <option value="lugar">📍 Ver por Sede / Lugar Exacto</option>
+        </select>
       </div>
+
       <div id="mapaComunidades" style="width: 100%; height: 380px; border-radius: 12px; border: 2px solid var(--primary);"></div>
     </div>
 
@@ -569,9 +573,8 @@
     let mapInstance = null;
     let marcadoresLayer = null;
     let sociosGlobalData = [];
-    let modoVistaPorLugar = false; // Por defecto FALSE ("Vista x Ciudad")
 
-    // Diccionario de centroides fijos por ciudad (utilizado en Vista x Ciudad)
+    // Diccionario de centroides fijos por ciudad
     const coordsCiudadesFijas = {
       "Cali, Valle del Cauca (Colombia)": [3.4516, -76.5320],
       "El cerrito, Valle del Cauca (Colombia)": [3.5394, -76.3036],
@@ -689,18 +692,21 @@
       });
     }
 
-    // Normalizador de coordenadas corruptas por formato de miles en Google Sheets
-    function limpiarCoordenada(val, isLat = true) {
-      if (!val) return isLat ? 3.4516 : -76.5320;
-      let s = val.toString().trim();
-      let isNeg = s.startsWith('-');
-      let digits = s.replace(/\D/g, '');
-      if (!digits) return isLat ? 3.4516 : -76.5320;
-
-      let cleaned = isLat ? (digits[0] + '.' + digits.slice(1)) : (digits.slice(0, 2) + '.' + digits.slice(2));
-      let num = parseFloat(cleaned);
-      if (isNeg) num = -num;
-      return isNaN(num) ? (isLat ? 3.4516 : -76.5320) : num;
+    // Normalizador de coordenadas de la Sheet (Corrige puntos excesivos y comas)
+    function limpiarCoordenadaSheet(val, isLat = true) {
+      if (val === null || val === undefined || val === "") return isLat ? 3.4516 : -76.5320;
+      let s = val.toString().trim().replace(/\./g, '').replace(',', '.');
+      let num = parseFloat(s);
+      if (isNaN(num)) return isLat ? 3.4516 : -76.5320;
+      
+      // Ajustar escala si quedó como 6219555 -> 6.219555
+      if (isLat && Math.abs(num) > 90) {
+        num = num / Math.pow(10, Math.floor(Math.log10(Math.abs(num))) - 1);
+      }
+      if (!isLat && Math.abs(num) > 180) {
+        num = num / Math.pow(10, Math.floor(Math.log10(Math.abs(num))) - 2);
+      }
+      return num;
     }
 
     // Inicializar Mapa con Vista x Ciudad por Defecto
@@ -718,15 +724,15 @@
         marcadoresLayer = L.layerGroup().addTo(mapInstance);
       }
 
-      dibujarPuntosMapa();
+      dibujarPuntosMapa('ciudad');
     }
 
-    function dibujarPuntosMapa() {
+    function dibujarPuntosMapa(modo) {
       if (!marcadoresLayer) return;
       marcadoresLayer.clearLayers();
 
-      if (!modoVistaPorLugar) {
-        // MODO 1: VISTA X CIUDAD (Agrupado por País - Departamento - Ciudad con centroides fijos)
+      if (modo === 'ciudad') {
+        // MODO 1: VISTA X CIUDAD (Consolidado por País - Departamento - Ciudad)
         let mapaUnicos = {};
         sociosGlobalData.forEach(s => {
           let clave = `${s.pais}|${s.departamento}|${s.ciudad}`;
@@ -757,14 +763,14 @@
         });
 
       } else {
-        // MODO 2: VISTA POR LUGAR (Coordenadas exactas de la Sheet validadas con Estado OK)
+        // MODO 2: VISTA POR LUGAR (Puntos exactos desde la Sheet con Estado OK)
         if (sociosGlobalData && sociosGlobalData.length > 0) {
           sociosGlobalData.forEach(item => {
             if (item.estadoGeo && item.estadoGeo.toUpperCase().startsWith("OK")) {
-              let latLimpia = limpiarCoordenada(item.lat, true);
-              let lonLimpia = limpiarCoordenada(item.lon, false);
+              let latFinal = limpiarCoordenadaSheet(item.lat, true);
+              let lonFinal = limpiarCoordenadaSheet(item.lon, false);
 
-              let marker = L.marker([latLimpia, lonLimpia]).bindPopup(
+              let marker = L.marker([latFinal, lonFinal]).bindPopup(
                 `<b>📍 ${item.ciudad}, ${item.departamento} (${item.pais})</b><br>🏫 Inst: ${item.institucion}<br>👤 Socio: ${item.nombres || 'Registrado'}`
               );
               marcadoresLayer.addLayer(marker);
@@ -776,17 +782,8 @@
       mapInstance.setView([4.5709, -74.2973], 6);
     }
 
-    function alternarVistaMapa() {
-      modoVistaPorLugar = !modoVistaPorLugar;
-      const btn = document.getElementById('btnGeoToggle');
-      if (modoVistaPorLugar) {
-        btn.innerText = "📍 Vista por Lugar";
-        btn.classList.add('active');
-      } else {
-        btn.innerText = "🏙️ Vista x Ciudad";
-        btn.classList.remove('active');
-      }
-      dibujarPuntosMapa();
+    function cambiarModoVisualizacionMapa(modo) {
+      dibujarPuntosMapa(modo);
     }
 
     async function cargarPaisesYCiudades() {
@@ -843,7 +840,7 @@
 
       const paisObj = paisesDataGlobal.find(p => p.nombre === paisNombre);
       if (paisObj && paisObj.departamentos) {
-        const deptoObj = paisObj.departamentos.find(d => d.departamento === deptoNombre);
+        let deptoObj = paisObj.departamentos.find(d => d.departamento === deptoNombre);
         if (deptoObj && deptoObj.ciudades) {
           let ciudsReg = [...deptoObj.ciudades].sort((a, b) => a.localeCompare(b));
           ciudsReg.forEach(c => {
